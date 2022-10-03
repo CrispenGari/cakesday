@@ -1,0 +1,22 @@
+version: "3.9" # latest version of docker compose (optional)
+services:
+  expressapi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    container_name: expressapi
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb://mongodb:27017
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+    volumes:
+      - ./db/:/data/db
