@@ -1,0 +1,48 @@
+.confirm__email {
+  width: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  user-zoom: none;
+  flex-direction: column;
+}
+.confirm__email > form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  max-width: 500px;
+}
+.confirm__email > form > input {
+  background-color: #f5f5f5;
+  outline: none;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+.confirm__email > form > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+.confirm__email > form > div > span {
+  border-bottom: 2px solid lightgray;
+  flex: 1;
+}
+.confirm__email > form > div > h1 {
+  margin: 0 10px;
+}
+.confirm__email > form > a {
+  align-self: flex-end;
+  margin: 5px 0;
+  color: cornflowerblue;
+}
+.confirm__email > form > p {
+  text-align: center;
+  margin: 5px 0;
+  color: red;
+  font-size: 0.9rem;
+}
