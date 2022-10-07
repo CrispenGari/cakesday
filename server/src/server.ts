@@ -69,6 +69,7 @@ const PORT: any = process.env.PORT || 3001;
   server.applyMiddleware({
     app,
     path: "/",
+    cors: false,
   });
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve)

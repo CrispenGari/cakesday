@@ -1,0 +1,9 @@
+query User {
+  user {
+    username
+    _id
+    email
+    isLoggedIn
+    confirmed
+  }
+}

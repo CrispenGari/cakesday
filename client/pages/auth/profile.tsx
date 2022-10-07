@@ -13,21 +13,15 @@ const Profile: React.FC<Props> = ({}) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    router.replace("/auth/confirm-email");
+    router.replace("/");
   };
   return (
-    <div className={styles.confirm__email}>
+    <div className={styles.profile}>
       <form onSubmit={onSubmit}>
-        <h1>Confirm Email</h1>
-        <input
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          type="text"
-          placeholder="000-000"
-        />
-        <p>Error</p>
-        <Link href={"/auth/forgot-password"}>Did not receive the code?</Link>
-        <Button>Confirm</Button>
+        <h1>Profile</h1>
+        {/* profile picture */}
+        {/* Banner */}
+        <Button type="submit">Next</Button>
         <div>
           <span></span>
           <h1>Already Have an Account?</h1>

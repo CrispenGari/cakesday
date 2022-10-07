@@ -32,6 +32,6 @@ export const createRefreshToken = (user: User): string => {
 export const storeRefreshToken = (res: Response, token: string): void => {
   res.cookie(__cookieName__, token, {
     httpOnly: true,
-    path: "/refresh-token",
+    // path: "/refresh-token",
   });
 };

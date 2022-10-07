@@ -1,23 +1,31 @@
 import { Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
-import { Emoji } from "../components";
-
-import { emotions } from "../constants";
+import { useEffect, useRef, useState } from "react";
+import { Emoji, Loading } from "../components";
+import { emotions, __server__base__url__ } from "../constants";
+import { useHelloWorldQuery, useUserQuery } from "../graphql/generated/graphql";
+import { setAccessToken } from "../state";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const divRef = useRef<any>();
-
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const { loading: l, data } = useUserQuery({
+    fetchPolicy: "network-only",
+  });
   useEffect(() => {
-    console.log(divRef.current?.width);
-  }, []);
+    setLoading(l);
+  }, [l]);
+  console.log(data);
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className={styles.home}>
-      <div className={styles.home__left} ref={divRef}>
+      <div className={styles.home__left}>
         <h1>CakeDay</h1>
         {emotions.map(({ code, name }) => (
           <Emoji

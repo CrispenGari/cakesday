@@ -12,7 +12,6 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     router.replace("/auth/more-info");
   };
   return (
@@ -27,7 +26,7 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
         />
         <p>Error</p>
         <Link href={"/auth/forgot-password"}>Did not receive the code?</Link>
-        <Button>Confirm</Button>
+        <Button type="submit">Confirm</Button>
         <div>
           <span></span>
           <h1>Already Have an Account?</h1>

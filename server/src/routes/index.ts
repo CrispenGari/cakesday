@@ -10,7 +10,7 @@ import {
 
 const router: Router = Router();
 
-router.post("/aa", async (req: Request, res: Response) => {
+router.post("/refresh-token", async (req: Request, res: Response) => {
   const token = req.cookies[__cookieName__];
   if (!token) {
     return res.status(401).send({
@@ -22,12 +22,7 @@ router.post("/aa", async (req: Request, res: Response) => {
   }
   let payload: any = null;
   try {
-    let tokenToVerify: string = String(token)
-      .toLocaleLowerCase()
-      .includes("Bearer")
-      ? token.split(" ")[1]
-      : token;
-    payload = jwt.verify(tokenToVerify, process.env.REFRESH_TOKEN_SECRETE);
+    payload = jwt.verify(token, process.env.REFRESH_TOKEN_SECRETE);
   } catch (error) {
     console.error(error);
     return res.status(403).send({
@@ -38,12 +33,7 @@ router.post("/aa", async (req: Request, res: Response) => {
     });
   }
 
-  const user = await User.findOne({
-    where: {
-      _id: payload.userId,
-    },
-  });
-
+  const user = await User.findOne(payload.userId);
   if (!user) {
     return res.status(403).send({
       code: 403,
@@ -52,7 +42,6 @@ router.post("/aa", async (req: Request, res: Response) => {
       accessToken: "",
     });
   }
-
   if (user.tokenVersion !== payload.tokenVersion) {
     return res.status(403).send({
       code: 403,
