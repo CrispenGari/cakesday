@@ -12,6 +12,7 @@ import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/SignUp.module.css";
+import { setAccessToken } from "../../state";
 interface Props {}
 const SignUp: React.FC<Props> = ({}) => {
   const [username, setUsername] = useState<string>("");
@@ -50,7 +51,8 @@ const SignUp: React.FC<Props> = ({}) => {
       setError(data.signUp.error.message);
     } else {
       setError("");
-      // router.replace("/auth/confirm-email");
+      setAccessToken(data?.signUp.accessToken ?? "");
+      //  router.replace("/auth/confirm-email");
     }
   }, [data, loading]);
   console.log(loading, data);

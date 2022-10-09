@@ -28,11 +28,21 @@ export class SignInResolver {
 
     if (!user)
       if (!user) {
-        throw new Error("invalid username or email");
+        return {
+          error: {
+            field: "usernameOrEmail",
+            message: "invalid username or email.",
+          },
+        };
       }
     const valid: boolean = await verify(user.password, password);
     if (!valid) {
-      throw new Error("invalid password");
+      return {
+        error: {
+          field: "password",
+          message: "invalid password.",
+        },
+      };
     }
 
     storeRefreshToken(res, createRefreshToken(user));
