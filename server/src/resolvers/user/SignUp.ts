@@ -22,6 +22,7 @@ import {
 } from "../../utils/regex";
 import { sendEmail } from "../../utils";
 import { verificationCodeEmailTemplate } from "../../templates";
+import { generateVerificationCode } from "@crispengari/random-verification-codes/lib";
 
 @Resolver()
 export class SignUpResolver {
@@ -81,8 +82,11 @@ export class SignUpResolver {
       email,
     }).save();
     // send the verification email
-    const verificationCode: string = "123456";
-
+    const verificationCode: string = (await generateVerificationCode(
+      6,
+      false,
+      true
+    )) as string;
     const token: string = __confirm__email__prefix + username;
     await redis.setex(token, __maxVerificationAge__, verificationCode);
     await sendEmail(

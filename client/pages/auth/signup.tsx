@@ -52,7 +52,6 @@ const SignUp: React.FC<Props> = ({}) => {
     } else {
       setError("");
       setAccessToken(data?.signUp.accessToken ?? "");
-      //  ;
       if (data?.signUp.accessToken) {
         router.replace("/auth/confirm-email");
       }

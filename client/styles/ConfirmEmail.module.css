@@ -35,14 +35,18 @@
 .confirm__email > form > div > h1 {
   margin: 0 10px;
 }
-.confirm__email > form > a {
+.confirm__email > form > p.confirm__email__clickable {
   align-self: flex-end;
   margin: 5px 0;
   color: cornflowerblue;
+  cursor: pointer;
 }
-.confirm__email > form > p {
+.confirm__email > form > p.confirm__email__error {
   text-align: center;
   margin: 5px 0;
   color: red;
   font-size: 0.9rem;
+}
+.confirm__email > form > p {
+  text-align: center;
 }

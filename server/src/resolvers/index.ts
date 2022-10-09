@@ -5,6 +5,7 @@ import { SignInResolver } from "./user/SignIn";
 import { SignOutResolver } from "./user/SignOut";
 import { SignUpResolver } from "./user/SignUp";
 import { UserResolver } from "./user/User";
+import { VerifyEmailResolver } from "./user/VerifyEmail";
 
 export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   HelloWorldResolver,
@@ -13,4 +14,5 @@ export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   SignOutResolver,
   SignInResolver,
   UserResolver,
+  VerifyEmailResolver,
 ];

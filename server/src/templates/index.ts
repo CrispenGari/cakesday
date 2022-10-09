@@ -9,6 +9,7 @@ export const verificationCodeEmailTemplate = (
   <p>We have a new account creation request at your email (${user.email}). If you intent to join CakesDay social application please verify your email.</p>
   <p>The verification code is:</p>
   <h4>${verificationCode}</h4>
+  <p><em>Note: This code will be valid for an hour.</em></p>
   <p>Regards</p>
   <p>CakesDay Team</p>
 `;

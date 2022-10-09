@@ -8,26 +8,23 @@ import "react-datepicker/dist/react-datepicker.css";
 interface Props {}
 
 const MoreInfo: React.FC<Props> = ({}) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [bday, setBday] = useState(new Date());
   const [gender, setGender] = useState("male");
   const [bio, setBio] = useState("");
   const router = useRouter();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(gender, bio, bday.toLocaleDateString());
     // alert(startDate.toLocaleDateString());
-    router.replace("/auth/profile");
+    // router.replace("/auth/profile");
   };
   return (
     <div className={styles.more__info}>
       <form onSubmit={onSubmit}>
         <h1>More Info</h1>
         <p>Date of birth</p>
-        <DatePicker
-          selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
-        />
+        <DatePicker selected={bday} onChange={(date: Date) => setBday(date)} />
         <p>Bio</p>
         <textarea
           placeholder="bio"
