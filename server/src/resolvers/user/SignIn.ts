@@ -44,9 +44,9 @@ export class SignInResolver {
         },
       };
     }
-
+    user.isLoggedIn = true;
+    await user.save();
     storeRefreshToken(res, createRefreshToken(user));
-
     return {
       user,
       accessToken: createAccessToken(user),

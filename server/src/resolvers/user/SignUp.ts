@@ -20,12 +20,14 @@ import {
   isValidPassword,
   isValidUsername,
 } from "../../utils/regex";
+import { sendEmail } from "../../utils";
+import { verificationCodeEmailTemplate } from "../../templates";
 
 @Resolver()
 export class SignUpResolver {
   @Mutation(() => SignUpObjectType)
   async signUp(
-    @Ctx() { res }: ContextType,
+    @Ctx() { res, redis }: ContextType,
     @Arg("input", () => SignUpInput)
     { email, password, username }: SignUpInput
   ): Promise<SignUpObjectType> {
@@ -78,7 +80,16 @@ export class SignUpResolver {
       username,
       email,
     }).save();
+    // send the verification email
+    const verificationCode: string = "123456";
 
+    const token: string = __confirm__email__prefix + username;
+    await redis.setex(token, __maxVerificationAge__, verificationCode);
+    await sendEmail(
+      email,
+      verificationCodeEmailTemplate(verificationCode, user),
+      "Account Creation Confirmation Code - CakesDay"
+    );
     storeRefreshToken(res, createRefreshToken(user));
     return {
       user,

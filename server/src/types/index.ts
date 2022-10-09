@@ -1,7 +1,9 @@
 import express from "express";
+import Redis from "ioredis";
 export interface ContextType {
   req: express.Request;
   res: express.Response;
+  redis: Redis;
 }
 
 export enum NotificationType {

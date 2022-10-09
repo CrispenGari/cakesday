@@ -15,6 +15,7 @@ import cors from "cors";
 import router from "./routes";
 import cookieParser from "cookie-parser";
 import { dataSource } from "./db";
+import Redis from "ioredis";
 
 _();
 const PORT: any = process.env.PORT || 3001;
@@ -24,6 +25,7 @@ const PORT: any = process.env.PORT || 3001;
     .initialize()
     .then(() => {})
     .catch((error) => console.log(error));
+  const redis = new Redis();
   const schema = await buildSchema({
     resolvers: [...Resolvers],
     validate: false,
@@ -49,6 +51,7 @@ const PORT: any = process.env.PORT || 3001;
     context: ({ req, res }) => ({
       req,
       res,
+      redis,
     }),
     plugins: [
       {

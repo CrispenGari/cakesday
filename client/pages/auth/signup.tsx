@@ -52,9 +52,12 @@ const SignUp: React.FC<Props> = ({}) => {
     } else {
       setError("");
       setAccessToken(data?.signUp.accessToken ?? "");
-      //  router.replace("/auth/confirm-email");
+      //  ;
+      if (data?.signUp.accessToken) {
+        router.replace("/auth/confirm-email");
+      }
     }
-  }, [data, loading]);
+  }, [data, loading, router]);
   console.log(loading, data);
   return (
     <div className={styles.signup}>

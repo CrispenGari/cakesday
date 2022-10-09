@@ -1,22 +1,19 @@
-version: "3.9" # latest version of docker compose (optional)
+version: "3.9"
 services:
-  expressapi:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - "3003:3003"
-    container_name: expressapi
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-    environment:
-      - MONGO_CONNECTION_STRING=mongodb://mongodb:27017
-  mongodb:
-    image: mongo
-    ports:
-      - "27017:27017"
-    container_name: mongodb
+  redis:
+    image: redis:6.2.7-alpine
+    container_name: rediscontainer
     volumes:
-      - ./db/:/data/db
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    expose:
+      - 6379
+    networks:
+      - internalnet
+networks:
+  internalnet:
+    driver: bridge
+volumes:
+  redis_data:
+    external: false
