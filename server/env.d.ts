@@ -6,6 +6,9 @@
 			ACCESS_TOKEN_SECRETE : string;
 			NODEMAILER_USER : string;
 			NODEMAILER_PASSWORD : string;
+			CLOUDNARY_CLOUD_NAME : string;
+			CLOUDNARY_API_KEY : string;
+			CLOUDNARY_API_SECRET : string;
 
     }
   }

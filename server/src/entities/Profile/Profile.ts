@@ -29,14 +29,14 @@ export class Profile extends BaseEntity {
   gender: string;
 
   @Field(() => String)
-  @Column({ nullable: true, type: "date" })
-  bday: Date;
+  @Column({ nullable: true, type: "text" })
+  bday: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true, type: "text" })
   bio: string;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: false })
   @Column({ nullable: false, default: false })
   verified: false | true;
 }

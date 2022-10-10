@@ -8,6 +8,8 @@ export const createAccessToken = (user: User): string => {
     {
       userId: user._id,
       tokenVersion: user.tokenVersion,
+      username: user.username,
+      email: user.email,
     },
     process.env.ACCESS_TOKEN_SECRETE!,
     {
@@ -30,6 +32,8 @@ export const createRefreshToken = (user: User): string => {
 };
 
 export const storeRefreshToken = (res: Response, token: string): void => {
+  // Invalidate old tokens
+
   res.cookie(__cookieName__, token, {
     httpOnly: true,
   });

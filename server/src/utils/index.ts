@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import { User } from "../entities/User/User";
+import { cloudinary } from "../cloudinary";
 export const sendEmail = async (to: string, html: string, subject: string) => {
   // let testAccount = await nodemailer.createTestAccount();
 
@@ -20,4 +22,20 @@ export const sendEmail = async (to: string, html: string, subject: string) => {
   });
   console.log("Message sent: %s", info.messageId);
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+};
+
+export const getDownloadURL = async (
+  data: string,
+  user: User
+): Promise<string | undefined> => {
+  try {
+    const { url } = await cloudinary.uploader.upload(data, {
+      public_id: user.username,
+      upload_preset: process.env.CLOUDNARY_UPLOAD_PRESET, // the folder we are uploading
+    });
+    return url;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
 };

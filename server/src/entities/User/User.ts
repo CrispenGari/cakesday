@@ -63,13 +63,13 @@ export class User extends BaseEntity {
   /** Relations between the user and other entities */
   // Profile
   @Field(() => Profile, { nullable: true })
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, {eager: true})
   @JoinColumn()
   profile: Profile;
 
   // Settings
   @Field(() => Settings, { nullable: true })
-  @OneToOne(() => Settings)
+  @OneToOne(() => Settings, {eager: true})
   @JoinColumn()
   settings: Settings;
   // Friends
