@@ -10,12 +10,12 @@ import { UpdateProfileObjectType } from "./ObjectTypes/UpdateProfileObjectType";
 import { ProfileInput } from "./InputTypes/UpdateProfileInput";
 import jwt from "jsonwebtoken";
 import { Profile } from "../../entities/Profile/Profile";
-import { getDownloadURL } from "src/utils";
+import { getDownloadURL } from "../../utils";
 
 @Resolver()
 export class UpdateProfileResolver {
   @Mutation(() => UpdateProfileObjectType)
-  async updateAvatar(
+  async updateAvatarOrBanner(
     @Arg("input", () => ProfileInput)
     { banner, avatar, accessToken }: ProfileInput,
     @Ctx() { res }: ContextType

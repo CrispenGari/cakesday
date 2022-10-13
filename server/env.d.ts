@@ -9,6 +9,7 @@
 			CLOUDNARY_CLOUD_NAME : string;
 			CLOUDNARY_API_KEY : string;
 			CLOUDNARY_API_SECRET : string;
+			CLOUDNARY_UPLOAD_PRESET : string;
 
     }
   }

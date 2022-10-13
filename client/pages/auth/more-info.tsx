@@ -1,9 +1,11 @@
 import { Button, Select } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/MoreInfo.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useUpdateProfileMutation } from "../../graphql/generated/graphql";
+import { getAccessToken } from "../../state";
 
 interface Props {}
 
@@ -11,14 +13,32 @@ const MoreInfo: React.FC<Props> = ({}) => {
   const [bday, setBday] = useState(new Date());
   const [gender, setGender] = useState("male");
   const [bio, setBio] = useState("");
+  const [updateProfile, { data, loading }] = useUpdateProfileMutation({
+    fetchPolicy: "network-only",
+  });
   const router = useRouter();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(gender, bio, bday.toLocaleDateString());
     // alert(startDate.toLocaleDateString());
-    // router.replace("/auth/profile");
+    await updateProfile({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          gender,
+          bday: bday.toLocaleDateString(),
+          bio,
+        },
+      },
+    });
   };
+
+  useEffect(() => {
+    if (data?.updateProfile.accessToken) {
+      router.replace("/auth/profile");
+    }
+  }, [data, router]);
   return (
     <div className={styles.more__info}>
       <form onSubmit={onSubmit}>
