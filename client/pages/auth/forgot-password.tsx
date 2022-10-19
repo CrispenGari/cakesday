@@ -1,36 +1,72 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/ForgotPassword.module.css";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { useRequestChangePasswordEmailMutation } from "../../graphql/generated/graphql";
 interface Props {}
 
 const ForgotPassword: React.FC<Props> = ({}) => {
-  const [code, setCode] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [sendEmail, { data, loading }] = useRequestChangePasswordEmailMutation({
+    fetchPolicy: "network-only",
+  });
   const router = useRouter();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    router.replace("/auth/confirm-email");
+    await sendEmail({
+      variables: {
+        input: {
+          email: email.trim().toLowerCase(),
+        },
+      },
+    });
   };
+
+  useEffect(() => {
+    if (data?.sendForgotPasswordEmail.message) {
+      setError(data.sendForgotPasswordEmail.message.message);
+    }
+  }, [data]);
   return (
-    <div className={styles.confirm__email}>
+    <div className={styles.forgot__password}>
       <form onSubmit={onSubmit}>
-        <h1>Confirm Email</h1>
-        <input
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          type="text"
-          placeholder="000-000"
-        />
-        <p>Error</p>
-        <Link href={"/auth/forgot-password"}>Did not receive the code?</Link>
-        <Button>Confirm</Button>
+        <h1>Reset Password</h1>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<MdOutlineMailOutline color="gray" />}
+          />
+          <Input
+            isInvalid={data?.sendForgotPasswordEmail?.success === false}
+            type="email"
+            placeholder="account email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </InputGroup>
+        <p className={styles.forgot__password__error}>{error}</p>
+        <p
+          className={styles.forgot__password__clickable}
+          onClick={async () => {
+            await sendEmail({
+              variables: {
+                input: {
+                  email: email.trim().toLowerCase(),
+                },
+              },
+            });
+          }}
+        >
+          Did not receive the email?
+        </p>
+        <Button type="submit">Request Reset Link</Button>
         <div>
           <span></span>
-          <h1>Already Have an Account?</h1>
+          <h1>I remember the password?</h1>
           <span></span>
         </div>
         <Button onClick={() => router.push("/auth/signin")}>Sign In</Button>

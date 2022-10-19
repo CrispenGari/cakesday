@@ -10,7 +10,6 @@ const Welcome: React.FC<Props> = ({}) => {
     <div className={styles.welcome}>
       <div className={styles.welcome__left}>
         <h1>CakeDay</h1>
-        <Emoji emojiId="react@emojify-10" />
         <p>
           Welcome to our application where you get to celebrate your birthdays
           with your loved fiends and family.
