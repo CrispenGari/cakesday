@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/Profile.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import { getBase64 } from "../../utils";
-import Image from "next/image";
 import { useUpdateProfileOrBannerMutation } from "../../graphql/generated/graphql";
-import { getAccessToken } from "../../state";
+import { getAccessToken, setAccessToken } from "../../state";
+import { AiOutlineCamera } from "react-icons/ai";
+import { Avatar } from "@chakra-ui/react";
 interface Props {}
 
 const Profile: React.FC<Props> = ({}) => {
   const [banner, setBanner] = useState<string>("");
+  const [accessToken, setAT] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [profileImage, setProfileImage] = useState<string>("");
   const [updateProfile, { data, loading: l }] =
     useUpdateProfileOrBannerMutation({ fetchPolicy: "network-only" });
@@ -24,8 +27,8 @@ const Profile: React.FC<Props> = ({}) => {
       variables: {
         input: {
           accessToken: getAccessToken() as any,
-          banner: profileImage,
-          avatar: profileImage,
+          banner: banner ?? undefined,
+          avatar: profileImage ?? undefined,
         },
       },
     });
@@ -33,12 +36,17 @@ const Profile: React.FC<Props> = ({}) => {
     // router.replace("/");
   };
 
-  console.log(data);
-  const handleFileChange = async (file: any) => {
+  useEffect(() => {
+    console.log(getAccessToken());
+  }, []);
+
+  const handleFileChange = async (file: any, field: "banner" | "avatar") => {
     if (file) {
       setLoading(true);
       const _file = await getBase64(file);
-      setProfileImage(_file as any);
+      field === "avatar"
+        ? setProfileImage(_file as any)
+        : setBanner(_file as any);
       setLoading(false);
     }
   };
@@ -46,32 +54,55 @@ const Profile: React.FC<Props> = ({}) => {
   useEffect(() => {
     setLoading(l);
   }, [l]);
+
+  useEffect(() => {
+    if (!loading && data?.updateAvatarOrBanner.error) {
+      setError(data.updateAvatarOrBanner.error.message);
+    } else {
+      setAccessToken(data?.updateAvatarOrBanner.accessToken ?? "");
+      setError("");
+      if (data?.updateAvatarOrBanner.accessToken) {
+        router.replace("/");
+      }
+    }
+  }, [data, loading, router]);
   return (
     <div className={styles.profile}>
       <form onSubmit={onSubmit}>
         <h1>Profile</h1>
         <div
           className={styles.profile__preview}
-          style={{ backgroundImage: `url(${profileImage})` }}
+          style={{ backgroundImage: `url(${banner})` }}
         >
-          <div className={styles.profile__image}>
-            <Image
-              alt="user-avatar"
+          <div className={styles.profile__image__container}>
+            <Avatar
+              className={styles.profile__image}
+              name="Profile Image"
               src={profileImage}
-              layout="fill"
-              style={{
-                borderRadius: "50%",
-              }}
+              background="lightgray"
+            />
+
+            <div>
+              <FileUploader
+                handleChange={(files: any) => handleFileChange(files, "avatar")}
+                name="file"
+                types={["jpeg", "png", "jpg", "webp", "gif"]}
+                multiple={false}
+                children={<AiOutlineCamera />}
+              />
+            </div>
+          </div>
+          <div className={styles.profile__preview__banner__btn}>
+            <FileUploader
+              handleChange={(files: any) => handleFileChange(files, "banner")}
+              name="file"
+              types={["jpeg", "png", "jpg", "webp", "gif"]}
+              multiple={false}
+              children={<AiOutlineCamera />}
             />
           </div>
         </div>
-
-        <FileUploader
-          handleChange={(files: any) => handleFileChange(files)}
-          name="file"
-          types={["jpeg", "png", "jpg", "webp", "gif"]}
-          multiple={false}
-        />
+        <p>{error}</p>
         <Button type="submit" isLoading={loading}>
           Next
         </Button>
