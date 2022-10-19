@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import styles from "./Welcome.module.css";
+import { Emoji } from "@crispengari/react-emojify";
 interface Props {}
 const Welcome: React.FC<Props> = ({}) => {
   const router = useRouter();
@@ -9,7 +10,7 @@ const Welcome: React.FC<Props> = ({}) => {
     <div className={styles.welcome}>
       <div className={styles.welcome__left}>
         <h1>CakeDay</h1>
-
+        <Emoji emojiId="react@emojify-10" />
         <p>
           Welcome to our application where you get to celebrate your birthdays
           with your loved fiends and family.

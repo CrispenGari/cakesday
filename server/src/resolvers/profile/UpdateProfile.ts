@@ -35,6 +35,7 @@ export class UpdateProfileResolver {
       where: { email: payload.email },
       relations: ["profile"],
     });
+    console.log("User.....", user);
     if (!user) {
       return {
         error: {

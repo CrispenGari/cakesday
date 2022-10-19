@@ -5,5 +5,21 @@ query User {
     email
     isLoggedIn
     confirmed
+    createdAt
+    updatedAt
+    settings {
+      _id
+      theme
+    }
+    profile {
+      _id
+      email
+      username
+      photoURL
+      bannerURL
+      bio
+      bday
+      verified
+    }
   }
 }

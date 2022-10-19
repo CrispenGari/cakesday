@@ -1296,6 +1296,11 @@
   resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-2.0.11.tgz#b2eb236e803451b39cdfcce3c5ab52e773c066a3"
   integrity sha512-e+5amYvnsmEQdiWH4XMyvrtGTdwz//+48vwj5CsNWWcselzkwqodmciy5rIrT71/SCQDOtmgnL7ZWAUOffxfsQ==
 
+"@crispengari/react-emojify@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@crispengari/react-emojify/-/react-emojify-0.1.0.tgz#5de9db8b25280f8bf83ac356cdf54f28ef952a39"
+  integrity sha512-kwcMmgbUF5dDvYoKV3a46rQnvVhsQ2EgChvB4dU/sSzAYpQt0MzXPWubE5mJmFVKha7WzEmS/RgbwmzzC/Ty4g==
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"

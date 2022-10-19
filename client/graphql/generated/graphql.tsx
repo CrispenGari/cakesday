@@ -235,7 +235,7 @@ export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, _id: string, email: string, isLoggedIn: boolean, confirmed: boolean } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, _id: string, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', _id: string, theme?: string | null } | null, profile?: { __typename?: 'Profile', _id: string, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null } | null } | null };
 
 
 export const ResendVerificatinCodeDocument = gql`
@@ -576,6 +576,22 @@ export const UserDocument = gql`
     email
     isLoggedIn
     confirmed
+    createdAt
+    updatedAt
+    settings {
+      _id
+      theme
+    }
+    profile {
+      _id
+      email
+      username
+      photoURL
+      bannerURL
+      bio
+      bday
+      verified
+    }
   }
 }
     `;
