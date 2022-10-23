@@ -1,0 +1,25 @@
+.header__icon__btn {
+  display: flex;
+  user-select: none;
+  user-zoom: none;
+  width: 70px;
+  transition: all 1s;
+  flex-direction: column;
+  cursor: pointer;
+  justify-content: center;
+  margin: 0px 3px;
+  align-items: center;
+  padding: 5px 0;
+  border-radius: 5px;
+}
+.header__icon__btn > h1 {
+  color: white;
+  font-size: 0.7rem !important;
+}
+.header__icon__btn__icon {
+  color: white;
+  font-size: 1.5rem;
+}
+.header__icon__btn:hover {
+  background-color: var(--color-purple);
+}

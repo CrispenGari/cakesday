@@ -5,8 +5,8 @@ const H = () => (
     <meta charSet="UTF-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cake Day</title>
-    {/* <link rel="shortcut icon" href="/mnist.png" type="image/x-icon" /> */}
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>cakesday</title>
   </Head>
 );
 
