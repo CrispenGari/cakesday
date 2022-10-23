@@ -1,10 +1,17 @@
-import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  Button,
+  Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/ForgotPassword.module.css";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { useRequestChangePasswordEmailMutation } from "../../graphql/generated/graphql";
+import { Footer } from "../../components";
 interface Props {}
 
 const ForgotPassword: React.FC<Props> = ({}) => {
@@ -34,6 +41,7 @@ const ForgotPassword: React.FC<Props> = ({}) => {
   return (
     <div className={styles.forgot__password}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Reset Password</h1>
         <InputGroup>
           <InputLeftElement
@@ -71,6 +79,7 @@ const ForgotPassword: React.FC<Props> = ({}) => {
         </div>
         <Button onClick={() => router.push("/auth/signin")}>Sign In</Button>
       </form>
+      <Footer />
     </div>
   );
 };

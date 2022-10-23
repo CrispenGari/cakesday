@@ -4,6 +4,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/SignUp.module.css";
 import { setAccessToken } from "../../state";
+import { Footer } from "../../components";
 interface Props {}
 const SignUp: React.FC<Props> = ({}) => {
   const [username, setUsername] = useState<string>("");
@@ -61,6 +63,7 @@ const SignUp: React.FC<Props> = ({}) => {
   return (
     <div className={styles.signup}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Sign Up</h1>
         <InputGroup>
           <InputLeftElement
@@ -158,6 +161,7 @@ const SignUp: React.FC<Props> = ({}) => {
           Sign In
         </Button>
       </form>
+      <Footer />
     </div>
   );
 };

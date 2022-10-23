@@ -4,6 +4,7 @@ export { default as Welcome } from "./Welcome/Welcome";
 export { default as Feed } from "./Feed/Feed";
 export { default as Header } from "./Header/Header";
 export { default as Main } from "./Main/Main";
+export { default as Footer } from "./Footer/Footer";
 export { default as SideBarRight } from "./SideBarRight/SideBarRight";
 export { default as SideBarLeft } from "./SideBarLeft/SideBarLeft";
 export { default as HeaderIconButton } from "./HeaderIconButton/HeaderIconButton";

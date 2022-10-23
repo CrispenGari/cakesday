@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Image } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/Profile.module.css";
@@ -8,6 +8,7 @@ import { useUpdateProfileOrBannerMutation } from "../../graphql/generated/graphq
 import { getAccessToken, setAccessToken } from "../../state";
 import { AiOutlineCamera } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/react";
+import { Footer } from "../../components";
 interface Props {}
 
 const Profile: React.FC<Props> = ({}) => {
@@ -69,6 +70,7 @@ const Profile: React.FC<Props> = ({}) => {
   return (
     <div className={styles.profile}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Profile</h1>
         <div
           className={styles.profile__preview}
@@ -115,6 +117,7 @@ const Profile: React.FC<Props> = ({}) => {
           Sign In
         </Button>
       </form>
+      <Footer />
     </div>
   );
 };
