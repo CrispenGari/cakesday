@@ -1,4 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -8,6 +14,8 @@ import {
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
 import styles from "../../styles/ConfirmEmail.module.css";
+import { BiCheck } from "react-icons/bi";
+import { Footer } from "../../components";
 interface Props {}
 
 const ConfirmEmail: React.FC<Props> = ({}) => {
@@ -63,18 +71,26 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
   return (
     <div className={styles.confirm__email}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Confirm Email</h1>
         <p>
           {data2?.resendVerificationCode
             ? "The verification code has been resent to your email."
             : "The email for the confirmation code has been sent to your email address."}
         </p>
-        <input
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          type="text"
-          placeholder="000-000"
-        />
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<BiCheck color="gray" />}
+          />
+          <Input
+            isInvalid={!!error}
+            type="text"
+            placeholder="0 0 0 - 0 0 0"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </InputGroup>
         <p className={styles.confirm__email__error}>{error}</p>
         <p onClick={resendCode} className={styles.confirm__email__clickable}>
           Did not receive the code?
@@ -91,6 +107,7 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
           Sign In
         </Button>
       </form>
+      <Footer />
     </div>
   );
 };

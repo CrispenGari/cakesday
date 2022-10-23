@@ -1,0 +1,47 @@
+.not__found {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  user-select: none;
+  user-zoom: none;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+.not__found__main > div > img {
+  -webkit-user-drag: none;
+  width: 100px;
+  position: relative;
+  animation: bounce 2s ease 500ms infinite alternate;
+}
+.not__found__main > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.not__found__main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+.not__found__main > div > h1 {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.not__found__main > div > a {
+  color: var(--main-color);
+  font-weight: 500;
+  margin: 20px auto;
+}
+
+@keyframes bounce {
+  from {
+    top: 0;
+  }
+  to {
+    top: -100px;
+  }
+}

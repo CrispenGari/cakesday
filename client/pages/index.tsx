@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.home}>{!data?.user ? <Feed /> : <Welcome />}</div>
+    <div className={styles.home}>{data?.user ? <Feed /> : <Welcome />}</div>
   );
 };
 

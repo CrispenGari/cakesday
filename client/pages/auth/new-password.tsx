@@ -4,6 +4,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/NewPassword.module.css";
 import { setAccessToken } from "../../state";
 import { useChangePasswordMutation } from "../../graphql/generated/graphql";
+import { Footer } from "../../components";
 interface Props {}
 const NewPassword: React.FC<Props> = ({}) => {
   const [show1, setShow1] = useState<boolean>(false);
@@ -56,6 +58,7 @@ const NewPassword: React.FC<Props> = ({}) => {
   return (
     <div className={styles.new__password}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Change Account Password</h1>
         <InputGroup>
           <InputLeftElement
@@ -126,6 +129,7 @@ const NewPassword: React.FC<Props> = ({}) => {
           Sign In
         </Button>
       </form>
+      <Footer />
     </div>
   );
 };

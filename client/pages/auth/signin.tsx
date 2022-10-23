@@ -1,5 +1,6 @@
 import {
   Button,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -10,7 +11,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
-import { Loading } from "../../components";
+import { Footer, Loading } from "../../components";
 import {
   useSignInMutation,
   useUserQuery,
@@ -68,6 +69,7 @@ const SignIn: React.FC<Props> = ({}) => {
   return (
     <div className={styles.signin}>
       <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
         <h1>Sign In</h1>
         <InputGroup>
           <InputLeftElement
@@ -128,6 +130,7 @@ const SignIn: React.FC<Props> = ({}) => {
           Sign Up
         </Button>
       </form>
+      <Footer />
     </div>
   );
 };
