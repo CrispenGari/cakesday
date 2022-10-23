@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Feed, Loading, Welcome } from "../components";
 import { __server__base__url__ } from "../constants";
@@ -9,7 +8,6 @@ import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetch(`${__server__base__url__}/refresh-token`, {
       method: "POST",
@@ -35,7 +33,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.home}>{data?.user ? <Feed /> : <Welcome />}</div>
+    <div className={styles.home}>{!data?.user ? <Feed /> : <Welcome />}</div>
   );
 };
 

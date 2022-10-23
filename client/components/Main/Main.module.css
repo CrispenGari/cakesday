@@ -1,0 +1,20 @@
+.main {
+  flex: 0.6;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.main::-webkit-scrollbar {
+  width: 5px;
+}
+.main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.main::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+}
+.main::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple);
+  cursor: pointer;
+}

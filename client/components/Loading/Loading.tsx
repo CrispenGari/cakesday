@@ -4,12 +4,7 @@ interface Props {}
 const Loading: React.FC<Props> = ({}) => {
   return (
     <div className={styles.loading}>
-      <h1>
-        Loading<span>.</span>
-        <span>.</span>
-        <span>.</span>
-        <span>.</span>
-      </h1>
+      <div></div>
     </div>
   );
 };

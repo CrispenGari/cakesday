@@ -1,0 +1,38 @@
+.sidebar__right {
+  flex: 0.2;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px;
+  user-select: none;
+  user-zoom: none;
+}
+.sidebar__right__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar__right__top > h1 {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.sidebar__right__top > h2 {
+  color: gray;
+  margin: 10px auto;
+  font-size: 0.7rem;
+}
+.sidebar__right__top__avatar {
+  width: 150px !important;
+  height: 150px !important;
+  margin: 10px 0 !important
+  ;
+}
+.sidebar__right__top > button {
+  width: 100%;
+  background-color: var(--color-purple);
+  color: white;
+}
+.sidebar__right > button {
+  background-color: var(--main-color);
+  color: white;
+}

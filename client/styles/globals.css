@@ -2,10 +2,11 @@ html,
 body {
   padding: 0;
   margin: 0;
-  --main-color: #e4717d;
-  --color-gray: #c2c8ce;
-  --color-brown: #7e695b;
-  --color-green: #aed374;
+  --main-color: #034c65;
+  --color-pink: #ef8c86;
+  --color-brown: #2f1f2b;
+  --color-purple: #685268;
+  --color-orange: #fcb677;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }

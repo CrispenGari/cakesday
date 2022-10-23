@@ -10,7 +10,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
-import { useSignInMutation } from "../../graphql/generated/graphql";
+import { Loading } from "../../components";
+import {
+  useSignInMutation,
+  useUserQuery,
+} from "../../graphql/generated/graphql";
 import { setAccessToken } from "../../state";
 import styles from "../../styles/SignIn.module.css";
 interface Props {}
@@ -19,10 +23,10 @@ const SignIn: React.FC<Props> = ({}) => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
-
-  const [signInHandler, { loading, data }] = useSignInMutation({
+  const [signInHandler, { loading: submitting, data }] = useSignInMutation({
     fetchPolicy: "network-only",
   });
+  const { data: user, loading } = useUserQuery({ fetchPolicy: "network-only" });
 
   const router = useRouter();
 
@@ -40,7 +44,7 @@ const SignIn: React.FC<Props> = ({}) => {
   };
 
   useEffect(() => {
-    if (!loading && data?.signIn.error) {
+    if (!submitting && data?.signIn.error) {
       setError(data.signIn.error.message);
     } else {
       setAccessToken(data?.signIn.accessToken ?? "");
@@ -49,7 +53,18 @@ const SignIn: React.FC<Props> = ({}) => {
         router.replace("/");
       }
     }
-  }, [data, loading, router]);
+  }, [data, submitting, router]);
+  console.log(user);
+  useEffect(() => {
+    if (!loading && user?.user) {
+      if (user.user.isLoggedIn && user.user.confirmed) {
+        router.replace("/");
+      }
+    }
+  }, [loading, user, router]);
+
+  if (loading) return <Loading />;
+
   return (
     <div className={styles.signin}>
       <form onSubmit={onSubmit}>
@@ -98,7 +113,7 @@ const SignIn: React.FC<Props> = ({}) => {
 
         <p>{error}</p>
         <Link href={"/auth/forgot-password"}>Forgot Password?</Link>
-        <Button type="submit" isLoading={loading}>
+        <Button type="submit" isLoading={submitting}>
           Sign In
         </Button>
         <div>
@@ -106,7 +121,10 @@ const SignIn: React.FC<Props> = ({}) => {
           <h1>New to Cakesday?</h1>
           <span></span>
         </div>
-        <Button onClick={() => router.push("/auth/signup")} disabled={loading}>
+        <Button
+          onClick={() => router.push("/auth/signup")}
+          disabled={submitting}
+        >
           Sign Up
         </Button>
       </form>

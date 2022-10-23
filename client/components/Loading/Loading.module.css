@@ -1,40 +1,26 @@
 .loading {
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.loading > h1 {
-  font-size: 2rem;
-  color: white;
+
+.loading > div {
+  width: 40px;
+  height: 40px;
+  background-color: cornflowerblue;
+  border-radius: 50%;
+  animation: ripple 1.5s ease 0s infinite;
 }
 
-/* .loading > h1 > span {
-  animation: opacity 5s ease 1s infinite;
-} */
-.loading > h1 > span:nth-of-type(2) {
-  animation: opacity 2s ease 0s infinite;
-}
-.loading > h1 > span:nth-of-type(3) {
-  animation: opacity 1s ease 2s infinite;
-}
-.loading > h1 > span:nth-of-type(4) {
-  animation: opacity 1s ease 1s infinite;
-}
-
-@keyframes opacity {
+@keyframes ripple {
   from {
-    opacity: 0;
+    opacity: 1;
+    transform: scale(0);
   }
   to {
-    opacity: 1;
+    transform: scale(4);
+    opacity: 0;
   }
 }
