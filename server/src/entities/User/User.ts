@@ -10,7 +10,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Friend } from "../Friend/Friend";
+import { Follower } from "../Follower/Follower";
+import { Following } from "../Following/Following";
 import { Profile } from "../Profile/Profile";
 import { Settings } from "../Settings/Settings";
 
@@ -70,12 +71,20 @@ export class User extends BaseEntity {
   @OneToOne(() => Settings, { eager: true })
   @JoinColumn()
   settings: Settings;
-  // Friends
 
-  @Field(() => [Friend], { nullable: true })
-  @OneToMany(() => Friend, (friend) => friend.user, {
+  // Followers
+  @Field(() => [Follower], { nullable: true })
+  @OneToMany(() => Follower, (follower) => follower.user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })
-  friends: Friend[];
+  followers: Follower[];
+
+  // Followings
+  @Field(() => [Following], { nullable: true })
+  @OneToMany(() => Following, (following) => following.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  followings: Following[];
 }

@@ -1,6 +1,6 @@
 import { NonEmptyArray } from "type-graphql";
 import { CookieResolver } from "./auth/CookieResolver";
-import { AddFriendResolver } from "./friend/AddFriendResolver";
+import { FollowUserResolver } from "./friend/FollowUserResolver";
 import { HelloWorldResolver } from "./hello/HelloWorldResolver";
 import { UpdateProfileResolver } from "./profile/UpdateProfile";
 import { ChangePasswordResolver } from "./user/ChangePasswordResolver";
@@ -20,5 +20,5 @@ export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   VerifyEmailResolver,
   UpdateProfileResolver,
   ChangePasswordResolver,
-  AddFriendResolver,
+  FollowUserResolver,
 ];

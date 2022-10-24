@@ -1,0 +1,11 @@
+fragment ProfileFragment on Profile {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}

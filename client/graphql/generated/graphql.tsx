@@ -15,15 +15,6 @@ export type Scalars = {
   Float: number;
 };
 
-export type AddFriendInputType = {
-  username: Scalars['String'];
-};
-
-export type AddFriendObjectType = {
-  __typename?: 'AddFriendObjectType';
-  success: Scalars['Boolean'];
-};
-
 export type AuthError = {
   __typename?: 'AuthError';
   field: Scalars['String'];
@@ -43,8 +34,19 @@ export type ChangePasswordObjectType = {
   user?: Maybe<User>;
 };
 
-export type Friend = {
-  __typename?: 'Friend';
+export type FollowUserInputType = {
+  accessToken: Scalars['String'];
+  friendUsername: Scalars['String'];
+};
+
+export type FollowUserObjectType = {
+  __typename?: 'FollowUserObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
+export type Follower = {
+  __typename?: 'Follower';
   bannerURL?: Maybe<Scalars['String']>;
   bday: Scalars['String'];
   bio?: Maybe<Scalars['String']>;
@@ -53,7 +55,22 @@ export type Friend = {
   gender: Scalars['String'];
   id: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
-  profileId: Scalars['String'];
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
+export type Following = {
+  __typename?: 'Following';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
   updatedAt: Scalars['String'];
   user: User;
   username: Scalars['String'];
@@ -62,8 +79,8 @@ export type Friend = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addFriend: AddFriendObjectType;
   changePassword: ChangePasswordObjectType;
+  followUser: FollowUserObjectType;
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
   signIn: SignInObjectType;
@@ -75,13 +92,13 @@ export type Mutation = {
 };
 
 
-export type MutationAddFriendArgs = {
-  input: AddFriendInputType;
+export type MutationChangePasswordArgs = {
+  input: ChangePasswordInputType;
 };
 
 
-export type MutationChangePasswordArgs = {
-  input: ChangePasswordInputType;
+export type MutationFollowUserArgs = {
+  input: FollowUserInputType;
 };
 
 
@@ -209,7 +226,8 @@ export type User = {
   confirmed: Scalars['Boolean'];
   createdAt: Scalars['String'];
   email: Scalars['String'];
-  friends?: Maybe<Array<Friend>>;
+  followers?: Maybe<Array<Follower>>;
+  followings?: Maybe<Array<Following>>;
   id: Scalars['Int'];
   isLoggedIn: Scalars['Boolean'];
   profile?: Maybe<Profile>;
@@ -229,6 +247,16 @@ export type VerifyEmailObjectType = {
   error?: Maybe<AuthError>;
   user?: Maybe<User>;
 };
+
+export type FollowerFragmentFragment = { __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type FollowingFragmentFragment = { __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type ProfileFragmentFragment = { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string };
+
+export type SettingFragmentFragment = { __typename?: 'Settings', id: number, theme?: string | null };
+
+export type UserFragmentFragment = { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null };
 
 export type ChangePasswordMutationVariables = Exact<{
   input: ChangePasswordInputType;
@@ -299,9 +327,82 @@ export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null } | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
 
-
+export const SettingFragmentFragmentDoc = gql`
+    fragment SettingFragment on Settings {
+  id
+  theme
+}
+    `;
+export const ProfileFragmentFragmentDoc = gql`
+    fragment ProfileFragment on Profile {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const FollowerFragmentFragmentDoc = gql`
+    fragment FollowerFragment on Follower {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const FollowingFragmentFragmentDoc = gql`
+    fragment FollowingFragment on Following {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const UserFragmentFragmentDoc = gql`
+    fragment UserFragment on User {
+  username
+  id
+  email
+  isLoggedIn
+  confirmed
+  createdAt
+  updatedAt
+  settings {
+    ...SettingFragment
+  }
+  profile {
+    ...ProfileFragment
+  }
+  followers {
+    ...FollowerFragment
+  }
+  followings {
+    ...FollowingFragment
+  }
+  settings {
+    ...SettingFragment
+  }
+}
+    ${SettingFragmentFragmentDoc}
+${ProfileFragmentFragmentDoc}
+${FollowerFragmentFragmentDoc}
+${FollowingFragmentFragmentDoc}`;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($input: ChangePasswordInputType!) {
   changePassword(input: $input) {
@@ -714,30 +815,10 @@ export type HelloWorldQueryResult = Apollo.QueryResult<HelloWorldQuery, HelloWor
 export const UserDocument = gql`
     query User {
   user {
-    username
-    id
-    email
-    isLoggedIn
-    confirmed
-    createdAt
-    updatedAt
-    settings {
-      id
-      theme
-    }
-    profile {
-      id
-      email
-      username
-      photoURL
-      bannerURL
-      bio
-      bday
-      verified
-    }
+    ...UserFragment
   }
 }
-    `;
+    ${UserFragmentFragmentDoc}`;
 
 /**
  * __useUserQuery__

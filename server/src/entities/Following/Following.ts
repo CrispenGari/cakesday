@@ -6,59 +6,18 @@ import {
   Entity,
   ManyToOne,
   UpdateDateColumn,
- PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from "typeorm";
 // import { Profile } from "../Profile/Profile";
 
 import { User } from "../User/User";
 
-// interface InputI {
-//   userProfile: Profile;
-//   profileId: string;
-//   email: string;
-//   username: string;
-//   photoURL?: string;
-//   bannerURL?: string;
-//   gender: string;
-//   bday?: string;
-//   bio?: string;
-//   verified: boolean;
-// }
 @ObjectType()
 @Entity()
-export class Friend extends BaseEntity {
-  // constructor(input: InputI) {
-  //   super();
-  //   const {
-  //     bannerURL,
-  //     _id,
-  //     bio,
-  //     email,
-  //     username,
-  //     bday,
-  //     gender,
-  //     photoURL,
-  //     verified,
-  //   } = input?.userProfile;
-
-  //   this.bannerURL = bannerURL;
-  //   this.bday = bday;
-  //   this.email = email;
-  //   this.bio = bio;
-  //   this.username = username;
-  //   this.gender = gender;
-  //   this.verified = verified;
-  //   this.photoURL = photoURL;
-  //   this.profileId = _id as any;
-  // }
-
+export class Following extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn({ type: "int" })
   id: number;
-
-  @Field(() => String)
-  @Column({ nullable: false })
-  profileId: String;
 
   @Field(() => String, { nullable: false })
   @Column({ nullable: false })
@@ -81,8 +40,8 @@ export class Friend extends BaseEntity {
   gender: string;
 
   @Field(() => String)
-  @Column({ nullable: true, type: "date" })
-  bday: Date;
+  @Column({ nullable: true, type: "text" })
+  bday: String;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true, type: "text" })
@@ -94,7 +53,7 @@ export class Friend extends BaseEntity {
 
   // Relations
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.friends)
+  @ManyToOne(() => User, (user) => user.followings)
   user: User;
 
   @Field(() => String)

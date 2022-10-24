@@ -13,7 +13,7 @@ export class UserResolver {
       const payload: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRETE);
       const user = await User.findOne({
         where: { id: payload.userId as number },
-        relations: ["profile"],
+        relations: ["profile", "followings", "settings", "followers"],
       });
       if (!user) return undefined;
 
