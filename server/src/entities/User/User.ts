@@ -1,16 +1,14 @@
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType, Field, Int } from "type-graphql";
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  ObjectIdColumn,
-  ObjectID,
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
   OneToMany,
-  BeforeInsert,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Friend } from "../Friend/Friend";
 import { Profile } from "../Profile/Profile";
@@ -19,9 +17,9 @@ import { Settings } from "../Settings/Settings";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(() => String)
-  @ObjectIdColumn()
-  _id: ObjectID;
+  @Field(() => Int)
+  @PrimaryGeneratedColumn({ type: "int" })
+  id: number;
 
   @Field(() => String)
   @Column({ type: "varchar", unique: true, length: 25 })
@@ -45,12 +43,12 @@ export class User extends BaseEntity {
   @Column("int", { default: 0 })
   tokenVersion: number;
 
-  @BeforeInsert()
-  beforeInsertActions() {
-    this.tokenVersion = 0;
-    this.confirmed = false;
-    this.isLoggedIn = false;
-  }
+  // @BeforeInsert()
+  // beforeInsertActions() {
+  //   this.tokenVersion = 0;
+  //   this.confirmed = false;
+  //   this.isLoggedIn = false;
+  // }
 
   @Field(() => String)
   @CreateDateColumn({ type: "datetime", nullable: false })

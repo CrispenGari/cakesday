@@ -1,12 +1,12 @@
-import { ObjectType, Field } from "type-graphql";
-import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { ObjectType, Field, Int } from "type-graphql";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
 @Entity()
 export class Profile extends BaseEntity {
-  @Field(() => String)
-  @ObjectIdColumn()
-  _id: ObjectID;
+  @Field(() => Int)
+  @PrimaryGeneratedColumn({ type: "int" })
+  id: number;
 
   @Field(() => String, { nullable: false })
   @Column({ nullable: false })

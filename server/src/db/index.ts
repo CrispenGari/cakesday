@@ -1,13 +1,14 @@
-import { DataSource } from "typeorm";
 import { entities } from "../entities";
+import { DataSource } from "typeorm";
 
 export const dataSource = new DataSource({
-  type: "mongodb",
-  host: "127.0.0.1",
-  port: 27017,
-  
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "root",
+  password: "root",
   database: "cakesday",
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities,
 });

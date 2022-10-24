@@ -1,7 +1,7 @@
 mutation SignIn($input: SignInInput!) {
   signIn(input: $input) {
     user {
-      _id
+      id
       username
     }
     accessToken

@@ -35,7 +35,6 @@ export class UpdateProfileResolver {
       where: { email: payload.email },
       relations: ["profile"],
     });
-    console.log("User.....", user);
     if (!user) {
       return {
         error: {
@@ -52,6 +51,7 @@ export class UpdateProfileResolver {
 
     if (banner) {
       const uploadURL = await getDownloadURL(banner, user, "banner");
+
       if (!profile) {
         // create a new profile
         const _profile = new Profile();

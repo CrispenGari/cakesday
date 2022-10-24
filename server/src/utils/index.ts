@@ -33,10 +33,11 @@ export const getDownloadURL = async (
     const { url } = await cloudinary.uploader.upload(data, {
       public_id: `${user.username}-${type}`,
       upload_preset: process.env.CLOUDNARY_UPLOAD_PRESET, // the folder we are uploading
+      timeout: 120000,
     });
     return url;
   } catch (error) {
-    console.error(error);
+    console.error("Upload Error", error);
     return undefined;
   }
 };

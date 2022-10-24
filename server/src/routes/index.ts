@@ -33,7 +33,7 @@ router.post("/refresh-token", async (req: Request, res: Response) => {
     });
   }
 
-  const user = await User.findOne(payload.userId);
+  const user = await User.findOne({ where: { id: payload.userId } });
   if (!user) {
     return res.status(403).send({
       code: 403,

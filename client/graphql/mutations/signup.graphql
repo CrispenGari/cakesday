@@ -2,7 +2,7 @@ mutation SignUp($input: SignUpInput!) {
   signUp(input: $input) {
     accessToken
     user {
-      _id
+      id
       email
       username
     }

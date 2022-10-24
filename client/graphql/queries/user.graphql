@@ -1,18 +1,18 @@
 query User {
   user {
     username
-    _id
+    id
     email
     isLoggedIn
     confirmed
     createdAt
     updatedAt
     settings {
-      _id
+      id
       theme
     }
     profile {
-      _id
+      id
       email
       username
       photoURL

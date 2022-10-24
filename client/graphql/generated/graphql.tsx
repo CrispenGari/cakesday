@@ -15,6 +15,15 @@ export type Scalars = {
   Float: number;
 };
 
+export type AddFriendInputType = {
+  username: Scalars['String'];
+};
+
+export type AddFriendObjectType = {
+  __typename?: 'AddFriendObjectType';
+  success: Scalars['Boolean'];
+};
+
 export type AuthError = {
   __typename?: 'AuthError';
   field: Scalars['String'];
@@ -36,13 +45,13 @@ export type ChangePasswordObjectType = {
 
 export type Friend = {
   __typename?: 'Friend';
-  _id: Scalars['String'];
   bannerURL?: Maybe<Scalars['String']>;
   bday: Scalars['String'];
   bio?: Maybe<Scalars['String']>;
   createdAt: Scalars['String'];
   email: Scalars['String'];
   gender: Scalars['String'];
+  id: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
   profileId: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -53,6 +62,7 @@ export type Friend = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFriend: AddFriendObjectType;
   changePassword: ChangePasswordObjectType;
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
@@ -62,6 +72,11 @@ export type Mutation = {
   updateAvatarOrBanner: UpdateProfileObjectType;
   updateProfile: UpdateProfileObjectType;
   verifyEmail: VerifyEmailObjectType;
+};
+
+
+export type MutationAddFriendArgs = {
+  input: AddFriendInputType;
 };
 
 
@@ -106,12 +121,12 @@ export type MutationVerifyEmailArgs = {
 
 export type Profile = {
   __typename?: 'Profile';
-  _id: Scalars['String'];
   bannerURL?: Maybe<Scalars['String']>;
   bday: Scalars['String'];
   bio?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   gender: Scalars['String'];
+  id: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
   username: Scalars['String'];
   verified?: Maybe<Scalars['Boolean']>;
@@ -153,7 +168,7 @@ export type SendForgotPasswordEmailObjectType = {
 
 export type Settings = {
   __typename?: 'Settings';
-  _id: Scalars['String'];
+  id: Scalars['Int'];
   theme?: Maybe<Scalars['String']>;
 };
 
@@ -191,11 +206,11 @@ export type UpdateProfileObjectType = {
 
 export type User = {
   __typename?: 'User';
-  _id: Scalars['String'];
   confirmed: Scalars['Boolean'];
   createdAt: Scalars['String'];
   email: Scalars['String'];
   friends?: Maybe<Array<Friend>>;
+  id: Scalars['Int'];
   isLoggedIn: Scalars['Boolean'];
   profile?: Maybe<Profile>;
   settings?: Maybe<Settings>;
@@ -220,7 +235,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'ChangePasswordObjectType', accessToken?: string | null, user?: { __typename?: 'User', _id: string, username: string, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'ChangePasswordObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
 export type RequestChangePasswordEmailMutationVariables = Exact<{
   input: SendForgotPasswordEmailInputType;
@@ -241,7 +256,7 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInObjectType', accessToken?: string | null, user?: { __typename?: 'User', _id: string, username: string } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
+export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
 export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -253,28 +268,28 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'SignUpObjectType', accessToken?: string | null, user?: { __typename?: 'User', _id: string, email: string, username: string } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'SignUpObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, email: string, username: string } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
 export type UpdateProfileOrBannerMutationVariables = Exact<{
   input: ProfileInput;
 }>;
 
 
-export type UpdateProfileOrBannerMutation = { __typename?: 'Mutation', updateAvatarOrBanner: { __typename?: 'UpdateProfileObjectType', accessToken?: string | null, error?: { __typename?: 'AuthError', message: string, field: string } | null, user?: { __typename?: 'User', username: string, _id: string, email: string, isLoggedIn: boolean, confirmed: boolean, profile?: { __typename?: 'Profile', _id: string, username: string, email: string, bannerURL?: string | null, bday: string, verified?: boolean | null, bio?: string | null, photoURL?: string | null } | null } | null } };
+export type UpdateProfileOrBannerMutation = { __typename?: 'Mutation', updateAvatarOrBanner: { __typename?: 'UpdateProfileObjectType', accessToken?: string | null, error?: { __typename?: 'AuthError', message: string, field: string } | null, user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, profile?: { __typename?: 'Profile', id: number, username: string, email: string, bannerURL?: string | null, bday: string, verified?: boolean | null, bio?: string | null, photoURL?: string | null } | null } | null } };
 
 export type UpdateProfileMutationVariables = Exact<{
   input: ProfileInput;
 }>;
 
 
-export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'UpdateProfileObjectType', accessToken?: string | null, error?: { __typename?: 'AuthError', message: string, field: string } | null, user?: { __typename?: 'User', username: string, _id: string, email: string, isLoggedIn: boolean, confirmed: boolean, profile?: { __typename?: 'Profile', _id: string, username: string, email: string, bannerURL?: string | null, bday: string, verified?: boolean | null, bio?: string | null, photoURL?: string | null } | null } | null } };
+export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'UpdateProfileObjectType', accessToken?: string | null, error?: { __typename?: 'AuthError', message: string, field: string } | null, user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, profile?: { __typename?: 'Profile', id: number, username: string, email: string, bannerURL?: string | null, bday: string, verified?: boolean | null, bio?: string | null, photoURL?: string | null } | null } | null } };
 
 export type VerifyEmailMutationVariables = Exact<{
   input: VerifyEmailInput;
 }>;
 
 
-export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailObjectType', accessToken?: string | null, user?: { __typename?: 'User', _id: string, username: string, email: string, confirmed: boolean, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
+export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, email: string, confirmed: boolean, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -284,14 +299,14 @@ export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, _id: string, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', _id: string, theme?: string | null } | null, profile?: { __typename?: 'Profile', _id: string, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null } | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null } | null } | null };
 
 
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($input: ChangePasswordInputType!) {
   changePassword(input: $input) {
     user {
-      _id
+      id
       username
       isLoggedIn
     }
@@ -401,7 +416,7 @@ export const SignInDocument = gql`
     mutation SignIn($input: SignInInput!) {
   signIn(input: $input) {
     user {
-      _id
+      id
       username
     }
     accessToken
@@ -473,7 +488,7 @@ export const SignUpDocument = gql`
   signUp(input: $input) {
     accessToken
     user {
-      _id
+      id
       email
       username
     }
@@ -520,12 +535,12 @@ export const UpdateProfileOrBannerDocument = gql`
     accessToken
     user {
       username
-      _id
+      id
       email
       isLoggedIn
       confirmed
       profile {
-        _id
+        id
         username
         email
         bannerURL
@@ -575,12 +590,12 @@ export const UpdateProfileDocument = gql`
     accessToken
     user {
       username
-      _id
+      id
       email
       isLoggedIn
       confirmed
       profile {
-        _id
+        id
         username
         email
         bannerURL
@@ -624,7 +639,7 @@ export const VerifyEmailDocument = gql`
     mutation VerifyEmail($input: VerifyEmailInput!) {
   verifyEmail(input: $input) {
     user {
-      _id
+      id
       username
       email
       confirmed
@@ -700,18 +715,18 @@ export const UserDocument = gql`
     query User {
   user {
     username
-    _id
+    id
     email
     isLoggedIn
     confirmed
     createdAt
     updatedAt
     settings {
-      _id
+      id
       theme
     }
     profile {
-      _id
+      id
       email
       username
       photoURL

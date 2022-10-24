@@ -1,7 +1,7 @@
 mutation VerifyEmail($input: VerifyEmailInput!) {
   verifyEmail(input: $input) {
     user {
-      _id
+      id
       username
       email
       confirmed

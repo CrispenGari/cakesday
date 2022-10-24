@@ -2,8 +2,6 @@ import { ContextType } from "../../types";
 import { Ctx, Query, Resolver } from "type-graphql";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/User/User";
-import { Profile } from "../../entities/Profile/Profile";
-
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
@@ -13,11 +11,12 @@ export class UserResolver {
     try {
       const token = authorization.split(" ")[1];
       const payload: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRETE);
-      const user = await User.findOne(payload.userId);
+      const user = await User.findOne({
+        where: { id: payload.userId as number },
+        relations: ["profile"],
+      });
       if (!user) return undefined;
-      user.profile = (await Profile.findOne({
-        where: { username: user.username },
-      })) as any;
+
       return user;
     } catch (error) {
       return undefined;

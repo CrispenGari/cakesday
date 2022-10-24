@@ -7,12 +7,12 @@ mutation UpdateProfileOrBanner($input: ProfileInput!) {
     accessToken
     user {
       username
-      _id
+      id
       email
       isLoggedIn
       confirmed
       profile {
-        _id
+        id
         username
         email
         bannerURL

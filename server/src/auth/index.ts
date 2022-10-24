@@ -6,7 +6,7 @@ import { User } from "../entities/User/User";
 export const createAccessToken = (user: User): string => {
   return jwt.sign(
     {
-      userId: user._id,
+      userId: user.id,
       tokenVersion: user.tokenVersion,
       username: user.username,
       email: user.email,
@@ -21,7 +21,7 @@ export const createAccessToken = (user: User): string => {
 export const createRefreshToken = (user: User): string => {
   return jwt.sign(
     {
-      userId: user._id,
+      userId: user.id,
       tokenVersion: user.tokenVersion,
     },
     process.env.REFRESH_TOKEN_SECRETE!,

@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType, Int } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -6,8 +6,7 @@ import {
   Entity,
   ManyToOne,
   UpdateDateColumn,
-  ObjectID,
-  ObjectIdColumn,
+ PrimaryGeneratedColumn
 } from "typeorm";
 // import { Profile } from "../Profile/Profile";
 
@@ -53,9 +52,9 @@ export class Friend extends BaseEntity {
   //   this.profileId = _id as any;
   // }
 
-  @Field(() => String)
-  @ObjectIdColumn({})
-  _id: ObjectID;
+  @Field(() => Int)
+  @PrimaryGeneratedColumn({ type: "int" })
+  id: number;
 
   @Field(() => String)
   @Column({ nullable: false })
