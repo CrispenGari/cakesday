@@ -51,7 +51,7 @@ export class UpdateProfileResolver {
     });
 
     if (banner) {
-      const uploadURL = await getDownloadURL(banner, user);
+      const uploadURL = await getDownloadURL(banner, user, "banner");
       if (!profile) {
         // create a new profile
         const _profile = new Profile();
@@ -66,7 +66,7 @@ export class UpdateProfileResolver {
       }
     }
     if (avatar) {
-      const uploadURL = await getDownloadURL(avatar, user);
+      const uploadURL = await getDownloadURL(avatar, user, "avatar");
       if (!profile) {
         // create a new profile
         const _profile = new Profile();

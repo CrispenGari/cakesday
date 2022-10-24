@@ -1,3 +1,32 @@
 .sidebar__left {
   flex: 0.2;
+  user-select: none;
+  user-zoom: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.sidebar__left > h1 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 10px 0;
+  text-align: center;
+  background-color: var(--main-color);
+  border-top: 1px solid var(--color-purple);
+  border-bottom: 1px solid var(--color-purple);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.sidebar__left__main {
+  padding: 10px 5px;
+}
+.sidebar__left > button {
+  background-color: var(--color-purple);
+  color: white;
+  margin: 20px 5px;
 }

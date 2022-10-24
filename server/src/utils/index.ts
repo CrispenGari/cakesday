@@ -26,11 +26,12 @@ export const sendEmail = async (to: string, html: string, subject: string) => {
 
 export const getDownloadURL = async (
   data: string,
-  user: User
+  user: User,
+  type: string
 ): Promise<string | undefined> => {
   try {
     const { url } = await cloudinary.uploader.upload(data, {
-      public_id: user.username,
+      public_id: `${user.username}-${type}`,
       upload_preset: process.env.CLOUDNARY_UPLOAD_PRESET, // the folder we are uploading
     });
     return url;

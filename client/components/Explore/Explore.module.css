@@ -1,0 +1,41 @@
+.explore {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 10px;
+  user-select: none;
+  user-zoom: none;
+}
+.explore__main {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  width: 100%;
+}
+.explore > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 5px auto;
+}
+.explore > h1 {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: var(--main-color);
+  margin-bottom: 10px;
+}
+
+.explore__main::-webkit-scrollbar {
+  height: 5px;
+}
+.explore__main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.explore__main::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+}
+.explore__main::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple);
+  cursor: pointer;
+}

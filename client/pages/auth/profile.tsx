@@ -57,16 +57,22 @@ const Profile: React.FC<Props> = ({}) => {
   }, [l]);
 
   useEffect(() => {
-    if (!loading && data?.updateAvatarOrBanner.error) {
-      setError(data.updateAvatarOrBanner.error.message);
-    } else {
-      setAccessToken(data?.updateAvatarOrBanner.accessToken ?? "");
+    if (!loading && data?.updateAvatarOrBanner.accessToken) {
+      setAccessToken(data?.updateAvatarOrBanner.accessToken);
       setError("");
       if (data?.updateAvatarOrBanner.accessToken) {
         router.replace("/");
       }
+    } else {
+      if (data?.updateAvatarOrBanner.error) {
+        setError(data.updateAvatarOrBanner.error.message);
+      } else {
+        setError("");
+      }
     }
   }, [data, loading, router]);
+
+  console.log(data);
   return (
     <div className={styles.profile}>
       <form onSubmit={onSubmit}>

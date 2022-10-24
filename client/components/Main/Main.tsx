@@ -1,10 +1,15 @@
 import React from "react";
+import { useUserQuery } from "../../graphql/generated/graphql";
+import { Explore } from "../../components";
 import styles from "./Main.module.css";
 interface Props {}
 const Main: React.FC<Props> = ({}) => {
+  const { loading, data } = useUserQuery({ fetchPolicy: "network-only" });
   return (
     <div className={styles.main}>
-      <h1>Hello from Main</h1>
+      <Explore />
+      <pre>{JSON.stringify({ loading, data }, null, 2)}</pre>
+      <pre>{JSON.stringify({ loading, data }, null, 2)}</pre>
     </div>
   );
 };

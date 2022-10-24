@@ -5,6 +5,7 @@
   padding: 30px 10px;
   user-select: none;
   user-zoom: none;
+  position: relative;
 }
 .sidebar__right__top {
   display: flex;
@@ -15,6 +16,7 @@
 .sidebar__right__top > h1 {
   font-weight: bold;
   font-size: 1rem;
+  color: var(--main-color);
 }
 .sidebar__right__top > h2 {
   color: gray;
@@ -22,8 +24,8 @@
   font-size: 0.7rem;
 }
 .sidebar__right__top__avatar {
-  width: 150px !important;
-  height: 150px !important;
+  width: 100px !important;
+  height: 100px !important;
   margin: 10px 0 !important
   ;
 }
@@ -35,4 +37,32 @@
 .sidebar__right > button {
   background-color: var(--main-color);
   color: white;
+}
+.sidebar__right__banner {
+  width: 100%;
+  background-color: var(--main-color);
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  margin: 10px auto;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+}
+
+.sidebar__right__top > h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  position: relative;
+  color: var(--main-color);
+}
+
+.sidebar__right__top > h3 > span {
+  position: absolute;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: gray;
+  text-decoration: underline;
 }

@@ -1,6 +1,20 @@
 import { EmojiType } from "../types";
 
 export const __server__base__url__: string = "http://localhost:3001";
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 export const emotions: Array<EmojiType> = [
   {
     name: "grinning",
