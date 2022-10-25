@@ -1,0 +1,11 @@
+query FriendsSuggestions($input: FriendSuggestionInputType!) {
+  suggestions(input: $input) {
+    suggestions {
+      ...UserFragment
+    }
+    error {
+      message
+      field
+    }
+  }
+}

@@ -77,6 +77,16 @@ export type Following = {
   verified: Scalars['Boolean'];
 };
 
+export type FriendSuggestionInputType = {
+  accessToken: Scalars['String'];
+};
+
+export type FriendSuggestionObjectType = {
+  __typename?: 'FriendSuggestionObjectType';
+  error?: Maybe<AuthError>;
+  suggestions: Array<User>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: ChangePasswordObjectType;
@@ -165,12 +175,18 @@ export type Query = {
   __typename?: 'Query';
   cookie: Scalars['Boolean'];
   helloWorld: Scalars['String'];
+  suggestions: FriendSuggestionObjectType;
   user?: Maybe<User>;
 };
 
 
 export type QueryCookieArgs = {
   cookie: Scalars['String'];
+};
+
+
+export type QuerySuggestionsArgs = {
+  input: FriendSuggestionInputType;
 };
 
 export type SendForgotPasswordEmailInputType = {
@@ -318,6 +334,13 @@ export type VerifyEmailMutationVariables = Exact<{
 
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, email: string, confirmed: boolean, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
+
+export type FriendsSuggestionsQueryVariables = Exact<{
+  input: FriendSuggestionInputType;
+}>;
+
+
+export type FriendsSuggestionsQuery = { __typename?: 'Query', suggestions: { __typename?: 'FriendSuggestionObjectType', suggestions: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null }>, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -780,6 +803,47 @@ export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const FriendsSuggestionsDocument = gql`
+    query FriendsSuggestions($input: FriendSuggestionInputType!) {
+  suggestions(input: $input) {
+    suggestions {
+      ...UserFragment
+    }
+    error {
+      message
+      field
+    }
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useFriendsSuggestionsQuery__
+ *
+ * To run a query within a React component, call `useFriendsSuggestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFriendsSuggestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFriendsSuggestionsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFriendsSuggestionsQuery(baseOptions: Apollo.QueryHookOptions<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>(FriendsSuggestionsDocument, options);
+      }
+export function useFriendsSuggestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>(FriendsSuggestionsDocument, options);
+        }
+export type FriendsSuggestionsQueryHookResult = ReturnType<typeof useFriendsSuggestionsQuery>;
+export type FriendsSuggestionsLazyQueryHookResult = ReturnType<typeof useFriendsSuggestionsLazyQuery>;
+export type FriendsSuggestionsQueryResult = Apollo.QueryResult<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>;
 export const HelloWorldDocument = gql`
     query HelloWorld {
   helloWorld

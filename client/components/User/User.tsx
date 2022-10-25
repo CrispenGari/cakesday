@@ -1,37 +1,41 @@
 import React from "react";
 import styles from "./User.module.css";
 import { Box, Image, Badge, Button, Avatar } from "@chakra-ui/react";
+import { UserType } from "../../types";
+import { userBirthdayObject } from "../../utils";
 
-interface Props {}
-const User: React.FC<Props> = ({}) => {
-  const property = {
-    imageUrl: "https://bit.ly/2Z4KKcF",
-    imageAlt: "Rear view of modern home with pool",
-    beds: 3,
-    baths: 2,
-    title: "Modern home in city center in the heart of historic Los Angeles",
-    formattedPrice: "$1,900.00",
-    reviewCount: 34,
-    rating: 4,
-  };
-
+interface Props {
+  friend: UserType;
+}
+const User: React.FC<Props> = ({
+  friend: { profile, followers, followings, username },
+}) => {
   return (
     <div className={styles.user}>
-      <div className={styles.user__banner}>
+      <div
+        className={styles.user__banner}
+        style={{
+          backgroundImage: `url(${profile?.bannerURL})`,
+        }}
+      >
         <Badge borderRadius="full" px="2" className={styles.user__badge}>
           New
         </Badge>
         <Avatar
+          title={username}
           className={styles.user__avatar}
-          name="Dan Abrahmov"
-          src="https://bit.ly/dan-abramov"
+          name={username}
+          src={profile?.photoURL}
         />
       </div>
-      <h1>@username</h1>
+      <h1>@{username}</h1>
       <h2>
-        23 <span>years</span>
+        {userBirthdayObject(profile?.bday).age} <span>years</span>
       </h2>
-      <p>Birthday 24 October &bull; male</p>
+      <p>
+        Birthday {userBirthdayObject(profile?.bday).formattedBirthday} &bull;{" "}
+        {profile?.gender}
+      </p>
       <div className={styles.user__buttons}>
         <Button>Add</Button>
         <Button>Remove</Button>
