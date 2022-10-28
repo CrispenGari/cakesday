@@ -1,3 +1,5 @@
+import { Friend } from "../graphql/generated/graphql";
+
 export interface EmojiType {
   name: string;
   code: string;
@@ -43,5 +45,6 @@ export type UserType = {
   profile?: ProfileType;
   followers?: FollowerType[];
   followings?: FollowingType[];
+  friends?: Friend[];
   __typename: string;
 };

@@ -6,6 +6,9 @@ fragment UserFragment on User {
   confirmed
   createdAt
   updatedAt
+  friends {
+    ...FriendFragment
+  }
   settings {
     ...SettingFragment
   }

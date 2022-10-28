@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import {
   useSignOutMutation,
-  useUserQuery,
+  useMeQuery,
 } from "../../graphql/generated/graphql";
 import { userBirthdayObject } from "../../utils";
 import styles from "./SideBarRight.module.css";
@@ -14,7 +14,7 @@ const SideBarRight: React.FC<Props> = ({}) => {
   const [logout, { loading, data }] = useSignOutMutation({
     fetchPolicy: "network-only",
   });
-  const { loading: userLoading, data: user } = useUserQuery({
+  const { loading: userLoading, data: user } = useMeQuery({
     fetchPolicy: "network-only",
   });
   const router = useRouter();
@@ -27,27 +27,39 @@ const SideBarRight: React.FC<Props> = ({}) => {
   return (
     <div className={styles.sidebar__right}>
       <div className={styles.sidebar__right__top}>
-        <h1>@{user?.user?.username}</h1>
+        <h1
+          onClick={() => {
+            router.push(`/profile/${user?.me?.id}`);
+          }}
+        >
+          @{user?.me?.username}
+        </h1>
         <div
           className={styles.sidebar__right__banner}
           style={{
-            backgroundImage: `url(${user?.user?.profile?.bannerURL})`,
+            backgroundImage: `url(${user?.me?.profile?.bannerURL})`,
           }}
         >
           <Avatar
             className={styles.sidebar__right__top__avatar}
-            name={user?.user?.username}
-            src={user?.user?.profile?.photoURL ?? ""}
+            name={user?.me?.username}
+            src={user?.me?.profile?.photoURL ?? ""}
           />
         </div>
-        <Button>Profile</Button>
+        <Button
+          onClick={() => {
+            router.push(`/profile/${user?.me?.id}`);
+          }}
+        >
+          Profile
+        </Button>
         <h2>
           Birthday{" "}
-          {userBirthdayObject(user?.user?.profile?.bday).formattedBirthday}
+          {userBirthdayObject(user?.me?.profile?.bday).formattedBirthday}
         </h2>
 
         <h3>
-          {userBirthdayObject(user?.user?.profile?.bday).age} <span>years</span>
+          {userBirthdayObject(user?.me?.profile?.bday).age} <span>years</span>
         </h3>
       </div>
 

@@ -23,6 +23,7 @@ import {
 import { sendEmail } from "../../utils";
 import { verificationCodeEmailTemplate } from "../../templates";
 import { generateVerificationCode } from "@crispengari/random-verification-codes/lib";
+import { Profile } from "../../entities/Profile/Profile";
 
 @Resolver()
 export class SignUpResolver {
@@ -76,11 +77,19 @@ export class SignUpResolver {
       };
     }
     const hashedPassword = await argorn2.hash(password);
+    // Create a temporary profile
+    const profile = await Profile.create({
+      username,
+      email,
+    }).save();
+
     const user = await User.create({
       password: hashedPassword,
       username,
       email,
     }).save();
+    user.profile = profile;
+    await user.save();
     // send the verification email
     const verificationCode: string = (await generateVerificationCode(
       6,

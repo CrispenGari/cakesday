@@ -1535,6 +1535,14 @@
     "@graphql-tools/utils" "^8.8.0"
     tslib "~2.4.0"
 
+"@graphql-codegen/fragment-matcher@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/fragment-matcher/-/fragment-matcher-3.3.1.tgz#6ab4a9813fdaf9fb93bef8e13286ef3781228466"
+  integrity sha512-FpIDBmnbWYS50f0FdB1l8qPNi1i+IKkp3bhzT14rnLMjll+dzn1Lux5evuth+3USkS9dn2zGrzGh44j6svrpgQ==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.6.2"
+    tslib "~2.4.0"
+
 "@graphql-codegen/gql-tag-operations@1.5.3":
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/gql-tag-operations/-/gql-tag-operations-1.5.3.tgz#ed326073d0aaecb79050635a1eb9ea621407bb43"
@@ -1544,6 +1552,15 @@
     "@graphql-codegen/visitor-plugin-common" "2.12.1"
     "@graphql-tools/utils" "^8.8.0"
     auto-bind "~4.0.0"
+    tslib "~2.4.0"
+
+"@graphql-codegen/introspection@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/introspection/-/introspection-2.2.1.tgz#2fb52f7989142d0dde15858c40b543652d9e7b4e"
+  integrity sha512-083tu9rSLL0k9LrAyGt1AjGQI/O9gX3w1UliaufLc3mofDSt7iV04tT9VJRuk4IoBvyPZ/8YCs5zIpmt/GexPA==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.6.2"
+    "@graphql-codegen/visitor-plugin-common" "^2.12.1"
     tslib "~2.4.0"
 
 "@graphql-codegen/plugin-helpers@^2.6.2":

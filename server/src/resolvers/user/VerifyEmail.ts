@@ -31,7 +31,7 @@ export class VerifyEmailResolver {
     } catch (error) {
       return false;
     }
-    const user = await User.findOne(payload.userId);
+    const user = await User.findOne({ where: { id: payload.userId } });
     if (!user) return false;
     // new token
     const verificationCode: string = (await generateVerificationCode(

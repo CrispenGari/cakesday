@@ -12,10 +12,7 @@ import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { Footer, Loading } from "../../components";
-import {
-  useSignInMutation,
-  useUserQuery,
-} from "../../graphql/generated/graphql";
+import { useMeQuery, useSignInMutation } from "../../graphql/generated/graphql";
 import { setAccessToken } from "../../state";
 import styles from "../../styles/SignIn.module.css";
 interface Props {}
@@ -27,7 +24,7 @@ const SignIn: React.FC<Props> = ({}) => {
   const [signInHandler, { loading: submitting, data }] = useSignInMutation({
     fetchPolicy: "network-only",
   });
-  const { data: user, loading } = useUserQuery({ fetchPolicy: "network-only" });
+  const { data: user, loading } = useMeQuery({ fetchPolicy: "network-only" });
 
   const router = useRouter();
 
@@ -57,8 +54,8 @@ const SignIn: React.FC<Props> = ({}) => {
   }, [data, submitting, router]);
   console.log(user);
   useEffect(() => {
-    if (!loading && user?.user) {
-      if (user.user.isLoggedIn && user.user.confirmed) {
+    if (!loading && user?.me) {
+      if (user.me.isLoggedIn && user.me.confirmed) {
         router.replace("/");
       }
     }

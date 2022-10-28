@@ -17,6 +17,7 @@
   font-weight: bold;
   font-size: 1rem;
   color: var(--main-color);
+  cursor: pointer;
 }
 .sidebar__right__top > h2 {
   color: gray;

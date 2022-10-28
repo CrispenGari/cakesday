@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import { Follower } from "../Follower/Follower";
 import { Following } from "../Following/Following";
+import { Friend } from "../Friends/Friends";
 import { Profile } from "../Profile/Profile";
 import { Settings } from "../Settings/Settings";
 
@@ -87,4 +88,12 @@ export class User extends BaseEntity {
     onUpdate: "CASCADE",
   })
   followings: Following[];
+
+  // Friends (you only be friends if you guys follow each other)
+  @Field(() => [Friend], { nullable: true })
+  @OneToMany(() => Friend, (friend) => friend.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  friends: Friend[];
 }

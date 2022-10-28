@@ -1,5 +1,8 @@
 export { default as Emoji } from "./Emoji/Emoji";
 export { default as Loading } from "./Loading/Loading";
+export { default as UserInfo } from "./UserInfo/UserInfo";
+export { default as Banner } from "./Banner/Banner";
+export { default as SignOutButton } from "./SignOutButton/SignOutButton";
 export { default as Welcome } from "./Welcome/Welcome";
 export { default as Feed } from "./Feed/Feed";
 export { default as Header } from "./Header/Header";
@@ -7,6 +10,7 @@ export { default as Main } from "./Main/Main";
 export { default as Explore } from "./Explore/Explore";
 export { default as Footer } from "./Footer/Footer";
 export { default as User } from "./User/User";
+export { default as BirthDayCard } from "./BirthDayCard/BirthDayCard";
 export { default as SideBarRight } from "./SideBarRight/SideBarRight";
 export { default as SideBarLeft } from "./SideBarLeft/SideBarLeft";
 export { default as HeaderIconButton } from "./HeaderIconButton/HeaderIconButton";

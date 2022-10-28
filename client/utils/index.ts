@@ -1,3 +1,4 @@
+import { time } from "console";
 import { months } from "../constants";
 import { BirthdayType } from "../types";
 
@@ -38,5 +39,20 @@ export const userBirthdayObject = (
     age,
     formattedBirthday: formateBday,
     isBirthday,
+  };
+};
+
+export const unixTimeStampToObject = (timestamp: string | undefined) => {
+  if (!timestamp) return {};
+  const date = new Date(Number.parseInt(timestamp));
+  const now = new Date();
+  const day = date.getDay();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return {
+    day,
+    month,
+    year,
+    formattedDate: `${day} ${month} ${year}`,
   };
 };

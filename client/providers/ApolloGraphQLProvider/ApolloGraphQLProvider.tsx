@@ -1,14 +1,13 @@
 import React from "react";
 import { setContext } from "@apollo/client/link/context";
-// import { ApolloLink, Observable } from "apollo-link";
+
 import {
   ApolloProvider,
   InMemoryCache,
-  HttpLink,
+
   ApolloClient,
   createHttpLink,
-  ApolloLink,
-  Observable,
+
 } from "@apollo/client";
 import { getAccessToken } from "../../state";
 import { __server__base__url__ } from "../../constants";

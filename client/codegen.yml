@@ -7,6 +7,8 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+      - "fragment-matcher"
+      # - "introspection"
     config:
       withHOC: false
       withComponent: false

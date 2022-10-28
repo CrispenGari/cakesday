@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Feed, Loading, Welcome } from "../components";
 import { __server__base__url__ } from "../constants";
-import { useUserQuery } from "../graphql/generated/graphql";
+import { useMeQuery } from "../graphql/generated/graphql";
 import { setAccessToken } from "../state";
 import styles from "../styles/Home.module.css";
 
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       .catch((error) => console.log(error));
   });
 
-  const { loading: l, data } = useUserQuery({
+  const { loading: l, data } = useMeQuery({
     fetchPolicy: "network-only",
   });
 
@@ -32,9 +32,7 @@ const Home: NextPage = () => {
     return <Loading />;
   }
 
-  return (
-    <div className={styles.home}>{data?.user ? <Feed /> : <Welcome />}</div>
-  );
+  return <div className={styles.home}>{data?.me ? <Feed /> : <Welcome />}</div>;
 };
 
 export default Home;

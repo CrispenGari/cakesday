@@ -1,5 +1,5 @@
-query User {
-  user {
+query Me {
+  me {
     ...UserFragment
   }
 }
