@@ -1,0 +1,5 @@
+query UserById($input: UserInputType!) {
+  user(input: $input) {
+    ...UserFragment
+  }
+}

@@ -1,25 +1,5 @@
-query User {
-  user {
-    username
-    id
-    email
-    isLoggedIn
-    confirmed
-    createdAt
-    updatedAt
-    settings {
-      id
-      theme
-    }
-    profile {
-      id
-      email
-      username
-      photoURL
-      bannerURL
-      bio
-      bday
-      verified
-    }
+query Me {
+  me {
+    ...UserFragment
   }
 }

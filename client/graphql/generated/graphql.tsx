@@ -15,15 +15,6 @@ export type Scalars = {
   Float: number;
 };
 
-export type AddFriendInputType = {
-  username: Scalars['String'];
-};
-
-export type AddFriendObjectType = {
-  __typename?: 'AddFriendObjectType';
-  success: Scalars['Boolean'];
-};
-
 export type AuthError = {
   __typename?: 'AuthError';
   field: Scalars['String'];
@@ -43,6 +34,49 @@ export type ChangePasswordObjectType = {
   user?: Maybe<User>;
 };
 
+export type FollowUserInputType = {
+  accessToken: Scalars['String'];
+  friendUsername: Scalars['String'];
+};
+
+export type FollowUserObjectType = {
+  __typename?: 'FollowUserObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
+export type Follower = {
+  __typename?: 'Follower';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
+export type Following = {
+  __typename?: 'Following';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
 export type Friend = {
   __typename?: 'Friend';
   bannerURL?: Maybe<Scalars['String']>;
@@ -53,35 +87,45 @@ export type Friend = {
   gender: Scalars['String'];
   id: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
-  profileId: Scalars['String'];
   updatedAt: Scalars['String'];
   user: User;
   username: Scalars['String'];
   verified: Scalars['Boolean'];
 };
 
+export type FriendSuggestionInputType = {
+  accessToken: Scalars['String'];
+};
+
+export type FriendSuggestionObjectType = {
+  __typename?: 'FriendSuggestionObjectType';
+  error?: Maybe<AuthError>;
+  suggestions: Array<User>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  addFriend: AddFriendObjectType;
   changePassword: ChangePasswordObjectType;
+  followUser: FollowUserObjectType;
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
   signIn: SignInObjectType;
   signOut: Scalars['Boolean'];
   signUp: SignUpObjectType;
+  unFollowUser: FollowUserObjectType;
   updateAvatarOrBanner: UpdateProfileObjectType;
   updateProfile: UpdateProfileObjectType;
   verifyEmail: VerifyEmailObjectType;
 };
 
 
-export type MutationAddFriendArgs = {
-  input: AddFriendInputType;
+export type MutationChangePasswordArgs = {
+  input: ChangePasswordInputType;
 };
 
 
-export type MutationChangePasswordArgs = {
-  input: ChangePasswordInputType;
+export type MutationFollowUserArgs = {
+  input: FollowUserInputType;
 };
 
 
@@ -102,6 +146,11 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   input: SignUpInput;
+};
+
+
+export type MutationUnFollowUserArgs = {
+  input: FollowUserInputType;
 };
 
 
@@ -148,12 +197,24 @@ export type Query = {
   __typename?: 'Query';
   cookie: Scalars['Boolean'];
   helloWorld: Scalars['String'];
+  me?: Maybe<User>;
+  suggestions: FriendSuggestionObjectType;
   user?: Maybe<User>;
 };
 
 
 export type QueryCookieArgs = {
   cookie: Scalars['String'];
+};
+
+
+export type QuerySuggestionsArgs = {
+  input: FriendSuggestionInputType;
+};
+
+
+export type QueryUserArgs = {
+  input: UserInputType;
 };
 
 export type SendForgotPasswordEmailInputType = {
@@ -209,6 +270,8 @@ export type User = {
   confirmed: Scalars['Boolean'];
   createdAt: Scalars['String'];
   email: Scalars['String'];
+  followers?: Maybe<Array<Follower>>;
+  followings?: Maybe<Array<Following>>;
   friends?: Maybe<Array<Friend>>;
   id: Scalars['Int'];
   isLoggedIn: Scalars['Boolean'];
@@ -216,6 +279,10 @@ export type User = {
   settings?: Maybe<Settings>;
   updatedAt: Scalars['String'];
   username: Scalars['String'];
+};
+
+export type UserInputType = {
+  id: Scalars['Int'];
 };
 
 export type VerifyEmailInput = {
@@ -230,12 +297,31 @@ export type VerifyEmailObjectType = {
   user?: Maybe<User>;
 };
 
+export type FollowerFragmentFragment = { __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type FollowingFragmentFragment = { __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type FriendFragmentFragment = { __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type ProfileFragmentFragment = { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string };
+
+export type SettingFragmentFragment = { __typename?: 'Settings', id: number, theme?: string | null };
+
+export type UserFragmentFragment = { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null };
+
 export type ChangePasswordMutationVariables = Exact<{
   input: ChangePasswordInputType;
 }>;
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'ChangePasswordObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
+
+export type FollowUserMutationVariables = Exact<{
+  input: FollowUserInputType;
+}>;
+
+
+export type FollowUserMutation = { __typename?: 'Mutation', followUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type RequestChangePasswordEmailMutationVariables = Exact<{
   input: SendForgotPasswordEmailInputType;
@@ -270,6 +356,13 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'SignUpObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, email: string, username: string } | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
+export type UnFollowUserMutationVariables = Exact<{
+  input: FollowUserInputType;
+}>;
+
+
+export type UnFollowUserMutation = { __typename?: 'Mutation', unFollowUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
 export type UpdateProfileOrBannerMutationVariables = Exact<{
   input: ProfileInput;
 }>;
@@ -291,17 +384,121 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, email: string, confirmed: boolean, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
+export type FriendsSuggestionsQueryVariables = Exact<{
+  input: FriendSuggestionInputType;
+}>;
+
+
+export type FriendsSuggestionsQuery = { __typename?: 'Query', suggestions: { __typename?: 'FriendSuggestionObjectType', suggestions: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null }>, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
+
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
 
-export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null } | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
+
+export type UserByIdQueryVariables = Exact<{
+  input: UserInputType;
+}>;
 
 
+export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, theme?: string | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
+
+export const FriendFragmentFragmentDoc = gql`
+    fragment FriendFragment on Friend {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const SettingFragmentFragmentDoc = gql`
+    fragment SettingFragment on Settings {
+  id
+  theme
+}
+    `;
+export const ProfileFragmentFragmentDoc = gql`
+    fragment ProfileFragment on Profile {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const FollowerFragmentFragmentDoc = gql`
+    fragment FollowerFragment on Follower {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const FollowingFragmentFragmentDoc = gql`
+    fragment FollowingFragment on Following {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
+export const UserFragmentFragmentDoc = gql`
+    fragment UserFragment on User {
+  username
+  id
+  email
+  isLoggedIn
+  confirmed
+  createdAt
+  updatedAt
+  friends {
+    ...FriendFragment
+  }
+  settings {
+    ...SettingFragment
+  }
+  profile {
+    ...ProfileFragment
+  }
+  followers {
+    ...FollowerFragment
+  }
+  followings {
+    ...FollowingFragment
+  }
+  settings {
+    ...SettingFragment
+  }
+}
+    ${FriendFragmentFragmentDoc}
+${SettingFragmentFragmentDoc}
+${ProfileFragmentFragmentDoc}
+${FollowerFragmentFragmentDoc}
+${FollowingFragmentFragmentDoc}`;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($input: ChangePasswordInputType!) {
   changePassword(input: $input) {
@@ -344,6 +541,43 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const FollowUserDocument = gql`
+    mutation FollowUser($input: FollowUserInputType!) {
+  followUser(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type FollowUserMutationFn = Apollo.MutationFunction<FollowUserMutation, FollowUserMutationVariables>;
+
+/**
+ * __useFollowUserMutation__
+ *
+ * To run a mutation, you first call `useFollowUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followUserMutation, { data, loading, error }] = useFollowUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFollowUserMutation(baseOptions?: Apollo.MutationHookOptions<FollowUserMutation, FollowUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FollowUserMutation, FollowUserMutationVariables>(FollowUserDocument, options);
+      }
+export type FollowUserMutationHookResult = ReturnType<typeof useFollowUserMutation>;
+export type FollowUserMutationResult = Apollo.MutationResult<FollowUserMutation>;
+export type FollowUserMutationOptions = Apollo.BaseMutationOptions<FollowUserMutation, FollowUserMutationVariables>;
 export const RequestChangePasswordEmailDocument = gql`
     mutation RequestChangePasswordEmail($input: SendForgotPasswordEmailInputType!) {
   sendForgotPasswordEmail(input: $input) {
@@ -525,6 +759,43 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const UnFollowUserDocument = gql`
+    mutation UnFollowUser($input: FollowUserInputType!) {
+  unFollowUser(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type UnFollowUserMutationFn = Apollo.MutationFunction<UnFollowUserMutation, UnFollowUserMutationVariables>;
+
+/**
+ * __useUnFollowUserMutation__
+ *
+ * To run a mutation, you first call `useUnFollowUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnFollowUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unFollowUserMutation, { data, loading, error }] = useUnFollowUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUnFollowUserMutation(baseOptions?: Apollo.MutationHookOptions<UnFollowUserMutation, UnFollowUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnFollowUserMutation, UnFollowUserMutationVariables>(UnFollowUserDocument, options);
+      }
+export type UnFollowUserMutationHookResult = ReturnType<typeof useUnFollowUserMutation>;
+export type UnFollowUserMutationResult = Apollo.MutationResult<UnFollowUserMutation>;
+export type UnFollowUserMutationOptions = Apollo.BaseMutationOptions<UnFollowUserMutation, UnFollowUserMutationVariables>;
 export const UpdateProfileOrBannerDocument = gql`
     mutation UpdateProfileOrBanner($input: ProfileInput!) {
   updateAvatarOrBanner(input: $input) {
@@ -679,6 +950,47 @@ export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const FriendsSuggestionsDocument = gql`
+    query FriendsSuggestions($input: FriendSuggestionInputType!) {
+  suggestions(input: $input) {
+    suggestions {
+      ...UserFragment
+    }
+    error {
+      message
+      field
+    }
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useFriendsSuggestionsQuery__
+ *
+ * To run a query within a React component, call `useFriendsSuggestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFriendsSuggestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFriendsSuggestionsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFriendsSuggestionsQuery(baseOptions: Apollo.QueryHookOptions<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>(FriendsSuggestionsDocument, options);
+      }
+export function useFriendsSuggestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>(FriendsSuggestionsDocument, options);
+        }
+export type FriendsSuggestionsQueryHookResult = ReturnType<typeof useFriendsSuggestionsQuery>;
+export type FriendsSuggestionsLazyQueryHookResult = ReturnType<typeof useFriendsSuggestionsLazyQuery>;
+export type FriendsSuggestionsQueryResult = Apollo.QueryResult<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>;
 export const HelloWorldDocument = gql`
     query HelloWorld {
   helloWorld
@@ -711,57 +1023,83 @@ export function useHelloWorldLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type HelloWorldQueryHookResult = ReturnType<typeof useHelloWorldQuery>;
 export type HelloWorldLazyQueryHookResult = ReturnType<typeof useHelloWorldLazyQuery>;
 export type HelloWorldQueryResult = Apollo.QueryResult<HelloWorldQuery, HelloWorldQueryVariables>;
-export const UserDocument = gql`
-    query User {
-  user {
-    username
-    id
-    email
-    isLoggedIn
-    confirmed
-    createdAt
-    updatedAt
-    settings {
-      id
-      theme
-    }
-    profile {
-      id
-      email
-      username
-      photoURL
-      bannerURL
-      bio
-      bday
-      verified
-    }
+export const MeDocument = gql`
+    query Me {
+  me {
+    ...UserFragment
   }
 }
-    `;
+    ${UserFragmentFragmentDoc}`;
 
 /**
- * __useUserQuery__
+ * __useMeQuery__
  *
- * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserQuery({
+ * const { data, loading, error } = useMeQuery({
  *   variables: {
  *   },
  * });
  */
-export function useUserQuery(baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
       }
-export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
         }
-export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
-export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
-export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const UserByIdDocument = gql`
+    query UserById($input: UserInputType!) {
+  user(input: $input) {
+    ...UserFragment
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useUserByIdQuery__
+ *
+ * To run a query within a React component, call `useUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserByIdQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserByIdQuery(baseOptions: Apollo.QueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, options);
+      }
+export function useUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, options);
+        }
+export type UserByIdQueryHookResult = ReturnType<typeof useUserByIdQuery>;
+export type UserByIdLazyQueryHookResult = ReturnType<typeof useUserByIdLazyQuery>;
+export type UserByIdQueryResult = Apollo.QueryResult<UserByIdQuery, UserByIdQueryVariables>;
+
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
+      }
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {}
+};
+      export default result;
+    

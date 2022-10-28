@@ -13,7 +13,6 @@ interface Props {}
 
 const Profile: React.FC<Props> = ({}) => {
   const [banner, setBanner] = useState<string>("");
-  const [accessToken, setAT] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [profileImage, setProfileImage] = useState<string>("");
   const [updateProfile, { data, loading: l }] =

@@ -18,3 +18,14 @@
   background: var(--color-purple);
   cursor: pointer;
 }
+.main > h1 {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: var(--main-color);
+  margin-bottom: 10px;
+  user-select: none;
+  user-zoom: none;
+  margin: 10px 0;
+  background-color: #f5f5f5;
+  padding: 10px;
+}

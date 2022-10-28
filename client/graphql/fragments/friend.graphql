@@ -1,0 +1,11 @@
+fragment FriendFragment on Friend {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}

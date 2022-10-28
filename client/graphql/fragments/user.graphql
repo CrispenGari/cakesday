@@ -1,0 +1,27 @@
+fragment UserFragment on User {
+  username
+  id
+  email
+  isLoggedIn
+  confirmed
+  createdAt
+  updatedAt
+  friends {
+    ...FriendFragment
+  }
+  settings {
+    ...SettingFragment
+  }
+  profile {
+    ...ProfileFragment
+  }
+  followers {
+    ...FollowerFragment
+  }
+  followings {
+    ...FollowingFragment
+  }
+  settings {
+    ...SettingFragment
+  }
+}

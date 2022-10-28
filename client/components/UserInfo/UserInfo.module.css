@@ -1,0 +1,72 @@
+.user__info {
+  margin: 10px;
+  background-color: white;
+  border-radius: 5px;
+  user-select: none;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative !important;
+}
+
+.user__info > h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  position: relative;
+  color: var(--main-color);
+}
+
+.user__info > h3 > span {
+  position: absolute;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: gray;
+  text-decoration: underline;
+}
+
+.user__info > h1 {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--main-color);
+}
+.user__info > h2,
+.user__info > h5 {
+  color: var(--color-purple);
+  margin: 10px auto;
+  font-size: 0.9rem;
+}
+.user__info > h5 {
+  font-weight: bold;
+}
+.user__info > h5 > span {
+  margin: 0px 5px !important;
+}
+.user__info > p {
+  font-size: 0.9rem;
+  color: gray;
+}
+.user__info > div:last-of-type {
+  width: 100%;
+}
+.user__info > div > p {
+  color: var(--main-color);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.user__info__badge {
+  position: absolute !important;
+  background-color: var(--color-purple) !important;
+  color: white !important;
+  top: 10px;
+  left: 10px;
+}
+.user__info > button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--main-color) !important;
+  color: white;
+  width: 100px;
+}

@@ -1,0 +1,11 @@
+fragment FollowerFragment on Follower {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
