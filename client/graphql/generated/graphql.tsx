@@ -330,12 +330,12 @@ export type RequestChangePasswordEmailMutationVariables = Exact<{
 
 export type RequestChangePasswordEmailMutation = { __typename?: 'Mutation', sendForgotPasswordEmail: { __typename?: 'SendForgotPasswordEmailObjectType', success: boolean, message?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
-export type ResendVerificatinCodeMutationVariables = Exact<{
+export type ResendVerificationCodeMutationVariables = Exact<{
   input: VerifyEmailInput;
 }>;
 
 
-export type ResendVerificatinCodeMutation = { __typename?: 'Mutation', resendVerificationCode: boolean };
+export type ResendVerificationCodeMutation = { __typename?: 'Mutation', resendVerificationCode: boolean };
 
 export type SignInMutationVariables = Exact<{
   input: SignInInput;
@@ -615,37 +615,37 @@ export function useRequestChangePasswordEmailMutation(baseOptions?: Apollo.Mutat
 export type RequestChangePasswordEmailMutationHookResult = ReturnType<typeof useRequestChangePasswordEmailMutation>;
 export type RequestChangePasswordEmailMutationResult = Apollo.MutationResult<RequestChangePasswordEmailMutation>;
 export type RequestChangePasswordEmailMutationOptions = Apollo.BaseMutationOptions<RequestChangePasswordEmailMutation, RequestChangePasswordEmailMutationVariables>;
-export const ResendVerificatinCodeDocument = gql`
-    mutation ResendVerificatinCode($input: VerifyEmailInput!) {
+export const ResendVerificationCodeDocument = gql`
+    mutation ResendVerificationCode($input: VerifyEmailInput!) {
   resendVerificationCode(input: $input)
 }
     `;
-export type ResendVerificatinCodeMutationFn = Apollo.MutationFunction<ResendVerificatinCodeMutation, ResendVerificatinCodeMutationVariables>;
+export type ResendVerificationCodeMutationFn = Apollo.MutationFunction<ResendVerificationCodeMutation, ResendVerificationCodeMutationVariables>;
 
 /**
- * __useResendVerificatinCodeMutation__
+ * __useResendVerificationCodeMutation__
  *
- * To run a mutation, you first call `useResendVerificatinCodeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useResendVerificatinCodeMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useResendVerificationCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResendVerificationCodeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [resendVerificatinCodeMutation, { data, loading, error }] = useResendVerificatinCodeMutation({
+ * const [resendVerificationCodeMutation, { data, loading, error }] = useResendVerificationCodeMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useResendVerificatinCodeMutation(baseOptions?: Apollo.MutationHookOptions<ResendVerificatinCodeMutation, ResendVerificatinCodeMutationVariables>) {
+export function useResendVerificationCodeMutation(baseOptions?: Apollo.MutationHookOptions<ResendVerificationCodeMutation, ResendVerificationCodeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ResendVerificatinCodeMutation, ResendVerificatinCodeMutationVariables>(ResendVerificatinCodeDocument, options);
+        return Apollo.useMutation<ResendVerificationCodeMutation, ResendVerificationCodeMutationVariables>(ResendVerificationCodeDocument, options);
       }
-export type ResendVerificatinCodeMutationHookResult = ReturnType<typeof useResendVerificatinCodeMutation>;
-export type ResendVerificatinCodeMutationResult = Apollo.MutationResult<ResendVerificatinCodeMutation>;
-export type ResendVerificatinCodeMutationOptions = Apollo.BaseMutationOptions<ResendVerificatinCodeMutation, ResendVerificatinCodeMutationVariables>;
+export type ResendVerificationCodeMutationHookResult = ReturnType<typeof useResendVerificationCodeMutation>;
+export type ResendVerificationCodeMutationResult = Apollo.MutationResult<ResendVerificationCodeMutation>;
+export type ResendVerificationCodeMutationOptions = Apollo.BaseMutationOptions<ResendVerificationCodeMutation, ResendVerificationCodeMutationVariables>;
 export const SignInDocument = gql`
     mutation SignIn($input: SignInInput!) {
   signIn(input: $input) {

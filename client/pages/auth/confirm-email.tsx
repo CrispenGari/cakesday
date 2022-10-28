@@ -9,10 +9,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import {
-  useResendVerificatinCodeMutation,
+  useResendVerificationCodeMutation,
   useVerifyEmailMutation,
 } from "../../graphql/generated/graphql";
-import { getAccessToken } from "../../state";
 import styles from "../../styles/ConfirmEmail.module.css";
 import { BiCheck } from "react-icons/bi";
 import { Footer } from "../../components";
@@ -25,7 +24,7 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
   const [confirmEmail, { loading: loading1, data: data1 }] =
     useVerifyEmailMutation({ fetchPolicy: "network-only" });
   const [resendConfirmationCode, { loading: loading2, data: data2 }] =
-    useResendVerificatinCodeMutation({ fetchPolicy: "network-only" });
+    useResendVerificationCodeMutation({ fetchPolicy: "network-only" });
 
   const router = useRouter();
 
@@ -35,7 +34,6 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
       fetchPolicy: "network-only",
       variables: {
         input: {
-          accessToken: getAccessToken() as any,
           verificationCode: code.trim(),
         },
       },
@@ -44,11 +42,7 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
   const resendCode = async () => {
     await resendConfirmationCode({
       fetchPolicy: "network-only",
-      variables: {
-        input: {
-          accessToken: getAccessToken() as any,
-        },
-      },
+      variables: {},
     });
   };
   useEffect(() => {

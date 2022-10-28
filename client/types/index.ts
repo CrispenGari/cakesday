@@ -1,5 +1,12 @@
 import { Friend } from "../graphql/generated/graphql";
 
+export interface ActionType<T> {
+  payload: T;
+  type: string;
+}
+export interface StateType {
+  accessToken: string;
+}
 export interface EmojiType {
   name: string;
   code: string;

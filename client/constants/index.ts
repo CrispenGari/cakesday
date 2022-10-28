@@ -1,5 +1,9 @@
 import { EmojiType } from "../types";
 
+export const constants = {
+  SET_ACCESS_TOKEN: "SET_ACCESS_TOKEN",
+};
+
 export const __server__base__url__: string = "http://localhost:3001";
 export const months = [
   "January",

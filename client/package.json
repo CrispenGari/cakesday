@@ -23,12 +23,17 @@
     "jwt-decode": "^3.1.2",
     "next": "12.3.1",
     "react": "18.2.0",
+    "react-cookie": "^4.1.1",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
     "react-drag-drop-files": "^2.3.7",
     "react-emoji-render": "^1.2.4",
     "react-emojis": "^1.0.6",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0",
+    "sfcookies": "^1.0.2",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.5",
@@ -45,6 +50,7 @@
     "@types/react": "18.0.21",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "18.0.6",
+    "@types/sfcookies": "^1.0.1",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
     "typescript": "4.8.4"

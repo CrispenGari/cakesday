@@ -49,6 +49,7 @@ export class FriendsSuggestionsResolver {
       .filter((s) => s.profile)
       .filter((s) => s.username !== user.username)
       .filter((s) => s.confirmed);
+
     return {
       suggestions: _suggestions,
     };

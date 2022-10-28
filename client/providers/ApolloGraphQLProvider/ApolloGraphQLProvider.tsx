@@ -4,13 +4,11 @@ import { setContext } from "@apollo/client/link/context";
 import {
   ApolloProvider,
   InMemoryCache,
-
   ApolloClient,
   createHttpLink,
-
 } from "@apollo/client";
-import { getAccessToken } from "../../state";
 import { __server__base__url__ } from "../../constants";
+import { getAccessToken } from "../../state";
 
 const cache = new InMemoryCache({});
 const httpLink = createHttpLink({
@@ -19,11 +17,11 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = getAccessToken();
+  const accessToken = getAccessToken();
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: accessToken ? `Bearer ${accessToken}` : "",
     },
   };
 });
