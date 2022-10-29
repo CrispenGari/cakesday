@@ -10,8 +10,13 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/ForgotPassword.module.css";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { useRequestChangePasswordEmailMutation } from "../../graphql/generated/graphql";
+import {
+  ImAuthenticatedDocument,
+  useRequestChangePasswordEmailMutation,
+} from "../../graphql/generated/graphql";
 import { Footer } from "../../components";
+import { GetServerSidePropsContext } from "next";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 interface Props {}
 
 const ForgotPassword: React.FC<Props> = ({}) => {
@@ -85,3 +90,26 @@ const ForgotPassword: React.FC<Props> = ({}) => {
 };
 
 export default ForgotPassword;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

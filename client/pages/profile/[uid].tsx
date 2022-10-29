@@ -14,6 +14,7 @@ const Profile: React.FC<Props> = ({}) => {
   });
 
   const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
+  console.log(me);
   return (
     <div className={styles.profile}>
       <Header />

@@ -4,11 +4,16 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/Profile.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import { getBase64 } from "../../utils";
-import { useUpdateProfileOrBannerMutation } from "../../graphql/generated/graphql";
+import {
+  ImAuthenticatedDocument,
+  useUpdateProfileOrBannerMutation,
+} from "../../graphql/generated/graphql";
 import { getAccessToken, setAccessToken } from "../../state";
 import { AiOutlineCamera } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/react";
 import { Footer } from "../../components";
+import { GetServerSidePropsContext } from "next";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 interface Props {}
 
 const Profile: React.FC<Props> = ({}) => {
@@ -128,3 +133,26 @@ const Profile: React.FC<Props> = ({}) => {
 };
 
 export default Profile;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

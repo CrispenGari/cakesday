@@ -10,6 +10,7 @@ body {
   --color-orange: #fcb677;
   font-family: "Trirong", sans-serif !important;
   /* font-size: 1.3rem; */
+  background-color: #f5f5f5;
 }
 
 a {

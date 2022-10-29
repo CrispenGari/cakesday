@@ -5,16 +5,19 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import {
+  ImAuthenticatedDocument,
   useResendVerificationCodeMutation,
   useVerifyEmailMutation,
 } from "../../graphql/generated/graphql";
 import styles from "../../styles/ConfirmEmail.module.css";
 import { BiCheck } from "react-icons/bi";
 import { Footer } from "../../components";
+import { getAccessToken } from "../../state";
+import { GetServerSidePropsContext } from "next";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 interface Props {}
 
 const ConfirmEmail: React.FC<Props> = ({}) => {
@@ -35,6 +38,7 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
       variables: {
         input: {
           verificationCode: code.trim(),
+          accessToken: getAccessToken(),
         },
       },
     });
@@ -107,3 +111,26 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
 };
 
 export default ConfirmEmail;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

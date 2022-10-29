@@ -103,10 +103,21 @@ export type FriendSuggestionObjectType = {
   suggestions: Array<User>;
 };
 
+export type ImAuthenticatedInputType = {
+  refreshToken: Scalars['String'];
+};
+
+export type ImAuthenticatedObjectType = {
+  __typename?: 'ImAuthenticatedObjectType';
+  error: AuthError;
+  imAuthenticated: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: ChangePasswordObjectType;
   followUser: FollowUserObjectType;
+  imAuthenticated: ImAuthenticatedObjectType;
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
   signIn: SignInObjectType;
@@ -126,6 +137,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationFollowUserArgs = {
   input: FollowUserInputType;
+};
+
+
+export type MutationImAuthenticatedArgs = {
+  input: ImAuthenticatedInputType;
 };
 
 
@@ -195,16 +211,10 @@ export type ProfileInput = {
 
 export type Query = {
   __typename?: 'Query';
-  cookie: Scalars['Boolean'];
   helloWorld: Scalars['String'];
   me?: Maybe<User>;
   suggestions: FriendSuggestionObjectType;
   user?: Maybe<User>;
-};
-
-
-export type QueryCookieArgs = {
-  cookie: Scalars['String'];
 };
 
 
@@ -322,6 +332,13 @@ export type FollowUserMutationVariables = Exact<{
 
 
 export type FollowUserMutation = { __typename?: 'Mutation', followUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type ImAuthenticatedMutationVariables = Exact<{
+  input: ImAuthenticatedInputType;
+}>;
+
+
+export type ImAuthenticatedMutation = { __typename?: 'Mutation', imAuthenticated: { __typename?: 'ImAuthenticatedObjectType', imAuthenticated: boolean, error: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type RequestChangePasswordEmailMutationVariables = Exact<{
   input: SendForgotPasswordEmailInputType;
@@ -578,6 +595,43 @@ export function useFollowUserMutation(baseOptions?: Apollo.MutationHookOptions<F
 export type FollowUserMutationHookResult = ReturnType<typeof useFollowUserMutation>;
 export type FollowUserMutationResult = Apollo.MutationResult<FollowUserMutation>;
 export type FollowUserMutationOptions = Apollo.BaseMutationOptions<FollowUserMutation, FollowUserMutationVariables>;
+export const ImAuthenticatedDocument = gql`
+    mutation ImAuthenticated($input: ImAuthenticatedInputType!) {
+  imAuthenticated(input: $input) {
+    imAuthenticated
+    error {
+      field
+      message
+    }
+  }
+}
+    `;
+export type ImAuthenticatedMutationFn = Apollo.MutationFunction<ImAuthenticatedMutation, ImAuthenticatedMutationVariables>;
+
+/**
+ * __useImAuthenticatedMutation__
+ *
+ * To run a mutation, you first call `useImAuthenticatedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useImAuthenticatedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [imAuthenticatedMutation, { data, loading, error }] = useImAuthenticatedMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useImAuthenticatedMutation(baseOptions?: Apollo.MutationHookOptions<ImAuthenticatedMutation, ImAuthenticatedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ImAuthenticatedMutation, ImAuthenticatedMutationVariables>(ImAuthenticatedDocument, options);
+      }
+export type ImAuthenticatedMutationHookResult = ReturnType<typeof useImAuthenticatedMutation>;
+export type ImAuthenticatedMutationResult = Apollo.MutationResult<ImAuthenticatedMutation>;
+export type ImAuthenticatedMutationOptions = Apollo.BaseMutationOptions<ImAuthenticatedMutation, ImAuthenticatedMutationVariables>;
 export const RequestChangePasswordEmailDocument = gql`
     mutation RequestChangePasswordEmail($input: SendForgotPasswordEmailInputType!) {
   sendForgotPasswordEmail(input: $input) {

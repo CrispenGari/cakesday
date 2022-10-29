@@ -6,17 +6,23 @@ import {
   InputLeftElement,
   InputRightElement,
 } from "@chakra-ui/react";
+import { GetServerSidePropsContext, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { Footer, Loading } from "../../components";
-import { useMeQuery, useSignInMutation } from "../../graphql/generated/graphql";
+import {
+  ImAuthenticatedDocument,
+  useMeQuery,
+  useSignInMutation,
+} from "../../graphql/generated/graphql";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 import { setAccessToken } from "../../state";
 import styles from "../../styles/SignIn.module.css";
 interface Props {}
-const SignIn: React.FC<Props> = ({}) => {
+const SignIn: NextPage = ({}) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -24,7 +30,7 @@ const SignIn: React.FC<Props> = ({}) => {
   const [signInHandler, { loading: submitting, data }] = useSignInMutation({
     fetchPolicy: "network-only",
   });
-  const { data: user, loading } = useMeQuery({ fetchPolicy: "network-only" });
+  const { data: me, loading } = useMeQuery({ fetchPolicy: "network-only" });
 
   const router = useRouter();
 
@@ -40,7 +46,6 @@ const SignIn: React.FC<Props> = ({}) => {
       fetchPolicy: "network-only",
     });
   };
-
   useEffect(() => {
     if (!submitting && data?.signIn.error) {
       setError(data.signIn.error.message);
@@ -52,14 +57,14 @@ const SignIn: React.FC<Props> = ({}) => {
       }
     }
   }, [data, submitting, router]);
-  console.log(user);
+  console.log(me);
   useEffect(() => {
-    if (!loading && user?.me) {
-      if (user.me.isLoggedIn && user.me.confirmed) {
+    if (!loading && me?.me) {
+      if (me.me.isLoggedIn && me.me.confirmed) {
         router.replace("/");
       }
     }
-  }, [loading, user, router]);
+  }, [loading, me, router]);
 
   if (loading) return <Loading />;
 
@@ -133,3 +138,26 @@ const SignIn: React.FC<Props> = ({}) => {
 };
 
 export default SignIn;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

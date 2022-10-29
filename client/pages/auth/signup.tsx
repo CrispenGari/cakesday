@@ -8,13 +8,15 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useSignUpMutation } from "../../graphql/generated/graphql";
+import { ImAuthenticatedDocument, useSignUpMutation } from "../../graphql/generated/graphql";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/SignUp.module.css";
 import { setAccessToken } from "../../state";
 import { Footer } from "../../components";
+import { GetServerSidePropsContext } from "next";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 interface Props {}
 const SignUp: React.FC<Props> = ({}) => {
   const [username, setUsername] = useState<string>("");
@@ -167,3 +169,27 @@ const SignUp: React.FC<Props> = ({}) => {
 };
 
 export default SignUp;
+
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

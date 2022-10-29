@@ -39,7 +39,6 @@ export class FriendsSuggestionsResolver {
     }
 
     const followings = user.followings.map((f) => f.username);
-    console.log(followings);
     const suggestions = await User.find({
       relations: ["profile", "followers", "followings", "friends"],
     });

@@ -55,21 +55,6 @@ export class UpdateProfileResolver {
       if (!profile) {
         // create a new profile
         const _profile = new Profile();
-        _profile.photoURL = uploadURL ?? user.profile.photoURL;
-        const __profile = await _profile.save();
-        user.profile = __profile;
-      } else {
-        // update existing profile
-        profile.photoURL = uploadURL ?? user.profile.photoURL;
-        const _profile = await profile.save();
-        user.profile = _profile;
-      }
-    }
-    if (avatar) {
-      const uploadURL = await getDownloadURL(avatar, user, "avatar");
-      if (!profile) {
-        // create a new profile
-        const _profile = new Profile();
         _profile.bannerURL = uploadURL ?? user.profile.bannerURL;
         const __profile = await _profile.save();
         user.profile = __profile;
@@ -80,7 +65,23 @@ export class UpdateProfileResolver {
         user.profile = _profile;
       }
     }
-
+    if (avatar) {
+      const uploadURL = await getDownloadURL(avatar, user, "avatar");
+      if (!profile) {
+        // create a new profile
+        const _profile = new Profile();
+        _profile.photoURL = uploadURL ?? user.profile.photoURL;
+        const __profile = await _profile.save();
+        user.profile = __profile;
+      } else {
+        // update existing profile
+        profile.photoURL = uploadURL ?? user.profile.photoURL;
+        const _profile = await profile.save();
+        user.profile = _profile;
+      }
+    }
+    // automatically log in the user
+    user.isLoggedIn = true;
     await user.save();
     storeRefreshToken(res, createRefreshToken(user));
     return {

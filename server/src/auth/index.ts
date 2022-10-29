@@ -33,8 +33,9 @@ export const createRefreshToken = (user: User): string => {
 
 export const storeRefreshToken = (res: Response, token: string): void => {
   // Invalidate old tokens
-
   res.cookie(__cookieName__, token, {
-    httpOnly: true,
+    httpOnly: true, // they can not be accessed using javascript
+    path: "*",
+    sameSite: "lax",
   });
 };

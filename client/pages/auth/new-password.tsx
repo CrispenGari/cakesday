@@ -12,8 +12,13 @@ import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/NewPassword.module.css";
 import { setAccessToken } from "../../state";
-import { useChangePasswordMutation } from "../../graphql/generated/graphql";
+import {
+  ImAuthenticatedDocument,
+  useChangePasswordMutation,
+} from "../../graphql/generated/graphql";
 import { Footer } from "../../components";
+import { GetServerSidePropsContext } from "next";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 interface Props {}
 const NewPassword: React.FC<Props> = ({}) => {
   const [show1, setShow1] = useState<boolean>(false);
@@ -135,3 +140,26 @@ const NewPassword: React.FC<Props> = ({}) => {
 };
 
 export default NewPassword;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const refreshToken = context.req.cookies?.qid ?? "";
+  const { data, errors } = await client.mutate({
+    mutation: ImAuthenticatedDocument,
+    variables: {
+      input: {
+        refreshToken,
+      },
+    },
+  });
+  if (data?.imAuthenticated?.imAuthenticated === true) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

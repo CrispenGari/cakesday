@@ -94,8 +94,6 @@ export class VerifyEmailResolver {
 
     //  the user email has been confirmed
     user.confirmed = true;
-    // automatically log in the user
-    user.isLoggedIn = true;
     await user.save();
     // new tokens
     storeRefreshToken(res, createRefreshToken(user));

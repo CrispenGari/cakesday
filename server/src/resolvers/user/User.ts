@@ -11,6 +11,7 @@ export class UserInputType {
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
+  // @UseMiddleware(isAuth)
   async me(@Ctx() { req }: ContextType): Promise<User | undefined> {
     const authorization = req.headers["authorization"];
     if (!authorization) return undefined;
