@@ -1,0 +1,22 @@
+.change__theme__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.change__theme__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.change__theme__settings > h1 {
+  font-weight: 600;
+}
+.change__theme__settings > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 10px 0;
+}

@@ -12,6 +12,7 @@ import { getAccessToken } from "../../state";
 import { Footer } from "../../components";
 import { GetServerSidePropsContext } from "next";
 import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
+import { genders } from "../../constants";
 
 interface Props {}
 
@@ -61,8 +62,11 @@ const MoreInfo: React.FC<Props> = ({}) => {
         ></textarea>
         <h2>Gender</h2>
         <select value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option value="male">male</option>
-          <option value="female">female</option>
+          {genders.map((gender) => (
+            <option key={gender} value={gender}>
+              {gender}
+            </option>
+          ))}
         </select>
         <p>{error}</p>
         <Button type="submit">Next</Button>

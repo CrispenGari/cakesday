@@ -1,5 +1,6 @@
 import { Friend } from "../graphql/generated/graphql";
 
+export type ThemeType = "dark" | "light";
 export interface ActionType<T> {
   payload: T;
   type: string;

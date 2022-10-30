@@ -1,0 +1,109 @@
+.profile__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.profile__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+  align-self: flex-start;
+  text-align: start;
+  width: 100%;
+}
+.profile__settings > h1 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.profile__settings > div {
+  display: flex;
+  align-items: flex-start;
+  margin: 5px 0;
+  justify-content: space-between;
+}
+.profile__settings > div > div {
+  flex: 1;
+  margin-left: 10px;
+}
+.profile__settings > div > div > p {
+  font-size: 0.8rem;
+  color: var(--main-color);
+}
+.profile__settings__date {
+  display: flex;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: gray;
+  align-items: center;
+}
+.profile__settings > div > textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  outline: none;
+}
+.profile__settings > div > select {
+  flex: 1;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid lightgray;
+}
+.profile__settings__date__picker {
+  outline: none !important;
+  color: black !important;
+  flex: 1 !important;
+  margin-left: 10px;
+}
+.profile__settings__date__picker input {
+  display: none !important;
+}
+.profile__settings > p {
+  font-size: 0.8rem;
+  margin: 5px auto;
+  color: var(--main-color);
+}
+.profile__settings > p.profile__settings__error {
+  color: red;
+  text-align: center;
+}
+.profile__settings > div:last-of-type {
+  padding: 0px 10px;
+}
+.profile__settings > button {
+  background-color: var(--main-color);
+  color: white;
+  margin: 10px 0;
+  font-weight: 500 !important;
+  width: fit-content;
+}
+@media only screen and (max-width: 768px) {
+  .profile__settings > div {
+    flex-direction: column;
+    width: 100%;
+  }
+  .profile__settings > div > select {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .profile__settings > div > textarea {
+    margin: unset;
+    width: 100%;
+    margin: 5px 0;
+  }
+  .profile__settings__date {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .profile__settings > div > div {
+    max-width: 400px;
+  }
+}
