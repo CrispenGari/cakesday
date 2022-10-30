@@ -1,4 +1,14 @@
-fragment SettingFragment on Settings {
+fragment SettingsFragment on Settings {
   id
-  theme
+  createdAt
+  updatedAt
+  common {
+    ...CommonSettingsFragment
+  }
+  privacy {
+    ...PrivacySettingsFragment
+  }
+  notifications {
+    ...NotificationSettingsFragment
+  }
 }

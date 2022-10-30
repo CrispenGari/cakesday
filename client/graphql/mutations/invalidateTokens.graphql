@@ -1,0 +1,9 @@
+mutation InvalidateTokens($input: InvalidateTokenInputType!) {
+  invalidateToken(input: $input) {
+    message {
+      message
+      field
+    }
+    success
+  }
+}

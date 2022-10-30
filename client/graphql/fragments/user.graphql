@@ -10,7 +10,7 @@ fragment UserFragment on User {
     ...FriendFragment
   }
   settings {
-    ...SettingFragment
+    ...SettingsFragment
   }
   profile {
     ...ProfileFragment
@@ -20,8 +20,5 @@ fragment UserFragment on User {
   }
   followings {
     ...FollowingFragment
-  }
-  settings {
-    ...SettingFragment
   }
 }

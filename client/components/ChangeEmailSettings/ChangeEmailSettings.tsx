@@ -5,17 +5,26 @@ import {
   Button,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { ProfileType } from "../../types";
 import styles from "./ChangeEmailSettings.module.css";
-interface Props {}
-const ChangeEmailSettings: React.FC<Props> = ({}) => {
+interface Props {
+  profile: ProfileType;
+}
+const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
   const [show0, setShow0] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (profile) {
+      setEmail(profile.email);
+    }
+  }, [profile]);
   return (
     <div className={styles.change__email__settings}>
       <h1>Change Email</h1>

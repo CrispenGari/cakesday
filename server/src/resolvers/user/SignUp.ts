@@ -24,6 +24,10 @@ import { sendEmail } from "../../utils";
 import { verificationCodeEmailTemplate } from "../../templates";
 import { generateVerificationCode } from "@crispengari/random-verification-codes/lib";
 import { Profile } from "../../entities/Profile/Profile";
+import { CommonSettings } from "../../entities/Settings/Common/Common";
+import { NotificationsSettings } from "../../entities/Settings/Notifications/Notification";
+import { PrivacySettings } from "../../entities/Settings/Privacy/Privacy";
+import { Settings } from "../../entities/Settings/Settings";
 
 @Resolver()
 export class SignUpResolver {
@@ -88,6 +92,19 @@ export class SignUpResolver {
       username,
       email,
     }).save();
+
+    // Default user settings by cakesday
+    const _commonSetting = await CommonSettings.create().save();
+    const _notificationSetting = await NotificationsSettings.create().save();
+    const _privacySettings = await PrivacySettings.create().save();
+
+    const userSettings = await Settings.create({
+      common: _commonSetting,
+      notifications: _notificationSetting,
+      privacy: _privacySettings,
+    }).save();
+
+    user.settings = userSettings;
     user.profile = profile;
     await user.save();
     // send the verification email

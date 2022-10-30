@@ -1,3 +1,4 @@
+import { GenderType } from "../../types";
 import { ObjectType, Field, Int } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -25,7 +26,12 @@ export class Profile extends BaseEntity {
   bannerURL: string;
 
   @Field(() => String)
-  @Column({ nullable: false, default: "male" })
+  @Column({
+    nullable: false,
+    default: GenderType.MALE,
+    type: "enum",
+    enum: GenderType,
+  })
   gender: string;
 
   @Field(() => String)

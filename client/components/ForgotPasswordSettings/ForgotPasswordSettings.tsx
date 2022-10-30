@@ -1,10 +1,19 @@
 import { InputGroup, InputLeftElement, Input, Button } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { ProfileType } from "../../types";
 import styles from "./ForgotPasswordSettings.module.css";
-interface Props {}
-const ForgotPasswordSettings: React.FC<Props> = ({}) => {
+interface Props {
+  profile: ProfileType;
+}
+const ForgotPasswordSettings: React.FC<Props> = ({ profile }) => {
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (profile) {
+      setEmail(profile.email);
+    }
+  }, [profile]);
   return (
     <div className={styles.forgot__password__settings}>
       <h1>Forgot Password</h1>

@@ -6,6 +6,23 @@ export interface ContextType {
   redis: Redis;
 }
 
+export enum ThemeType {
+  DARK = "dark",
+  LIGHT = "light",
+}
+
+export enum PrivacyType {
+  ONLY_ME = "only me",
+  EVERYONE = "everyone",
+  FOLLOWERS = "followers",
+  FRIENDS = "friends",
+}
+export enum GenderType {
+  FEMALE = "female",
+  MALE = "male",
+  TRANSGENDER = "transgender",
+}
+
 export enum NotificationType {
   NEW_POST = "NEW_POST",
   NEW_LIKE = "NEW_LIKE",

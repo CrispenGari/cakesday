@@ -63,13 +63,23 @@ export class User extends BaseEntity {
   /** Relations between the user and other entities */
   // Profile
   @Field(() => Profile, { nullable: true })
-  @OneToOne(() => Profile, { eager: false })
+  @OneToOne(() => Profile, {
+    eager: true,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
   @JoinColumn()
   profile: Profile;
 
   // Settings
   @Field(() => Settings, { nullable: true })
-  @OneToOne(() => Settings, { eager: true })
+  @OneToOne(() => Settings, {
+    eager: true,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
   @JoinColumn()
   settings: Settings;
 
