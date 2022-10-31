@@ -5,6 +5,7 @@ fragment NotificationSettingsFragment on NotificationsSettings {
   onFriendProfileUpdate
   onFriendBirthday
   onBirthDayWish
+  onNewFollowers
   createdAt
   updatedAt
 }

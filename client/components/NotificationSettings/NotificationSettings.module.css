@@ -6,6 +6,7 @@
   border-radius: 5px;
   padding: 10px;
   user-select: none;
+  position: relative !important;
 }
 .notification__settings > p {
   color: var(--main-color);
@@ -16,6 +17,7 @@
 }
 .notification__settings > div {
   display: flex;
+  position: relative;
   width: 100%;
   justify-content: space-between;
   margin: 3px 0;
@@ -31,4 +33,15 @@
   color: white;
   margin: 10px 0;
   font-weight: 500 !important;
+}
+
+.notification__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.notification__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
 }
