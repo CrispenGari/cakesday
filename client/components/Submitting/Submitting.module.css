@@ -1,0 +1,43 @@
+.submitting {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.submitting > div {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.submitting > div > div {
+  width: 10px;
+  height: 10px;
+  background-color: cornflowerblue;
+  border-radius: 50%;
+  animation: ripple 1.5s ease 0s infinite;
+  align-self: center;
+  justify-self: center;
+}
+
+@keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

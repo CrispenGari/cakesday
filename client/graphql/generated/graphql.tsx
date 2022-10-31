@@ -160,6 +160,7 @@ export type Mutation = {
   signUp: SignUpObjectType;
   unFollowUser: FollowUserObjectType;
   updateAvatarOrBanner: UpdateProfileObjectType;
+  updateCommonSettings: UpdateProfileSettingsObjectType;
   updateProfile: UpdateProfileObjectType;
   updateProfileSettings: UpdateProfileSettingsObjectType;
   verifyEmail: VerifyEmailObjectType;
@@ -218,6 +219,11 @@ export type MutationUnFollowUserArgs = {
 
 export type MutationUpdateAvatarOrBannerArgs = {
   input: ProfileInput;
+};
+
+
+export type MutationUpdateCommonSettingsArgs = {
+  input: UpdateCommonSettingsInputType;
 };
 
 
@@ -346,6 +352,12 @@ export type SignUpObjectType = {
   accessToken?: Maybe<Scalars['String']>;
   error?: Maybe<AuthError>;
   user?: Maybe<User>;
+};
+
+export type UpdateCommonSettingsInputType = {
+  accessToken: Scalars['String'];
+  emailSubscriptions?: InputMaybe<Scalars['Boolean']>;
+  theme?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateProfileObjectType = {
@@ -500,6 +512,13 @@ export type UpdateProfileOrBannerMutationVariables = Exact<{
 
 
 export type UpdateProfileOrBannerMutation = { __typename?: 'Mutation', updateAvatarOrBanner: { __typename?: 'UpdateProfileObjectType', accessToken?: string | null, error?: { __typename?: 'AuthError', message: string, field: string } | null, user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, profile?: { __typename?: 'Profile', id: number, username: string, email: string, bannerURL?: string | null, bday: string, verified?: boolean | null, bio?: string | null, photoURL?: string | null } | null } | null } };
+
+export type UpdateCommonSettingsMutationVariables = Exact<{
+  input: UpdateCommonSettingsInputType;
+}>;
+
+
+export type UpdateCommonSettingsMutation = { __typename?: 'Mutation', updateCommonSettings: { __typename?: 'UpdateProfileSettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type UpdateProfileMutationVariables = Exact<{
   input: ProfileInput;
@@ -1141,6 +1160,43 @@ export function useUpdateProfileOrBannerMutation(baseOptions?: Apollo.MutationHo
 export type UpdateProfileOrBannerMutationHookResult = ReturnType<typeof useUpdateProfileOrBannerMutation>;
 export type UpdateProfileOrBannerMutationResult = Apollo.MutationResult<UpdateProfileOrBannerMutation>;
 export type UpdateProfileOrBannerMutationOptions = Apollo.BaseMutationOptions<UpdateProfileOrBannerMutation, UpdateProfileOrBannerMutationVariables>;
+export const UpdateCommonSettingsDocument = gql`
+    mutation UpdateCommonSettings($input: UpdateCommonSettingsInputType!) {
+  updateCommonSettings(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type UpdateCommonSettingsMutationFn = Apollo.MutationFunction<UpdateCommonSettingsMutation, UpdateCommonSettingsMutationVariables>;
+
+/**
+ * __useUpdateCommonSettingsMutation__
+ *
+ * To run a mutation, you first call `useUpdateCommonSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCommonSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCommonSettingsMutation, { data, loading, error }] = useUpdateCommonSettingsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCommonSettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCommonSettingsMutation, UpdateCommonSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCommonSettingsMutation, UpdateCommonSettingsMutationVariables>(UpdateCommonSettingsDocument, options);
+      }
+export type UpdateCommonSettingsMutationHookResult = ReturnType<typeof useUpdateCommonSettingsMutation>;
+export type UpdateCommonSettingsMutationResult = Apollo.MutationResult<UpdateCommonSettingsMutation>;
+export type UpdateCommonSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateCommonSettingsMutation, UpdateCommonSettingsMutationVariables>;
 export const UpdateProfileDocument = gql`
     mutation UpdateProfile($input: ProfileInput!) {
   updateProfile(input: $input) {

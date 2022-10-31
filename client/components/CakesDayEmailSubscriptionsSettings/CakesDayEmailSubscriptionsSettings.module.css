@@ -20,3 +20,14 @@
   justify-content: space-between;
   margin: 10px 0;
 }
+
+.cakes__day__email__subscriptions__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.cakes__day__email__subscriptions__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
