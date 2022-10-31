@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./ChangeThemeSettings.module.css";
-import { Switch } from "@chakra-ui/react";
+import { Button, Switch } from "@chakra-ui/react";
 import { ThemeType } from "../../types";
 import {
   CommonSettings,
@@ -17,6 +17,7 @@ interface Props {
 const ChangeThemeSettings: React.FC<Props> = ({ settings }) => {
   const [theme, setTheme] = React.useState<ThemeType>("light");
   const [error, setError] = React.useState("");
+  const [counter, setCounter] = React.useState(0);
   const [updateSettings, { loading, data }] = useUpdateCommonSettingsMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -31,10 +32,28 @@ const ChangeThemeSettings: React.FC<Props> = ({ settings }) => {
   });
 
   React.useEffect(() => {
+    const unsubscribe = setInterval(() => setCounter((prev) => prev - 1), 1000);
+    return () => {
+      clearInterval(unsubscribe);
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (data?.updateCommonSettings) {
       setError(data.updateCommonSettings.message.message);
+      setCounter(5);
     }
   }, [data]);
+
+  React.useEffect(() => {
+    if (
+      data?.updateCommonSettings.success &&
+      data.updateCommonSettings.message &&
+      counter === 0
+    ) {
+      setError("");
+    }
+  }, [data, counter]);
 
   React.useEffect(() => {
     if (settings) {
@@ -70,7 +89,6 @@ const ChangeThemeSettings: React.FC<Props> = ({ settings }) => {
         <p>{theme === "dark" ? "Dark" : "Light"}</p>
         <Switch
           value={theme}
-          onChangeCapture={updateTheme}
           isChecked={theme === "dark"}
           onChange={(e) => {
             if (e.target.checked) {
@@ -82,6 +100,9 @@ const ChangeThemeSettings: React.FC<Props> = ({ settings }) => {
         />
       </div>
 
+      <Button isLoading={loading} onClick={updateTheme}>
+        Save Theme
+      </Button>
       <p>This theme will be saved in your settings.</p>
     </div>
   );

@@ -32,3 +32,11 @@
   font-size: 0.9rem !important;
   margin: 5px 0;
 }
+
+.change__theme__settings > button {
+  width: fit-content !important;
+  background-color: var(--main-color);
+  color: white;
+  margin-bottom: 10px;
+  font-weight: unset !important;
+}

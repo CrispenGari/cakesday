@@ -6,6 +6,7 @@
   border-radius: 5px;
   padding: 10px;
   user-select: none;
+  position: relative;
 }
 .cakes__day__email__subscriptions__settings > p {
   color: var(--main-color);
@@ -30,4 +31,12 @@
   color: var(--main-color) !important;
   font-size: 0.9rem !important;
   margin: 5px 0;
+}
+
+.cakes__day__email__subscriptions__settings > button {
+  width: fit-content !important;
+  background-color: var(--main-color);
+  color: white;
+  margin-bottom: 10px;
+  font-weight: unset !important;
 }

@@ -10,7 +10,6 @@ export enum ThemeType {
   DARK = "dark",
   LIGHT = "light",
 }
-
 export enum PrivacyType {
   ONLY_ME = "only me",
   EVERYONE = "everyone",

@@ -1,4 +1,4 @@
-import { theme, Switch } from "@chakra-ui/react";
+import { theme, Switch, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
   CommonSettings,
@@ -7,13 +7,14 @@ import {
   useUpdateCommonSettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import Submitting from "../Submitting/Submitting";
 import styles from "./CakesDayEmailSubscriptionsSettings.module.css";
 interface Props {
   settings: CommonSettings;
 }
 const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
   const [subscription, setSubscription] = useState(0);
-
+  const [counter, setCounter] = React.useState(5);
   const [error, setError] = React.useState("");
   const [updateSettings, { loading, data }] = useUpdateCommonSettingsMutation({
     fetchPolicy: "network-only",
@@ -31,27 +32,51 @@ const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
   React.useEffect(() => {
     if (data?.updateCommonSettings) {
       setError(data.updateCommonSettings.message.message);
+      setCounter(5);
     }
   }, [data]);
+  React.useEffect(() => {
+    if (
+      data?.updateCommonSettings.success &&
+      data.updateCommonSettings.message &&
+      counter === 0
+    ) {
+      setError("");
+    }
+  }, [data, counter]);
 
   React.useEffect(() => {
-    if (settings) {
-      setSubscription(settings.emailSubscriptions ? 1 : 0);
-    }
+    let mounted: boolean = true;
+    if (mounted)
+      if (settings) {
+        setSubscription(settings.emailSubscriptions ? 1 : 0);
+      }
+
+    return () => {
+      mounted = false;
+    };
   }, [settings]);
+
+  React.useEffect(() => {
+    const unsubscribe = setInterval(() => setCounter((prev) => prev - 1), 1000);
+    return () => {
+      clearInterval(unsubscribe);
+    };
+  }, []);
 
   const updateEmailSubScriptions = async () => {
     await updateSettings({
       variables: {
         input: {
           accessToken: getAccessToken() as any,
-          emailSubscriptions: Boolean(subscription),
+          emailSubscriptions: subscription === 1 ? true : false,
         },
       },
     });
   };
   return (
     <div className={styles.cakes__day__email__subscriptions__settings}>
+      {loading ? <Submitting /> : null}
       <h1>Email Subscriptions</h1>
       <p
         className={
@@ -66,7 +91,6 @@ const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
         <p>{!!subscription ? "UnSubscribe" : "Subscribe"}</p>
         <Switch
           value={subscription}
-          onChangeCapture={updateEmailSubScriptions}
           isChecked={!!subscription}
           onChange={(e) => {
             if (e.target.checked) {
@@ -77,6 +101,9 @@ const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
           }}
         />
       </div>
+      <Button onClick={updateEmailSubScriptions} isLoading={loading}>
+        Save Changes
+      </Button>
       <p>Subscribe to news letters from cakesdays via email.</p>
     </div>
   );

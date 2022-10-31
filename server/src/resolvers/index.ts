@@ -7,6 +7,7 @@ import { UnFollowUserResolver } from "./friend/UnFollowUserResolver";
 import { HelloWorldResolver } from "./hello/HelloWorldResolver";
 import { UpdateProfileResolver } from "./profile/UpdateProfile";
 import { ChangePasswordSettingsResolver } from "./settings/ChangePasswordSettingsResolver";
+import { UpdateCommonSettingsResolver } from "./settings/UpdateCommonSettingsResolver";
 import { UpdateProfileSettingResolver } from "./settings/UpdateProfileSettingsResolver";
 import { ChangePasswordResolver } from "./user/ChangePasswordResolver";
 import { SignInResolver } from "./user/SignIn";
@@ -31,4 +32,5 @@ export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   InvalidateTokenResolver,
   UpdateProfileSettingResolver,
   ChangePasswordSettingsResolver,
+  UpdateCommonSettingsResolver,
 ];
