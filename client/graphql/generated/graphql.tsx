@@ -63,6 +63,21 @@ export type ChangePasswordSettingsObjectType = {
   success: Scalars['Boolean'];
 };
 
+export type ChangePrivacySettingsInputType = {
+  accessToken: Scalars['String'];
+  followersFollowings?: InputMaybe<Scalars['String']>;
+  myBirthday?: InputMaybe<Scalars['String']>;
+  myProfile?: InputMaybe<Scalars['String']>;
+  sendBirthDayWishes?: InputMaybe<Scalars['String']>;
+  shareBirthDayCard?: InputMaybe<Scalars['String']>;
+};
+
+export type ChangePrivacySettingsObjectType = {
+  __typename?: 'ChangePrivacySettingsObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
 export type CommonSettings = {
   __typename?: 'CommonSettings';
   createdAt: Scalars['String'];
@@ -178,6 +193,7 @@ export type Mutation = {
   updateAvatarOrBanner: UpdateProfileObjectType;
   updateCommonSettings: UpdateCommonSettingsObjectType;
   updateNotificationSettings: ChangeNotificationSettingsObjectType;
+  updatePrivacySettings: ChangePrivacySettingsObjectType;
   updateProfile: UpdateProfileObjectType;
   updateProfileSettings: UpdateProfileSettingsObjectType;
   verifyEmail: VerifyEmailObjectType;
@@ -246,6 +262,11 @@ export type MutationUpdateCommonSettingsArgs = {
 
 export type MutationUpdateNotificationSettingsArgs = {
   input: ChangeNotificationSettingsInputType;
+};
+
+
+export type MutationUpdatePrivacySettingsArgs = {
+  input: ChangePrivacySettingsInputType;
 };
 
 
@@ -472,6 +493,13 @@ export type ChangePasswordSettingsMutationVariables = Exact<{
 
 
 export type ChangePasswordSettingsMutation = { __typename?: 'Mutation', changePasswordSettings: { __typename?: 'ChangePasswordSettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type UpdatePrivacySettingsMutationVariables = Exact<{
+  input: ChangePrivacySettingsInputType;
+}>;
+
+
+export type UpdatePrivacySettingsMutation = { __typename?: 'Mutation', updatePrivacySettings: { __typename?: 'ChangePrivacySettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type FollowUserMutationVariables = Exact<{
   input: FollowUserInputType;
@@ -812,6 +840,43 @@ export function useChangePasswordSettingsMutation(baseOptions?: Apollo.MutationH
 export type ChangePasswordSettingsMutationHookResult = ReturnType<typeof useChangePasswordSettingsMutation>;
 export type ChangePasswordSettingsMutationResult = Apollo.MutationResult<ChangePasswordSettingsMutation>;
 export type ChangePasswordSettingsMutationOptions = Apollo.BaseMutationOptions<ChangePasswordSettingsMutation, ChangePasswordSettingsMutationVariables>;
+export const UpdatePrivacySettingsDocument = gql`
+    mutation UpdatePrivacySettings($input: ChangePrivacySettingsInputType!) {
+  updatePrivacySettings(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type UpdatePrivacySettingsMutationFn = Apollo.MutationFunction<UpdatePrivacySettingsMutation, UpdatePrivacySettingsMutationVariables>;
+
+/**
+ * __useUpdatePrivacySettingsMutation__
+ *
+ * To run a mutation, you first call `useUpdatePrivacySettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePrivacySettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePrivacySettingsMutation, { data, loading, error }] = useUpdatePrivacySettingsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdatePrivacySettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePrivacySettingsMutation, UpdatePrivacySettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePrivacySettingsMutation, UpdatePrivacySettingsMutationVariables>(UpdatePrivacySettingsDocument, options);
+      }
+export type UpdatePrivacySettingsMutationHookResult = ReturnType<typeof useUpdatePrivacySettingsMutation>;
+export type UpdatePrivacySettingsMutationResult = Apollo.MutationResult<UpdatePrivacySettingsMutation>;
+export type UpdatePrivacySettingsMutationOptions = Apollo.BaseMutationOptions<UpdatePrivacySettingsMutation, UpdatePrivacySettingsMutationVariables>;
 export const FollowUserDocument = gql`
     mutation FollowUser($input: FollowUserInputType!) {
   followUser(input: $input) {

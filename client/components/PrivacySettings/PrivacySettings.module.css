@@ -23,6 +23,7 @@
   padding: 10px;
   border-radius: 5px;
   font-size: 0.85rem;
+  position: relative;
 }
 .privacy__settings > div > select {
   outline: none;
@@ -38,4 +39,15 @@
   color: white;
   margin: 10px 0;
   font-weight: 500 !important;
+}
+
+.privacy__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.privacy__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
 }

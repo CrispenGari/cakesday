@@ -8,6 +8,7 @@ import { HelloWorldResolver } from "./hello/HelloWorldResolver";
 import { UpdateProfileResolver } from "./profile/UpdateProfile";
 import { ChangeNotificationSettingsResolver } from "./settings/ChangeNotificationSettingsResolver";
 import { ChangePasswordSettingsResolver } from "./settings/ChangePasswordSettingsResolver";
+import { ChangePrivacySettingsResolver } from "./settings/ChangePrivacySettingsResolver";
 import { UpdateCommonSettingsResolver } from "./settings/UpdateCommonSettingsResolver";
 import { UpdateProfileSettingResolver } from "./settings/UpdateProfileSettingsResolver";
 import { ChangePasswordResolver } from "./user/ChangePasswordResolver";
@@ -35,4 +36,5 @@ export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   ChangePasswordSettingsResolver,
   UpdateCommonSettingsResolver,
   ChangeNotificationSettingsResolver,
+  ChangePrivacySettingsResolver,
 ];
