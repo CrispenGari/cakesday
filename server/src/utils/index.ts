@@ -1,6 +1,10 @@
 import nodemailer from "nodemailer";
 import { User } from "../entities/User/User";
 import { cloudinary } from "../cloudinary";
+import fs, { ReadStream } from "fs";
+import { join, extname } from "path";
+import { createWriteStream } from "fs";
+import { __serverURL__ } from "../constants";
 export const sendEmail = async (to: string, html: string, subject: string) => {
   // let testAccount = await nodemailer.createTestAccount();
 
@@ -40,4 +44,77 @@ export const getDownloadURL = async (
     console.error("Upload Error", error);
     return undefined;
   }
+};
+
+// base64 to images
+
+export const writeBase64 = async (
+  base64: string,
+  isBanner: boolean,
+  { id, username }: User
+): Promise<{
+  success: boolean;
+  url?: string;
+}> => {
+  try {
+    const __: string = `@${username}-${id}-${
+      isBanner ? "banner" : "profile"
+    }.jpg`;
+    const path = join(
+      __dirname,
+      `../../images/${isBanner ? "banners" : "profiles"}/${__}`
+    );
+    const buffer = await Buffer.from(base64, "base64");
+    await fs.writeFileSync(path, buffer);
+    const url: string = `${__serverURL__}/storage/images/images/${
+      isBanner ? "banners" : "profiles"
+    }/${__}`;
+    return {
+      url,
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      url: undefined,
+    };
+  }
+};
+
+export const uploadFileAndGetUrl = (
+  createReadStream: () => ReadStream,
+  fileName: string,
+  isBanner: boolean,
+  { username, id }: User
+): Promise<{
+  success: boolean;
+  url?: string;
+}> => {
+  const extension = extname(fileName);
+  const __: string = `@${username}-${id}-${
+    isBanner ? "banner" : "profile"
+  }${extension}`;
+  const path = join(
+    __dirname,
+    `../../images/${isBanner ? "banners" : "profiles"}/${__}`
+  );
+  const url: string = `${__serverURL__}/storage/images/${
+    isBanner ? "banners" : "profiles"
+  }/${__}`;
+  return new Promise(async (resolve, reject) => {
+    await createReadStream()
+      .pipe(createWriteStream(join(path)))
+      .on("finish", () => {
+        return resolve({
+          success: true,
+          url,
+        });
+      })
+      .on("error", (error) => {
+        console.log("Error: ", error);
+        return reject({
+          success: false,
+        });
+      });
+  });
 };

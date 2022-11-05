@@ -5,12 +5,13 @@ import { FollowUserResolver } from "./friend/FollowUserResolver";
 import { FriendsSuggestionsResolver } from "./friend/FriendsSuggestionsResolver";
 import { UnFollowUserResolver } from "./friend/UnFollowUserResolver";
 import { HelloWorldResolver } from "./hello/HelloWorldResolver";
-import { UpdateProfileResolver } from "./profile/UpdateProfile";
+import { UpdateProfileResolver } from "./settings/UpdateProfile";
 import { ChangeNotificationSettingsResolver } from "./settings/ChangeNotificationSettingsResolver";
 import { ChangePasswordSettingsResolver } from "./settings/ChangePasswordSettingsResolver";
 import { ChangePrivacySettingsResolver } from "./settings/ChangePrivacySettingsResolver";
 import { UpdateCommonSettingsResolver } from "./settings/UpdateCommonSettingsResolver";
 import { UpdateProfileSettingResolver } from "./settings/UpdateProfileSettingsResolver";
+
 import { ChangePasswordResolver } from "./user/ChangePasswordResolver";
 import { SignInResolver } from "./user/SignIn";
 import { SignOutResolver } from "./user/SignOut";

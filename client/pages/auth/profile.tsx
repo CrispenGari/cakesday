@@ -17,12 +17,16 @@ import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvi
 interface Props {}
 
 const Profile: React.FC<Props> = ({}) => {
-  const [banner, setBanner] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [profileImage, setProfileImage] = useState<string>("");
+  const [bannerImage, setBannerImage] = useState<any>(undefined);
+  const [bannerImagePreview, setBannerImagePreview] = useState<string>("");
+
+  const [profileImagePreview, setProfileImagePreview] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<any>(undefined);
+
   const [updateProfile, { data, loading: l }] =
     useUpdateProfileOrBannerMutation({ fetchPolicy: "network-only" });
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const router = useRouter();
 
@@ -32,26 +36,21 @@ const Profile: React.FC<Props> = ({}) => {
       variables: {
         input: {
           accessToken: getAccessToken() as any,
-          banner: banner ?? undefined,
-          avatar: profileImage ?? undefined,
+          bannerImage,
+          avatarImage: profileImage,
         },
       },
     });
-
-    // router.replace("/");
   };
-
-  useEffect(() => {
-    console.log(getAccessToken());
-  }, []);
 
   const handleFileChange = async (file: any, field: "banner" | "avatar") => {
     if (file) {
       setLoading(true);
       const _file = await getBase64(file);
       field === "avatar"
-        ? setProfileImage(_file as any)
-        : setBanner(_file as any);
+        ? setProfileImagePreview(_file as any)
+        : setBannerImagePreview(_file as any);
+      field === "avatar" ? setProfileImage(file) : setBannerImage(file);
       setLoading(false);
     }
   };
@@ -75,8 +74,6 @@ const Profile: React.FC<Props> = ({}) => {
       }
     }
   }, [data, loading, router]);
-
-  console.log(data);
   return (
     <div className={styles.profile}>
       <form onSubmit={onSubmit}>
@@ -84,13 +81,15 @@ const Profile: React.FC<Props> = ({}) => {
         <h1>Profile</h1>
         <div
           className={styles.profile__preview}
-          style={{ backgroundImage: `url(${banner})` }}
+          style={{
+            backgroundImage: `url(${bannerImagePreview})`,
+          }}
         >
           <div className={styles.profile__image__container}>
             <Avatar
               className={styles.profile__image}
               name="Profile Image"
-              src={profileImage}
+              src={profileImagePreview}
               background="lightgray"
             />
 

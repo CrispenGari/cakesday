@@ -1,4 +1,4 @@
-mutation UpdateProfileOrBanner($input: ProfileInput!) {
+mutation UpdateProfileOrBanner($input: UpdateProfileSettingInputType!) {
   updateAvatarOrBanner(input: $input) {
     error {
       message

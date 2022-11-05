@@ -10,11 +10,12 @@ import { buildSchema } from "type-graphql";
 import { Resolvers } from "./resolvers";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-
 import cors from "cors";
 import router from "./routes";
 import cookieParser from "cookie-parser";
 import { dataSource } from "./db";
+import { join } from "path";
+import { graphqlUploadExpress } from "graphql-upload-minimal";
 import Redis from "ioredis";
 
 _();
@@ -38,6 +39,8 @@ const PORT: any = process.env.PORT || 3001;
     })
   );
   app.use(express.json({ limit: "10mb" }));
+  app.use("/storage/images", express.static(join(__dirname, "../images")));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
   app.use(cookieParser());
   app.use(router);
   const httpServer = http.createServer(app);
@@ -71,7 +74,7 @@ const PORT: any = process.env.PORT || 3001;
   await server.start();
   server.applyMiddleware({
     app,
-    path: "/",
+    path: "/graphql",
     cors: false,
   });
   await new Promise<void>((resolve) =>

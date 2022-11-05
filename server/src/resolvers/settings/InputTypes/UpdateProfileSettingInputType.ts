@@ -1,3 +1,4 @@
+import { FileUpload, GraphQLUpload } from "graphql-upload-minimal";
 import { Field, InputType } from "type-graphql";
 
 @InputType()
@@ -16,4 +17,10 @@ export class UpdateProfileSettingInputType {
 
   @Field(() => String, { nullable: true })
   bday?: string;
+
+  @Field(() => GraphQLUpload, { nullable: true })
+  bannerImage?: FileUpload;
+
+  @Field(() => GraphQLUpload, { nullable: true })
+  avatarImage?: FileUpload;
 }

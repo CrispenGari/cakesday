@@ -16,6 +16,7 @@ export { default as Feed } from "./Feed/Feed";
 export { default as ChangePasswordSettings } from "./ChangePasswordSettings/ChangePassword";
 export { default as Header } from "./Header/Header";
 export { default as Main } from "./Main/Main";
+export { default as Notification } from "./Notification/Notification";
 
 export { default as ChangeThemeSettings } from "./ChangeThemeSettings/ChangeThemeSettings";
 export { default as Explore } from "./Explore/Explore";

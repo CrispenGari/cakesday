@@ -30,7 +30,9 @@ const PrivacySettings: React.FC<Props> = ({ settings }) => {
       {
         query: FriendsSuggestionsDocument,
         variables: {
-          accessToken: getAccessToken() as any,
+          input: {
+            accessToken: getAccessToken() as any,
+          },
         },
       },
     ],

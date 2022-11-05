@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Upload: any;
 };
 
 export type AuthError = {
@@ -196,6 +197,7 @@ export type Mutation = {
   updatePrivacySettings: ChangePrivacySettingsObjectType;
   updateProfile: UpdateProfileObjectType;
   updateProfileSettings: UpdateProfileSettingsObjectType;
+  uploadFile: UploadFileObjectType;
   verifyEmail: VerifyEmailObjectType;
 };
 
@@ -251,7 +253,7 @@ export type MutationUnFollowUserArgs = {
 
 
 export type MutationUpdateAvatarOrBannerArgs = {
-  input: ProfileInput;
+  input: UpdateProfileSettingInputType;
 };
 
 
@@ -277,6 +279,11 @@ export type MutationUpdateProfileArgs = {
 
 export type MutationUpdateProfileSettingsArgs = {
   input: UpdateProfileSettingInputType;
+};
+
+
+export type MutationUploadFileArgs = {
+  input: UploadFileInputType;
 };
 
 
@@ -418,6 +425,8 @@ export type UpdateProfileObjectType = {
 
 export type UpdateProfileSettingInputType = {
   accessToken: Scalars['String'];
+  avatarImage?: InputMaybe<Scalars['Upload']>;
+  bannerImage?: InputMaybe<Scalars['Upload']>;
   bday?: InputMaybe<Scalars['String']>;
   bio?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;
@@ -428,6 +437,19 @@ export type UpdateProfileSettingsObjectType = {
   __typename?: 'UpdateProfileSettingsObjectType';
   message: AuthError;
   success: Scalars['Boolean'];
+};
+
+export type UploadFileInputType = {
+  accessToken: Scalars['String'];
+  file: Scalars['Upload'];
+  type: Scalars['String'];
+};
+
+export type UploadFileObjectType = {
+  __typename?: 'UploadFileObjectType';
+  error?: Maybe<AuthError>;
+  success: Scalars['Boolean'];
+  url?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -563,7 +585,7 @@ export type UnFollowUserMutationVariables = Exact<{
 export type UnFollowUserMutation = { __typename?: 'Mutation', unFollowUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type UpdateProfileOrBannerMutationVariables = Exact<{
-  input: ProfileInput;
+  input: UpdateProfileSettingInputType;
 }>;
 
 
@@ -596,6 +618,13 @@ export type UpdateProfileSettingsMutationVariables = Exact<{
 
 
 export type UpdateProfileSettingsMutation = { __typename?: 'Mutation', updateProfileSettings: { __typename?: 'UpdateProfileSettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type UploadFileMutationVariables = Exact<{
+  input: UploadFileInputType;
+}>;
+
+
+export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: { __typename?: 'UploadFileObjectType', success: boolean, url?: string | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
 
 export type VerifyEmailMutationVariables = Exact<{
   input: VerifyEmailInput;
@@ -1207,7 +1236,7 @@ export type UnFollowUserMutationHookResult = ReturnType<typeof useUnFollowUserMu
 export type UnFollowUserMutationResult = Apollo.MutationResult<UnFollowUserMutation>;
 export type UnFollowUserMutationOptions = Apollo.BaseMutationOptions<UnFollowUserMutation, UnFollowUserMutationVariables>;
 export const UpdateProfileOrBannerDocument = gql`
-    mutation UpdateProfileOrBanner($input: ProfileInput!) {
+    mutation UpdateProfileOrBanner($input: UpdateProfileSettingInputType!) {
   updateAvatarOrBanner(input: $input) {
     error {
       message
@@ -1427,6 +1456,44 @@ export function useUpdateProfileSettingsMutation(baseOptions?: Apollo.MutationHo
 export type UpdateProfileSettingsMutationHookResult = ReturnType<typeof useUpdateProfileSettingsMutation>;
 export type UpdateProfileSettingsMutationResult = Apollo.MutationResult<UpdateProfileSettingsMutation>;
 export type UpdateProfileSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateProfileSettingsMutation, UpdateProfileSettingsMutationVariables>;
+export const UploadFileDocument = gql`
+    mutation UploadFile($input: UploadFileInputType!) {
+  uploadFile(input: $input) {
+    error {
+      field
+      message
+    }
+    success
+    url
+  }
+}
+    `;
+export type UploadFileMutationFn = Apollo.MutationFunction<UploadFileMutation, UploadFileMutationVariables>;
+
+/**
+ * __useUploadFileMutation__
+ *
+ * To run a mutation, you first call `useUploadFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadFileMutation, { data, loading, error }] = useUploadFileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<UploadFileMutation, UploadFileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadFileMutation, UploadFileMutationVariables>(UploadFileDocument, options);
+      }
+export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
+export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
+export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
 export const VerifyEmailDocument = gql`
     mutation VerifyEmail($input: VerifyEmailInput!) {
   verifyEmail(input: $input) {

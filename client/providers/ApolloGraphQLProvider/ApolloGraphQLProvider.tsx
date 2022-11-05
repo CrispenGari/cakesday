@@ -1,18 +1,13 @@
 import React from "react";
 import { setContext } from "@apollo/client/link/context";
-
-import {
-  ApolloProvider,
-  InMemoryCache,
-  ApolloClient,
-  createHttpLink,
-} from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
+import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 import { __server__base__url__ } from "../../constants";
 import { getAccessToken } from "../../state";
 
 const cache = new InMemoryCache({});
-const httpLink = createHttpLink({
-  uri: __server__base__url__,
+const httpLink = createUploadLink({
+  uri: `${__server__base__url__}/graphql`,
   credentials: "include",
 });
 

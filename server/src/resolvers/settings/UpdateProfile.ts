@@ -6,21 +6,23 @@ import {
   createRefreshToken,
   storeRefreshToken,
 } from "../../auth";
-import { UpdateProfileObjectType } from "./ObjectTypes/UpdateProfileObjectType";
-import { ProfileInput } from "./InputTypes/UpdateProfileInput";
+import { UpdateProfileObjectType } from "../profile/ObjectTypes/UpdateProfileObjectType";
+import { ProfileInput } from "../profile/InputTypes/UpdateProfileInput";
 import jwt from "jsonwebtoken";
 import { Profile } from "../../entities/Profile/Profile";
-import { getDownloadURL } from "../../utils";
+import { uploadFileAndGetUrl } from "../../utils";
+import { UpdateProfileSettingInputType } from "./InputTypes/UpdateProfileSettingInputType";
 
 @Resolver()
 export class UpdateProfileResolver {
   @Mutation(() => UpdateProfileObjectType)
   async updateAvatarOrBanner(
-    @Arg("input", () => ProfileInput)
-    { banner, avatar, accessToken }: ProfileInput,
+    @Arg("input", () => UpdateProfileSettingInputType)
+    { bannerImage, accessToken, avatarImage }: UpdateProfileSettingInputType,
     @Ctx() { res }: ContextType
   ): Promise<UpdateProfileObjectType> {
     let payload: any = null;
+
     try {
       payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRETE);
     } catch (error) {
@@ -31,10 +33,12 @@ export class UpdateProfileResolver {
         },
       };
     }
+
     const user = await User.findOne({
       where: { email: payload.email },
       relations: ["profile"],
     });
+
     if (!user) {
       return {
         error: {
@@ -49,9 +53,14 @@ export class UpdateProfileResolver {
       },
     });
 
-    if (banner) {
-      const uploadURL = await getDownloadURL(banner, user, "banner");
-
+    if (bannerImage) {
+      const { filename, createReadStream } = await bannerImage;
+      const { url: uploadURL } = await uploadFileAndGetUrl(
+        createReadStream,
+        filename,
+        true,
+        user
+      );
       if (!profile) {
         // create a new profile
         const _profile = new Profile();
@@ -65,8 +74,14 @@ export class UpdateProfileResolver {
         user.profile = _profile;
       }
     }
-    if (avatar) {
-      const uploadURL = await getDownloadURL(avatar, user, "avatar");
+    if (avatarImage) {
+      const { createReadStream, filename } = await avatarImage;
+      const { url: uploadURL } = await uploadFileAndGetUrl(
+        createReadStream,
+        filename,
+        false,
+        user
+      );
       if (!profile) {
         // create a new profile
         const _profile = new Profile();

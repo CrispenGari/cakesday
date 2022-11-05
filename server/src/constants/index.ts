@@ -5,6 +5,8 @@ export const __secure__: boolean = false;
 export const __cookieName__: string = "qid";
 export const __cookieSecret__: string = "this_should_be_hidden";
 
+export const __serverURL__: string =
+  __env__ === "dev" ? "http://localhost:3001" : "http://localhost:3001";
 export const __clientURL__: string =
   __env__ === "dev" ? "http://localhost:3000" : "http://localhost:3000";
 //
