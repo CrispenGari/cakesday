@@ -30,3 +30,8 @@
   color: white;
   margin: 20px 5px;
 }
+@media only screen and (max-width: 1000px) {
+  .sidebar__left {
+    display: none;
+  }
+}

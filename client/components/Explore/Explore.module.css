@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   background-color: #f5f5f5;
-  padding: 10px;
+
   user-select: none;
   user-zoom: none;
 }
@@ -12,6 +12,7 @@
   overflow-y: hidden;
   overflow-x: scroll;
   width: 100%;
+  padding: 0 10px;
 }
 .explore > p {
   color: var(--main-color);
@@ -24,6 +25,8 @@
   font-size: 1.3rem;
   color: var(--main-color);
   margin-bottom: 10px;
+  padding: 10px;
+  background-color: white;
 }
 
 .explore__main::-webkit-scrollbar {
