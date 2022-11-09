@@ -1,0 +1,9 @@
+mutation IgnoreUser($input: IgnoreUserInputType!) {
+  ignoreUser(input: $input) {
+    message {
+      field
+      message
+    }
+    success
+  }
+}

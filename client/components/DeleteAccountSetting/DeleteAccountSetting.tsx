@@ -16,6 +16,7 @@ const DeleteAccountSetting: React.FC<Props> = ({}) => {
   const [show0, setShow0] = useState<boolean>(false);
   return (
     <div className={styles.delete__account__settings}>
+      <h1>Delete Account</h1>
       <form>
         <InputGroup>
           <InputLeftElement

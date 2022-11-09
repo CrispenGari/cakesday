@@ -2,6 +2,8 @@ import { MixedList, EntitySchema } from "typeorm";
 import { Follower } from "./Follower/Follower";
 import { Following } from "./Following/Following";
 import { Friend } from "./Friends/Friends";
+import { IgnoredUser } from "./IngoredUser/IngoredUser";
+import { Notification } from "./Notification/Notification";
 import { Profile } from "./Profile/Profile";
 import { CommonSettings } from "./Settings/Common/Common";
 import { NotificationsSettings } from "./Settings/Notifications/Notification";
@@ -21,4 +23,6 @@ export const entities:
   CommonSettings,
   NotificationsSettings,
   PrivacySettings,
+  IgnoredUser,
+  Notification,
 ];

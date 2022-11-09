@@ -46,7 +46,11 @@ const ConfirmEmail: React.FC<Props> = ({}) => {
   const resendCode = async () => {
     await resendConfirmationCode({
       fetchPolicy: "network-only",
-      variables: {},
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+        },
+      },
     });
   };
   useEffect(() => {

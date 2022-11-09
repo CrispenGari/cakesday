@@ -25,7 +25,13 @@ export class FriendsSuggestionsResolver {
     }
     const user = await User.findOne({
       where: { email: payload.email },
-      relations: ["followers", "followings", "profile", "friends"],
+      relations: [
+        "followers",
+        "followings",
+        "profile",
+        "friends",
+        "ignoredUsers",
+      ],
     });
 
     if (!user) {
@@ -39,15 +45,24 @@ export class FriendsSuggestionsResolver {
     }
 
     const followings = user.followings.map((f) => f.username);
+    const ignoredUsers = user.ignoredUsers.map((f) => f.username);
+    console.log(ignoredUsers);
     const suggestions = await User.find({
-      relations: ["profile", "followers", "followings", "friends"],
+      relations: [
+        "profile",
+        "followers",
+        "followings",
+        "friends",
+        "ignoredUsers",
+      ],
     });
 
     const _suggestions = suggestions
       .filter((s) => followings.indexOf(s.username) === -1)
       .filter((s) => s.profile)
       .filter((s) => s.username !== user.username)
-      .filter((s) => s.confirmed);
+      .filter((s) => s.confirmed)
+      .filter((s) => ignoredUsers.indexOf(s.username) === -1);
 
     return {
       suggestions: _suggestions,

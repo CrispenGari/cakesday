@@ -1,0 +1,11 @@
+fragment IgnoreUserFragment on IgnoredUser {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}

@@ -1,0 +1,35 @@
+.flat__user {
+  background-color: #f5f5f5;
+  margin: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flat__user__top {
+  display: flex;
+  justify-content: space-between;
+}
+.flat__user__avatar {
+}
+.flat__user__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.flat__user__info > h1 {
+  font-weight: 600;
+  color: var(--main-color);
+}
+.flat__user__info > p {
+  color: gray;
+  font-size: 0.8rem !important;
+}
+.flat__user > button {
+  margin-top: 5px;
+  background-color: var(--main-color);
+  color: white;
+  outline: none !important;
+}

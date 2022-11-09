@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   DeleteAccountSettings,
   ChangePasswordSettings,
@@ -11,13 +12,16 @@ import {
   CakesDayEmailSubscriptionsSettings,
   PrivacySettings,
   ProfileSettings,
+  VerifyEmailSettings,
 } from "../components";
 import { useMeQuery } from "../graphql/generated/graphql";
 import styles from "../styles/Settings.module.css";
+import { StateType } from "../types";
 interface Props {}
 const Settings: React.FC<Props> = ({}) => {
   const { loading, data: me } = useMeQuery({ fetchPolicy: "network-only" });
-  console.log(me);
+  const emailCard = useSelector((state: StateType) => state.emailCard);
+
   return (
     <div className={styles.settings}>
       <Header />
@@ -46,7 +50,12 @@ const Settings: React.FC<Props> = ({}) => {
         {/* Delete Account */}
         <DeleteAccountSettings />
         {/* Change Email */}
-        <ChangeEmailSettings profile={me?.me?.profile as any} />
+        {emailCard === "CHANGE_EMAIL" ? (
+          <ChangeEmailSettings profile={me?.me?.profile as any} />
+        ) : (
+          <VerifyEmailSettings />
+        )}
+
         {/* ForgotPasswordSettings */}
         <ForgotPasswordSettings profile={me?.me?.profile as any} />
       </div>

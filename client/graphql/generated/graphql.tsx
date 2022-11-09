@@ -22,6 +22,18 @@ export type AuthError = {
   message: Scalars['String'];
 };
 
+export type ChangeEmailInputType = {
+  accessToken: Scalars['String'];
+  currentPassword: Scalars['String'];
+  email: Scalars['String'];
+};
+
+export type ChangeEmailObjectType = {
+  __typename?: 'ChangeEmailObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
 export type ChangeNotificationSettingsInputType = {
   accessToken: Scalars['String'];
   onBirthDayWish?: InputMaybe<Scalars['Boolean']>;
@@ -157,6 +169,33 @@ export type FriendSuggestionObjectType = {
   suggestions: Array<User>;
 };
 
+export type IgnoreUserInputType = {
+  accessToken: Scalars['String'];
+  friendUsername: Scalars['String'];
+};
+
+export type IgnoreUserObjectType = {
+  __typename?: 'IgnoreUserObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
+export type IgnoredUser = {
+  __typename?: 'IgnoredUser';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
 export type ImAuthenticatedInputType = {
   refreshToken: Scalars['String'];
 };
@@ -180,9 +219,11 @@ export type InvalidateTokenObjectType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changeEmail: ChangeEmailObjectType;
   changePassword: ChangePasswordObjectType;
   changePasswordSettings: ChangePasswordSettingsObjectType;
   followUser: FollowUserObjectType;
+  ignoreUser: IgnoreUserObjectType;
   imAuthenticated: ImAuthenticatedObjectType;
   invalidateToken: InvalidateTokenObjectType;
   resendVerificationCode: Scalars['Boolean'];
@@ -197,8 +238,13 @@ export type Mutation = {
   updatePrivacySettings: ChangePrivacySettingsObjectType;
   updateProfile: UpdateProfileObjectType;
   updateProfileSettings: UpdateProfileSettingsObjectType;
-  uploadFile: UploadFileObjectType;
   verifyEmail: VerifyEmailObjectType;
+  verifyNewEmail: ChangeEmailObjectType;
+};
+
+
+export type MutationChangeEmailArgs = {
+  input: ChangeEmailInputType;
 };
 
 
@@ -214,6 +260,11 @@ export type MutationChangePasswordSettingsArgs = {
 
 export type MutationFollowUserArgs = {
   input: FollowUserInputType;
+};
+
+
+export type MutationIgnoreUserArgs = {
+  input: IgnoreUserInputType;
 };
 
 
@@ -282,13 +333,25 @@ export type MutationUpdateProfileSettingsArgs = {
 };
 
 
-export type MutationUploadFileArgs = {
-  input: UploadFileInputType;
+export type MutationVerifyEmailArgs = {
+  input: VerifyEmailInput;
 };
 
 
-export type MutationVerifyEmailArgs = {
-  input: VerifyEmailInput;
+export type MutationVerifyNewEmailArgs = {
+  input: VerifyNewEmailInputType;
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  createdAt: Scalars['String'];
+  from: Profile;
+  id: Scalars['Int'];
+  message: Scalars['String'];
+  read: Scalars['String'];
+  type: Scalars['String'];
+  updatedAt: Scalars['String'];
+  user: User;
 };
 
 export type NotificationsSettings = {
@@ -439,19 +502,6 @@ export type UpdateProfileSettingsObjectType = {
   success: Scalars['Boolean'];
 };
 
-export type UploadFileInputType = {
-  accessToken: Scalars['String'];
-  file: Scalars['Upload'];
-  type: Scalars['String'];
-};
-
-export type UploadFileObjectType = {
-  __typename?: 'UploadFileObjectType';
-  error?: Maybe<AuthError>;
-  success: Scalars['Boolean'];
-  url?: Maybe<Scalars['String']>;
-};
-
 export type User = {
   __typename?: 'User';
   confirmed: Scalars['Boolean'];
@@ -461,7 +511,9 @@ export type User = {
   followings?: Maybe<Array<Following>>;
   friends?: Maybe<Array<Friend>>;
   id: Scalars['Int'];
+  ignoredUsers?: Maybe<Array<IgnoredUser>>;
   isLoggedIn: Scalars['Boolean'];
+  notifications?: Maybe<Array<Notification>>;
   profile?: Maybe<Profile>;
   settings?: Maybe<Settings>;
   updatedAt: Scalars['String'];
@@ -484,6 +536,11 @@ export type VerifyEmailObjectType = {
   user?: Maybe<User>;
 };
 
+export type VerifyNewEmailInputType = {
+  accessToken: Scalars['String'];
+  verificationCode: Scalars['String'];
+};
+
 export type CommonSettingsFragmentFragment = { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string };
 
 export type FollowerFragmentFragment = { __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
@@ -491,6 +548,8 @@ export type FollowerFragmentFragment = { __typename?: 'Follower', id: number, em
 export type FollowingFragmentFragment = { __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
 
 export type FriendFragmentFragment = { __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
+
+export type IgnoreUserFragmentFragment = { __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string };
 
 export type NotificationSettingsFragmentFragment = { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string };
 
@@ -500,7 +559,14 @@ export type ProfileFragmentFragment = { __typename?: 'Profile', id: number, emai
 
 export type SettingsFragmentFragment = { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null };
 
-export type UserFragmentFragment = { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null };
+export type UserFragmentFragment = { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null };
+
+export type ChangeEmailMutationVariables = Exact<{
+  input: ChangeEmailInputType;
+}>;
+
+
+export type ChangeEmailMutation = { __typename?: 'Mutation', changeEmail: { __typename?: 'ChangeEmailObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type ChangePasswordMutationVariables = Exact<{
   input: ChangePasswordInputType;
@@ -529,6 +595,13 @@ export type FollowUserMutationVariables = Exact<{
 
 
 export type FollowUserMutation = { __typename?: 'Mutation', followUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type IgnoreUserMutationVariables = Exact<{
+  input: IgnoreUserInputType;
+}>;
+
+
+export type IgnoreUserMutation = { __typename?: 'Mutation', ignoreUser: { __typename?: 'IgnoreUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type ImAuthenticatedMutationVariables = Exact<{
   input: ImAuthenticatedInputType;
@@ -619,13 +692,6 @@ export type UpdateProfileSettingsMutationVariables = Exact<{
 
 export type UpdateProfileSettingsMutation = { __typename?: 'Mutation', updateProfileSettings: { __typename?: 'UpdateProfileSettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
-export type UploadFileMutationVariables = Exact<{
-  input: UploadFileInputType;
-}>;
-
-
-export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: { __typename?: 'UploadFileObjectType', success: boolean, url?: string | null, error?: { __typename?: 'AuthError', field: string, message: string } | null } };
-
 export type VerifyEmailMutationVariables = Exact<{
   input: VerifyEmailInput;
 }>;
@@ -633,12 +699,19 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailObjectType', accessToken?: string | null, user?: { __typename?: 'User', id: number, username: string, email: string, confirmed: boolean, isLoggedIn: boolean } | null, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
+export type VerifyChangeEmailMutationVariables = Exact<{
+  input: VerifyNewEmailInputType;
+}>;
+
+
+export type VerifyChangeEmailMutation = { __typename?: 'Mutation', verifyNewEmail: { __typename?: 'ChangeEmailObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
 export type FriendsSuggestionsQueryVariables = Exact<{
   input: FriendSuggestionInputType;
 }>;
 
 
-export type FriendsSuggestionsQuery = { __typename?: 'Query', suggestions: { __typename?: 'FriendSuggestionObjectType', suggestions: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null }>, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
+export type FriendsSuggestionsQuery = { __typename?: 'Query', suggestions: { __typename?: 'FriendSuggestionObjectType', suggestions: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null }>, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -648,15 +721,28 @@ export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
 
 export type UserByIdQueryVariables = Exact<{
   input: UserInputType;
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
+export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, friends?: Array<{ __typename?: 'Friend', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string }> | null } | null };
 
+export const IgnoreUserFragmentFragmentDoc = gql`
+    fragment IgnoreUserFragment on IgnoredUser {
+  id
+  email
+  username
+  photoURL
+  bannerURL
+  bio
+  bday
+  verified
+  gender
+}
+    `;
 export const FriendFragmentFragmentDoc = gql`
     fragment FriendFragment on Friend {
   id
@@ -769,6 +855,9 @@ export const UserFragmentFragmentDoc = gql`
   confirmed
   createdAt
   updatedAt
+  ignoredUsers {
+    ...IgnoreUserFragment
+  }
   friends {
     ...FriendFragment
   }
@@ -785,11 +874,49 @@ export const UserFragmentFragmentDoc = gql`
     ...FollowingFragment
   }
 }
-    ${FriendFragmentFragmentDoc}
+    ${IgnoreUserFragmentFragmentDoc}
+${FriendFragmentFragmentDoc}
 ${SettingsFragmentFragmentDoc}
 ${ProfileFragmentFragmentDoc}
 ${FollowerFragmentFragmentDoc}
 ${FollowingFragmentFragmentDoc}`;
+export const ChangeEmailDocument = gql`
+    mutation ChangeEmail($input: ChangeEmailInputType!) {
+  changeEmail(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type ChangeEmailMutationFn = Apollo.MutationFunction<ChangeEmailMutation, ChangeEmailMutationVariables>;
+
+/**
+ * __useChangeEmailMutation__
+ *
+ * To run a mutation, you first call `useChangeEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeEmailMutation, { data, loading, error }] = useChangeEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChangeEmailMutation(baseOptions?: Apollo.MutationHookOptions<ChangeEmailMutation, ChangeEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeEmailMutation, ChangeEmailMutationVariables>(ChangeEmailDocument, options);
+      }
+export type ChangeEmailMutationHookResult = ReturnType<typeof useChangeEmailMutation>;
+export type ChangeEmailMutationResult = Apollo.MutationResult<ChangeEmailMutation>;
+export type ChangeEmailMutationOptions = Apollo.BaseMutationOptions<ChangeEmailMutation, ChangeEmailMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($input: ChangePasswordInputType!) {
   changePassword(input: $input) {
@@ -943,6 +1070,43 @@ export function useFollowUserMutation(baseOptions?: Apollo.MutationHookOptions<F
 export type FollowUserMutationHookResult = ReturnType<typeof useFollowUserMutation>;
 export type FollowUserMutationResult = Apollo.MutationResult<FollowUserMutation>;
 export type FollowUserMutationOptions = Apollo.BaseMutationOptions<FollowUserMutation, FollowUserMutationVariables>;
+export const IgnoreUserDocument = gql`
+    mutation IgnoreUser($input: IgnoreUserInputType!) {
+  ignoreUser(input: $input) {
+    message {
+      field
+      message
+    }
+    success
+  }
+}
+    `;
+export type IgnoreUserMutationFn = Apollo.MutationFunction<IgnoreUserMutation, IgnoreUserMutationVariables>;
+
+/**
+ * __useIgnoreUserMutation__
+ *
+ * To run a mutation, you first call `useIgnoreUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIgnoreUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [ignoreUserMutation, { data, loading, error }] = useIgnoreUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useIgnoreUserMutation(baseOptions?: Apollo.MutationHookOptions<IgnoreUserMutation, IgnoreUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<IgnoreUserMutation, IgnoreUserMutationVariables>(IgnoreUserDocument, options);
+      }
+export type IgnoreUserMutationHookResult = ReturnType<typeof useIgnoreUserMutation>;
+export type IgnoreUserMutationResult = Apollo.MutationResult<IgnoreUserMutation>;
+export type IgnoreUserMutationOptions = Apollo.BaseMutationOptions<IgnoreUserMutation, IgnoreUserMutationVariables>;
 export const ImAuthenticatedDocument = gql`
     mutation ImAuthenticated($input: ImAuthenticatedInputType!) {
   imAuthenticated(input: $input) {
@@ -1456,44 +1620,6 @@ export function useUpdateProfileSettingsMutation(baseOptions?: Apollo.MutationHo
 export type UpdateProfileSettingsMutationHookResult = ReturnType<typeof useUpdateProfileSettingsMutation>;
 export type UpdateProfileSettingsMutationResult = Apollo.MutationResult<UpdateProfileSettingsMutation>;
 export type UpdateProfileSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateProfileSettingsMutation, UpdateProfileSettingsMutationVariables>;
-export const UploadFileDocument = gql`
-    mutation UploadFile($input: UploadFileInputType!) {
-  uploadFile(input: $input) {
-    error {
-      field
-      message
-    }
-    success
-    url
-  }
-}
-    `;
-export type UploadFileMutationFn = Apollo.MutationFunction<UploadFileMutation, UploadFileMutationVariables>;
-
-/**
- * __useUploadFileMutation__
- *
- * To run a mutation, you first call `useUploadFileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUploadFileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [uploadFileMutation, { data, loading, error }] = useUploadFileMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<UploadFileMutation, UploadFileMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UploadFileMutation, UploadFileMutationVariables>(UploadFileDocument, options);
-      }
-export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
-export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
-export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
 export const VerifyEmailDocument = gql`
     mutation VerifyEmail($input: VerifyEmailInput!) {
   verifyEmail(input: $input) {
@@ -1538,6 +1664,43 @@ export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const VerifyChangeEmailDocument = gql`
+    mutation VerifyChangeEmail($input: VerifyNewEmailInputType!) {
+  verifyNewEmail(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type VerifyChangeEmailMutationFn = Apollo.MutationFunction<VerifyChangeEmailMutation, VerifyChangeEmailMutationVariables>;
+
+/**
+ * __useVerifyChangeEmailMutation__
+ *
+ * To run a mutation, you first call `useVerifyChangeEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyChangeEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyChangeEmailMutation, { data, loading, error }] = useVerifyChangeEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVerifyChangeEmailMutation(baseOptions?: Apollo.MutationHookOptions<VerifyChangeEmailMutation, VerifyChangeEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyChangeEmailMutation, VerifyChangeEmailMutationVariables>(VerifyChangeEmailDocument, options);
+      }
+export type VerifyChangeEmailMutationHookResult = ReturnType<typeof useVerifyChangeEmailMutation>;
+export type VerifyChangeEmailMutationResult = Apollo.MutationResult<VerifyChangeEmailMutation>;
+export type VerifyChangeEmailMutationOptions = Apollo.BaseMutationOptions<VerifyChangeEmailMutation, VerifyChangeEmailMutationVariables>;
 export const FriendsSuggestionsDocument = gql`
     query FriendsSuggestions($input: FriendSuggestionInputType!) {
   suggestions(input: $input) {

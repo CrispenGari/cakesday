@@ -6,7 +6,7 @@ export interface ActionType<T> {
   type: string;
 }
 export interface StateType {
-  accessToken: string;
+  emailCard: "CHANGE_EMAIL" | "VERIFY_EMAIL";
 }
 export interface EmojiType {
   name: string;

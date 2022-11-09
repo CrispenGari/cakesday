@@ -1,0 +1,51 @@
+.verify__email__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.verify__email__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.verify__email__settings > h1 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.verify__email__settings > form > div:first-of-type {
+  max-width: 500px;
+  width: 100%;
+}
+
+.verify__email__settings > form > p {
+  font-size: 0.8rem;
+  margin: 5px auto;
+  color: var(--main-color);
+}
+.verify__email__settings > form > p.verify__email__error {
+  color: red;
+}
+.verify__email__settings > form > button {
+  align-self: flex-end;
+  background-color: var(--main-color);
+  color: white;
+  margin: 10px 0;
+  font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .verify__email__settings > form > div > div:first-of-type {
+    margin-right: unset;
+    margin: 10px 0;
+  }
+  .verify__email__settings > form > div:first-of-type {
+    display: unset;
+  }
+  .verify__email__settings > form > p {
+    text-align: center;
+  }
+}

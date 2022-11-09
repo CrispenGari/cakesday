@@ -6,7 +6,11 @@ export { default as ChangeEmailSettings } from "./ChangeEmailSettings/ChangeEmai
 export { default as NotificationSettings } from "./NotificationSettings/NotificationSettings";
 export { default as CakesDayEmailSubscriptionsSettings } from "./CakesDayEmailSubscriptionsSettings/CakesDayEmailSubscriptionsSettings";
 export { default as PrivacySettings } from "./PrivacySettings/PrivacySettings";
+export { default as FlatUser } from "./FlatUser/FlatUser";
+export { default as ProfileModal } from "./ProfileModal/ProfileModal";
 export { default as Loading } from "./Loading/Loading";
+export { default as VerifyEmailSettings } from "./VerifyEmailSettings/VerifyEmailSettings";
+
 export { default as Submitting } from "./Submitting/Submitting";
 export { default as ProfileSettings } from "./ProfileSettings/ProfileSettings";
 export { default as UserInfo } from "./UserInfo/UserInfo";

@@ -12,8 +12,17 @@ import styles from "./UserInfo.module.css";
 interface Props {
   user: UserType;
   isMe: boolean;
+  openFollowings: () => void;
+  openFollowers: () => void;
+  openFriends: () => void;
 }
-const UserInfo: React.FC<Props> = ({ user, isMe }) => {
+const UserInfo: React.FC<Props> = ({
+  user,
+  isMe,
+  openFollowers,
+  openFollowings,
+  openFriends,
+}) => {
   const [followUser, { data, loading }] = useFollowUserMutation({
     refetchQueries: [
       { query: MeDocument },
@@ -53,11 +62,17 @@ const UserInfo: React.FC<Props> = ({ user, isMe }) => {
       </h3>
       <p>{user?.profile?.bio}</p>
       <h5>
-        <span>{user?.followers?.length} followers</span>
+        <span onClick={() => openFollowers()}>
+          {user?.followers?.length} followers
+        </span>
         &bull;
-        <span>{user?.followings?.length} followings</span>
+        <span onClick={() => openFollowings()}>
+          {user?.followings?.length} followings
+        </span>
         &bull;
-        <span>{user?.friends?.length} friends</span>
+        <span onClick={() => openFriends()}>
+          {user?.friends?.length} friends
+        </span>
       </h5>
       <div>
         <p>

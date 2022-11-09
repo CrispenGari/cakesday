@@ -79,6 +79,7 @@ const InvalidateTokensSettings: React.FC<Props> = ({}) => {
   };
   return (
     <div className={styles.invalidate__tokens__settings}>
+      <h1>Invalidate Tokens</h1>
       <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
