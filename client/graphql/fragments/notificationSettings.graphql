@@ -1,0 +1,11 @@
+fragment NotificationSettingsFragment on NotificationsSettings {
+  id
+  onNewUserAccountCreation
+  onNewFriends
+  onFriendProfileUpdate
+  onFriendBirthday
+  onBirthDayWish
+  onNewFollowers
+  createdAt
+  updatedAt
+}

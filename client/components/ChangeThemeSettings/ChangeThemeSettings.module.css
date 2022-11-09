@@ -1,0 +1,42 @@
+.change__theme__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+  position: relative;
+}
+.change__theme__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.change__theme__settings > h1 {
+  font-weight: 600;
+}
+.change__theme__settings > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.change__theme__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.change__theme__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+
+.change__theme__settings > button {
+  width: fit-content !important;
+  background-color: var(--main-color);
+  color: white;
+  margin-bottom: 10px;
+  font-weight: unset !important;
+}

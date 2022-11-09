@@ -1,0 +1,53 @@
+.privacy__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.privacy__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.privacy__settings > h1 {
+  font-weight: 600;
+}
+.privacy__settings > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 3px 0;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  position: relative;
+}
+.privacy__settings > div > select {
+  outline: none;
+  border: 1px solid var(--main-color);
+  width: fit-content;
+  margin-left: 5px;
+  padding: 1px 10px;
+}
+.privacy__settings > button {
+  width: fit-content !important;
+  align-self: flex-end;
+  background-color: var(--main-color);
+  color: white;
+  margin: 10px 0;
+  font-weight: 500 !important;
+}
+
+.privacy__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.privacy__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}

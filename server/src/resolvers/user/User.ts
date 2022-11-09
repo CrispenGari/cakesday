@@ -2,6 +2,7 @@ import { ContextType } from "../../types";
 import { Arg, Ctx, Field, InputType, Int, Query, Resolver } from "type-graphql";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/User/User";
+import { dataSource } from "../../db";
 
 @InputType()
 export class UserInputType {
@@ -18,17 +19,29 @@ export class UserResolver {
     try {
       const token = authorization.split(" ")[1];
       const payload: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRETE);
-      const user = await User.findOne({
-        where: { id: payload.userId as number },
-        relations: [
-          "profile",
-          "followings",
-          "settings",
-          "followers",
-          "friends",
-        ],
+      const user = await dataSource.getRepository(User).findOne({
+        where: {
+          id: payload.userId,
+        },
+        relations: {
+          followers: true,
+          followings: true,
+          friends: true,
+          profile: true,
+          settings: {
+            common: true,
+            notifications: true,
+            privacy: true,
+          },
+        },
       });
-      return user ?? undefined;
+      if (!user) {
+        return undefined;
+      }
+      if (user.tokenVersion !== payload.tokenVersion) {
+        return undefined;
+      }
+      return user;
     } catch (error) {
       return undefined;
     }

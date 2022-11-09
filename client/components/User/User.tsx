@@ -8,6 +8,7 @@ import {
   FriendsSuggestionsDocument,
   MeDocument,
   useFollowUserMutation,
+  useIgnoreUserMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
 interface Props {
@@ -17,7 +18,29 @@ const User: React.FC<Props> = ({
   friend: { profile, followers, followings, username, id, friends },
 }) => {
   const router = useRouter();
-  const [followUser, { data, loading }] = useFollowUserMutation({
+
+  const [followUser, { loading: following }] = useFollowUserMutation({
+    refetchQueries: [
+      { query: MeDocument },
+      {
+        query: FriendsSuggestionsDocument,
+        variables: {
+          input: {
+            accessToken: getAccessToken() as any,
+          },
+        },
+      },
+    ],
+    fetchPolicy: "network-only",
+    variables: {
+      input: {
+        accessToken: getAccessToken() as any,
+        friendUsername: username,
+      },
+    },
+  });
+
+  const [ignoreUser, { loading: ignoring }] = useIgnoreUserMutation({
     refetchQueries: [
       { query: MeDocument },
       {
@@ -88,11 +111,20 @@ const User: React.FC<Props> = ({
           onClick={async () => {
             await followUser();
           }}
-          isLoading={loading}
+          isLoading={following}
+          disabled={ignoring}
         >
           Add
         </Button>
-        <Button>Remove</Button>
+        <Button
+          onClick={async () => {
+            await ignoreUser();
+          }}
+          isLoading={ignoring}
+          disabled={following}
+        >
+          Remove
+        </Button>
       </div>
     </div>
   );

@@ -13,6 +13,8 @@ import {
 import { Follower } from "../Follower/Follower";
 import { Following } from "../Following/Following";
 import { Friend } from "../Friends/Friends";
+import { IgnoredUser } from "../IngoredUser/IngoredUser";
+import { Notification } from "../Notification/Notification";
 import { Profile } from "../Profile/Profile";
 import { Settings } from "../Settings/Settings";
 
@@ -63,15 +65,41 @@ export class User extends BaseEntity {
   /** Relations between the user and other entities */
   // Profile
   @Field(() => Profile, { nullable: true })
-  @OneToOne(() => Profile, { eager: false })
+  @OneToOne(() => Profile, {
+    eager: true,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
   @JoinColumn()
   profile: Profile;
 
   // Settings
   @Field(() => Settings, { nullable: true })
-  @OneToOne(() => Settings, { eager: true })
+  @OneToOne(() => Settings, {
+    eager: true,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
   @JoinColumn()
   settings: Settings;
+
+  // Notifications
+  @Field(() => [Notification], { nullable: true })
+  @OneToMany(() => Notification, (notification) => notification.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  notifications: Follower[];
+
+  // Ignored Users
+  @Field(() => [IgnoredUser], { nullable: true })
+  @OneToMany(() => IgnoredUser, ({ user }) => user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  ignoredUsers: IgnoredUser[];
 
   // Followers
   @Field(() => [Follower], { nullable: true })

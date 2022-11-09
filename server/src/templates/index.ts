@@ -14,3 +14,21 @@ export const verificationCodeEmailTemplate = (
   <p>CakesDay Team</p>
 `;
 };
+
+export const changeEmailVerificationCodeTemplate = (
+  verificationCode: string,
+  { username, email: currentEmail }: User,
+  email: string
+) => {
+  return `
+  <h1>Hello, ${username}</h1>
+  <p>You have requested to change your email for your <b>cakesday account</b>
+    <strong>(${currentEmail})</strong> to <strong>(${email})</strong>. 
+    If you do not intent to change the email address of your <b>cakesday account</b> ignore this email.</p>
+  <p>The verification code is:</p>
+  <h4>${verificationCode}</h4>
+  <p><em>Note: This code will be valid for an hour.</em></p>
+  <p>Regards</p>
+  <p>CakesDay Team</p>
+`;
+};

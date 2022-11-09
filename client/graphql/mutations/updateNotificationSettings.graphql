@@ -1,0 +1,11 @@
+mutation UpdateNotificationSettings(
+  $input: ChangeNotificationSettingsInputType!
+) {
+  updateNotificationSettings(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

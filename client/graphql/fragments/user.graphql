@@ -6,11 +6,14 @@ fragment UserFragment on User {
   confirmed
   createdAt
   updatedAt
+  ignoredUsers {
+    ...IgnoreUserFragment
+  }
   friends {
     ...FriendFragment
   }
   settings {
-    ...SettingFragment
+    ...SettingsFragment
   }
   profile {
     ...ProfileFragment
@@ -20,8 +23,5 @@ fragment UserFragment on User {
   }
   followings {
     ...FollowingFragment
-  }
-  settings {
-    ...SettingFragment
   }
 }

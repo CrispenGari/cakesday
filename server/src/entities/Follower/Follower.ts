@@ -1,3 +1,4 @@
+import { GenderType } from "../../types";
 import { Field, ObjectType, Int } from "type-graphql";
 import {
   BaseEntity,
@@ -8,8 +9,6 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from "typeorm";
-// import { Profile } from "../Profile/Profile";
-
 import { User } from "../User/User";
 
 @ObjectType()
@@ -36,7 +35,12 @@ export class Follower extends BaseEntity {
   bannerURL: string;
 
   @Field(() => String)
-  @Column({ nullable: false, default: "male" })
+  @Column({
+    nullable: false,
+    default: GenderType.MALE,
+    type: "enum",
+    enum: GenderType,
+  })
   gender: string;
 
   @Field(() => String)

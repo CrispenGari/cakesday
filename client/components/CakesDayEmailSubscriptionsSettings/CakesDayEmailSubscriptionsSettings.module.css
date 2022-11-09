@@ -1,0 +1,42 @@
+.cakes__day__email__subscriptions__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+  position: relative;
+}
+.cakes__day__email__subscriptions__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.cakes__day__email__subscriptions__settings > h1 {
+  font-weight: 600;
+}
+.cakes__day__email__subscriptions__settings > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.cakes__day__email__subscriptions__settings__error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+.cakes__day__email__subscriptions__settings__message {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  margin: 5px 0;
+}
+
+.cakes__day__email__subscriptions__settings > button {
+  width: fit-content !important;
+  background-color: var(--main-color);
+  color: white;
+  margin-bottom: 10px;
+  font-weight: unset !important;
+}

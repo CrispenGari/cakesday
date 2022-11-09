@@ -1,0 +1,54 @@
+.invalidate__tokens__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.invalidate__tokens__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.invalidate__tokens__settings > h1 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.invalidate__tokens__settings > form > div:first-of-type {
+  width: 100%;
+  max-width: 400px;
+}
+
+.invalidate__tokens__settings > form > div > div:first-of-type {
+  margin-right: 10px;
+}
+.invalidate__tokens__settings > form > p {
+  font-size: 0.8rem;
+  margin: 5px auto;
+  color: var(--main-color);
+}
+.invalidate__tokens__settings > form > p.invalidate__tokens__error {
+  color: red;
+}
+.invalidate__tokens__settings > form > button {
+  align-self: flex-end;
+  background-color: var(--main-color);
+  color: white;
+  margin: 10px 0;
+  font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .invalidate__tokens__settings > form > div > div:first-of-type {
+    margin-right: unset;
+    margin: 10px 0;
+  }
+  .invalidate__tokens__settings > form > div:first-of-type {
+    max-width: unset;
+  }
+  .invalidate__tokens__settings > form > p {
+    text-align: center;
+  }
+}

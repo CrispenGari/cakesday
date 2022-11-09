@@ -1,11 +1,12 @@
 import { Friend } from "../graphql/generated/graphql";
 
+export type ThemeType = "dark" | "light";
 export interface ActionType<T> {
   payload: T;
   type: string;
 }
 export interface StateType {
-  accessToken: string;
+  emailCard: "CHANGE_EMAIL" | "VERIFY_EMAIL";
 }
 export interface EmojiType {
   name: string;

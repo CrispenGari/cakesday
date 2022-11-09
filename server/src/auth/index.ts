@@ -23,6 +23,8 @@ export const createRefreshToken = (user: User): string => {
     {
       userId: user.id,
       tokenVersion: user.tokenVersion,
+      username: user.username,
+      email: user.email,
     },
     process.env.REFRESH_TOKEN_SECRETE!,
     {

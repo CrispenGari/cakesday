@@ -67,3 +67,8 @@
   color: gray;
   text-decoration: underline;
 }
+@media only screen and (max-width: 1000px) {
+  .sidebar__right {
+    display: none;
+  }
+}

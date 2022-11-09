@@ -1,0 +1,55 @@
+.change__email__settings {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
+}
+.change__email__settings > p {
+  color: var(--main-color);
+  font-size: 0.7rem;
+}
+.change__email__settings > h1 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.change__email__settings > form > div:first-of-type {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.change__email__settings > form > div > div:first-of-type {
+  margin-right: 10px;
+}
+.change__email__settings > form > p {
+  font-size: 0.8rem;
+  margin: 5px auto;
+  color: var(--main-color);
+}
+.change__email__settings > form > p.change__email__error {
+  color: red;
+}
+.change__email__settings > form > button {
+  align-self: flex-end;
+  background-color: var(--main-color);
+  color: white;
+  margin: 10px 0;
+  font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .change__email__settings > form > div > div:first-of-type {
+    margin-right: unset;
+    margin: 10px 0;
+  }
+  .change__email__settings > form > div:first-of-type {
+    display: unset;
+  }
+  .change__email__settings > form > p {
+    text-align: center;
+  }
+}
