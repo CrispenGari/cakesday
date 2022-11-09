@@ -1,14 +1,7 @@
-### Cakes day
-All athenticated users will be able to:
+### cakesday
 
-1. see their friend
-2. see close people with birthdays
-3. get birthday reminders
-4. friend and unfriend their friends
-5. access to the settings
-    * logout
-    * change settings
+<p align="center">
+<img src="/images/main-logo.png" width="50%"/>
+</p>
 
-
-* Header.
-
+`Cakesday` is a social application for celebrating birthays with friends world wide.
