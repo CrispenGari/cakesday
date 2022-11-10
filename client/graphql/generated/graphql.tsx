@@ -100,6 +100,17 @@ export type CommonSettings = {
   updatedAt: Scalars['String'];
 };
 
+export type DeleteAccountInputType = {
+  accessToken: Scalars['String'];
+  currentPassword: Scalars['String'];
+};
+
+export type DeleteAccountObjectType = {
+  __typename?: 'DeleteAccountObjectType';
+  message: AuthError;
+  success: Scalars['Boolean'];
+};
+
 export type FollowUserInputType = {
   accessToken: Scalars['String'];
   friendUsername: Scalars['String'];
@@ -222,6 +233,7 @@ export type Mutation = {
   changeEmail: ChangeEmailObjectType;
   changePassword: ChangePasswordObjectType;
   changePasswordSettings: ChangePasswordSettingsObjectType;
+  deleteAccount: DeleteAccountObjectType;
   followUser: FollowUserObjectType;
   ignoreUser: IgnoreUserObjectType;
   imAuthenticated: ImAuthenticatedObjectType;
@@ -255,6 +267,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationChangePasswordSettingsArgs = {
   input: ChangePasswordSettingInputType;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  input: DeleteAccountInputType;
 };
 
 
@@ -588,6 +605,13 @@ export type UpdatePrivacySettingsMutationVariables = Exact<{
 
 
 export type UpdatePrivacySettingsMutation = { __typename?: 'Mutation', updatePrivacySettings: { __typename?: 'ChangePrivacySettingsObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type DeleteAccountMutationVariables = Exact<{
+  input: DeleteAccountInputType;
+}>;
+
+
+export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount: { __typename?: 'DeleteAccountObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
 export type FollowUserMutationVariables = Exact<{
   input: FollowUserInputType;
@@ -1033,6 +1057,43 @@ export function useUpdatePrivacySettingsMutation(baseOptions?: Apollo.MutationHo
 export type UpdatePrivacySettingsMutationHookResult = ReturnType<typeof useUpdatePrivacySettingsMutation>;
 export type UpdatePrivacySettingsMutationResult = Apollo.MutationResult<UpdatePrivacySettingsMutation>;
 export type UpdatePrivacySettingsMutationOptions = Apollo.BaseMutationOptions<UpdatePrivacySettingsMutation, UpdatePrivacySettingsMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation DeleteAccount($input: DeleteAccountInputType!) {
+  deleteAccount(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}
+    `;
+export type DeleteAccountMutationFn = Apollo.MutationFunction<DeleteAccountMutation, DeleteAccountMutationVariables>;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, options);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = Apollo.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = Apollo.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
 export const FollowUserDocument = gql`
     mutation FollowUser($input: FollowUserInputType!) {
   followUser(input: $input) {

@@ -1,5 +1,14 @@
 import { User } from "../entities/User/User";
 
+export const notifyUserThatTheAccountHasBeenDeleted = (user: User): string => {
+  return `
+  <h1>Hello, ${user.username}</h1>
+  <p>You have successfully deleted the <strong>cakesday account</strong>.</p>
+  <p>Regards</p>
+  <p>CakesDay Team</p>
+`;
+};
+
 export const verificationCodeEmailTemplate = (
   verificationCode: string,
   user: User

@@ -5,19 +5,51 @@ import {
   InputRightElement,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
+import { useDeleteAccountMutation } from "../../graphql/generated/graphql";
+import { getAccessToken } from "../../state";
 import styles from "./DeleteAccountSetting.module.css";
 interface Props {}
 const DeleteAccountSetting: React.FC<Props> = ({}) => {
+  const { replace } = useRouter();
   const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
   const [show0, setShow0] = useState<boolean>(false);
+  const [deleteAccount, { loading, data }] = useDeleteAccountMutation({
+    fetchPolicy: "network-only",
+  });
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await deleteAccount({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          currentPassword,
+        },
+      },
+    });
+  };
+
+  React.useEffect(() => {
+    if (data?.deleteAccount) {
+      setError(data.deleteAccount.message?.message);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (data?.deleteAccount) {
+      if (data.deleteAccount.success) {
+        replace("/");
+      }
+    }
+  }, [data, replace]);
   return (
     <div className={styles.delete__account__settings}>
       <h1>Delete Account</h1>
-      <form>
+      <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -46,8 +78,18 @@ const DeleteAccountSetting: React.FC<Props> = ({}) => {
             )}
           </InputRightElement>
         </InputGroup>
-        <p>Error</p>
-        <Button>Delete Account</Button>
+        <p
+          className={
+            data?.deleteAccount.success
+              ? styles.p
+              : styles.delete__account__error
+          }
+        >
+          {error}
+        </p>
+        <Button type="submit" isLoading={loading}>
+          Delete Account
+        </Button>
       </form>
       <p>
         Deleting your account is an irreversible action, you will lose friends

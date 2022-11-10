@@ -90,6 +90,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Notification, (notification) => notification.user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
+    cascade: true,
   })
   notifications: Follower[];
 
@@ -98,6 +99,7 @@ export class User extends BaseEntity {
   @OneToMany(() => IgnoredUser, ({ user }) => user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
+    cascade: true,
   })
   ignoredUsers: IgnoredUser[];
 
@@ -106,6 +108,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Follower, (follower) => follower.user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
+    cascade: true,
   })
   followers: Follower[];
 
@@ -114,6 +117,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Following, (following) => following.user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
+    cascade: true,
   })
   followings: Following[];
 
@@ -122,6 +126,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Friend, (friend) => friend.user, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
+    cascade: true,
   })
   friends: Friend[];
 }
