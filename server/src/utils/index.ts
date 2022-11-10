@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { User } from "../entities/User/User";
 import { cloudinary } from "../cloudinary";
-import fs, { ReadStream } from "fs";
+import fs, { existsSync, ReadStream, unlinkSync } from "fs";
 import { join, extname } from "path";
 import { createWriteStream } from "fs";
 import { __serverURL__ } from "../constants";
@@ -116,5 +116,32 @@ export const uploadFileAndGetUrl = (
           success: false,
         });
       });
+  });
+};
+
+// http://localhost:3001/storage/images/profiles/@username19-13-profile.png
+
+export const deleteFileFromStorage = (
+  url: string
+): Promise<{
+  success: boolean;
+}> => {
+  const _location: string = url.replace(__serverURL__ + "/storage", "");
+  const path = join(__dirname, `../../${_location}`);
+
+  console.log("Path: ", path);
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (await existsSync(path)) await unlinkSync(path);
+      return resolve({
+        success: true,
+      });
+    } catch (err) {
+      console.log(err);
+      return reject({
+        success: !true,
+      });
+    }
   });
 };
