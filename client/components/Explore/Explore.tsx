@@ -16,7 +16,10 @@ const Explore: React.FC<Props> = ({}) => {
   });
   return (
     <div className={styles.explore}>
-      <h1>Explore Friends</h1>
+      <h1>
+        <span>Explore Friends</span>
+        <span></span>
+      </h1>
       <div className={styles.explore__main}>
         {data?.suggestions?.suggestions?.map((suggestion) => (
           <User key={suggestion.id.toString()} friend={suggestion as any} />

@@ -24,6 +24,8 @@ const SideBarRight: React.FC<Props> = ({}) => {
     }
   }, [router, data]);
 
+  console.log(user?.me?.createdAt);
+
   return (
     <div className={styles.sidebar__right}>
       <div className={styles.sidebar__right__top}>

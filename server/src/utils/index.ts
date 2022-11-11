@@ -129,8 +129,6 @@ export const deleteFileFromStorage = (
   const _location: string = url.replace(__serverURL__ + "/storage", "");
   const path = join(__dirname, `../../${_location}`);
 
-  console.log("Path: ", path);
-
   return new Promise(async (resolve, reject) => {
     try {
       if (await existsSync(path)) await unlinkSync(path);
@@ -144,4 +142,35 @@ export const deleteFileFromStorage = (
       });
     }
   });
+};
+
+export const isUserBirthday = (birthday: string | undefined): boolean => {
+  if (!birthday) return false;
+  const [_day, _month, _year] = birthday
+    .split("/")
+    .map((b) => Number.parseInt(b));
+  const today = new Date();
+  return today.getMonth() === _month - 1 && _day === today.getDate();
+};
+
+export const calculateBelatedBithdays = (
+  birthday: string | undefined
+): {
+  days: number;
+} => {
+  if (!birthday)
+    return {
+      days: 0,
+    };
+  const [_day, _month, _year] = birthday
+    .split("/")
+    .map((b) => Number.parseInt(b));
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  const a = new Date();
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(_year, (_month - 1) as any, _day);
+  const days = Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
+  return {
+    days,
+  };
 };

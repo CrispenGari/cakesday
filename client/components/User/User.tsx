@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./User.module.css";
 import { Box, Image, Badge, Button, Avatar } from "@chakra-ui/react";
 import { UserType } from "../../types";
-import { userBirthdayObject } from "../../utils";
+import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import { useRouter } from "next/router";
 import {
   FriendsSuggestionsDocument,
@@ -15,7 +15,7 @@ interface Props {
   friend: UserType;
 }
 const User: React.FC<Props> = ({
-  friend: { profile, followers, followings, username, id, friends },
+  friend: { profile, followers, followings, username, id, friends, createdAt },
 }) => {
   const router = useRouter();
 
@@ -72,9 +72,11 @@ const User: React.FC<Props> = ({
           backgroundImage: `url(${profile?.bannerURL})`,
         }}
       >
-        <Badge borderRadius="full" px="2" className={styles.user__badge}>
-          New
-        </Badge>
+        {dateDiffFromToday(new Date(Number(createdAt))).isNew ? (
+          <Badge borderRadius="full" px="2" className={styles.user__badge}>
+            New
+          </Badge>
+        ) : null}
         <Avatar
           onClick={() => {
             router.push(`/profile/${id}`);
@@ -99,13 +101,6 @@ const User: React.FC<Props> = ({
         Birthday {userBirthdayObject(profile?.bday).formattedBirthday} &bull;{" "}
         {profile?.gender}
       </p>
-      <h5>
-        <span>{followers?.length} followers</span>
-        &bull;
-        <span>{followings?.length} followings</span>
-        &bull;
-        <span>{friends?.length} friends</span>
-      </h5>
       <div className={styles.user__buttons}>
         <Button
           onClick={async () => {

@@ -12,6 +12,8 @@ export { default as Loading } from "./Loading/Loading";
 export { default as VerifyEmailSettings } from "./VerifyEmailSettings/VerifyEmailSettings";
 
 export { default as Submitting } from "./Submitting/Submitting";
+export { default as Card } from "./Card/Card";
+
 export { default as ProfileSettings } from "./ProfileSettings/ProfileSettings";
 export { default as UserInfo } from "./UserInfo/UserInfo";
 export { default as Banner } from "./Banner/Banner";

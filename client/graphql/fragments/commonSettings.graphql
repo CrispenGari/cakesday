@@ -3,4 +3,5 @@ fragment CommonSettingsFragment on CommonSettings {
   theme
   emailSubscriptions
   createdAt
+  updatedAt
 }

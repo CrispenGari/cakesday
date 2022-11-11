@@ -1,6 +1,13 @@
 import { GenderType } from "../../types";
 import { ObjectType, Field, Int } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @ObjectType()
 @Entity()
@@ -45,4 +52,12 @@ export class Profile extends BaseEntity {
   @Field(() => Boolean, { defaultValue: false })
   @Column({ nullable: false, default: false })
   verified: false | true;
+
+  @Field(() => String)
+  @CreateDateColumn({ nullable: false })
+  createdAt: Date;
+
+  @Field(() => String)
+  @UpdateDateColumn({ nullable: false })
+  updatedAt: Date;
 }

@@ -1,8 +1,9 @@
 import { ContextType } from "../../types";
-import { Arg, Ctx, Field, InputType, Int, Query, Resolver } from "type-graphql";
+import { Ctx, Field, InputType, Int, Query, Resolver } from "type-graphql";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/User/User";
 import { dataSource } from "../../db";
+import { calculateBelatedBithdays, isUserBirthday } from "../../utils";
 
 @InputType()
 export class UserInputType {
@@ -10,9 +11,11 @@ export class UserInputType {
   id: number;
 }
 @Resolver()
-export class UserResolver {
+export class UsersBirthDaysResolver {
   @Query(() => [User], { nullable: true })
-  async users(@Ctx() { req }: ContextType): Promise<User[] | undefined> {
+  async usersBelatedBirthdays(
+    @Ctx() { req }: ContextType
+  ): Promise<User[] | undefined> {
     const authorization = req.headers["authorization"];
     if (!authorization) return undefined;
     try {
@@ -53,15 +56,24 @@ export class UserResolver {
           },
         },
       });
-      return users.filter((u) => u.id !== user.id).filter((u) => u.confirmed);
+      //   belated birthdays are enabled only for 1 to 5 days
+      return users
+        .filter((u) => u.confirmed)
+        .filter(
+          (u) =>
+            calculateBelatedBithdays(u.profile.bday).days >= 1 &&
+            calculateBelatedBithdays(u.profile.bday).days <= 5
+        )
+        .filter((u) => u.id !== user.id);
     } catch (error) {
       return undefined;
     }
   }
 
-  @Query(() => User, { nullable: true })
-  // @UseMiddleware(isAuth)
-  async me(@Ctx() { req }: ContextType): Promise<User | undefined> {
+  @Query(() => [User], { nullable: true })
+  async usersBirthday(
+    @Ctx() { req }: ContextType
+  ): Promise<User[] | undefined> {
     const authorization = req.headers["authorization"];
     if (!authorization) return undefined;
     try {
@@ -89,29 +101,25 @@ export class UserResolver {
       if (user.tokenVersion !== payload.tokenVersion) {
         return undefined;
       }
-      return user;
+      const users = await User.find({
+        relations: {
+          followers: true,
+          followings: true,
+          friends: true,
+          profile: true,
+          settings: {
+            common: true,
+            notifications: true,
+            privacy: true,
+          },
+        },
+      });
+      return users
+        .filter((u) => u.confirmed)
+        .filter((u) => isUserBirthday(u.profile.bday))
+        .filter((u) => u.id !== user.id);
     } catch (error) {
       return undefined;
     }
-  }
-
-  @Query(() => User, { nullable: true })
-  async user(
-    @Arg("input", () => UserInputType) { id }: UserInputType
-  ): Promise<User | undefined> {
-    return (
-      (await User.findOne({
-        where: {
-          id,
-        },
-        relations: [
-          "profile",
-          "followings",
-          "settings",
-          "followers",
-          "friends",
-        ],
-      })) ?? undefined
-    );
   }
 }

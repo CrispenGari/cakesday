@@ -11,25 +11,45 @@
   display: flex;
   justify-content: space-between;
 }
-.flat__user__avatar {
+.flat__user__avatar__small {
+  width: 30px !important;
+  height: 30px !important;
 }
-.flat__user__info {
+.flat__user__info,
+.flat__user__info__small {
   display: flex;
   flex: 1;
   flex-direction: column;
   margin-left: 10px;
 }
-.flat__user__info > h1 {
+.flat__user__info > h1,
+.flat__user__info__small > h1 {
   font-weight: 600;
   color: var(--main-color);
 }
-.flat__user__info > p {
+.flat__user__info > p,
+.flat__user__info__small > p {
   color: gray;
   font-size: 0.8rem !important;
+}
+.flat__user__info__small > h1 {
+  font-size: 0.9rem;
+}
+
+.flat__user__info__small > p {
+  color: gray;
+  font-size: 0.7rem !important;
 }
 .flat__user > button {
   margin-top: 5px;
   background-color: var(--main-color);
   color: white;
   outline: none !important;
+}
+.flat__user__secondary__btn {
+  background-color: var(--main-color) !important;
+}
+
+.flat__user__secondary__btn {
+  background-color: var(--color-purple) !important;
 }

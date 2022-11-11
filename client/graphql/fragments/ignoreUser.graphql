@@ -8,4 +8,6 @@ fragment IgnoreUserFragment on IgnoredUser {
   bday
   verified
   gender
+  createdAt
+  updatedAt
 }

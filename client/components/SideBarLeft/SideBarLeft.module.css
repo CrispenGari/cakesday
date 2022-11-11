@@ -6,6 +6,7 @@
   flex-direction: column;
   position: relative;
   height: 100%;
+  padding-bottom: 30px;
 }
 .sidebar__left > h1 {
   font-size: 1rem;
@@ -20,15 +21,27 @@
   border-top: 1px solid var(--color-purple);
   border-bottom: 1px solid var(--color-purple);
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 1px;
 }
 .sidebar__left__lists {
   padding: 10px 5px;
   flex: 1;
   overflow-y: scroll;
+  padding-bottom: 30px;
 }
-
+.sidebar__left__lists > p {
+  text-transform: uppercase;
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.sidebar__left__lists > p > span:last-of-type {
+  flex: 1;
+  margin-left: 5px;
+  border-bottom: 1px solid var(--main-color);
+}
 .sidebar__left__lists::-webkit-scrollbar {
   width: 5px;
 }

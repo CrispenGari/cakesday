@@ -1,4 +1,3 @@
-import { time } from "console";
 import { months } from "../constants";
 import { BirthdayType } from "../types";
 
@@ -54,5 +53,24 @@ export const unixTimeStampToObject = (timestamp: string | undefined) => {
     month,
     year,
     formattedDate: `${day} ${month} ${year}`,
+  };
+};
+
+export const dateDiffFromToday = (
+  _date: Date
+): {
+  days: number;
+  isNew: boolean;
+} => {
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  const a = new Date();
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate());
+  const days = Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
+  // when you have only five days after creating the app then you are new
+  const isNew = days <= 5;
+  return {
+    isNew,
+    days,
   };
 };

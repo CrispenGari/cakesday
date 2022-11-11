@@ -1,4 +1,4 @@
-import { Badge, Button } from "@chakra-ui/react";
+import { Avatar, Badge, Button } from "@chakra-ui/react";
 import React from "react";
 import {
   useFollowUserMutation,
@@ -7,7 +7,11 @@ import {
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
 import { UserType } from "../../types";
-import { unixTimeStampToObject, userBirthdayObject } from "../../utils";
+import {
+  dateDiffFromToday,
+  unixTimeStampToObject,
+  userBirthdayObject,
+} from "../../utils";
 import styles from "./UserInfo.module.css";
 interface Props {
   user: UserType;
@@ -45,9 +49,14 @@ const UserInfo: React.FC<Props> = ({
   });
   return (
     <div className={styles.user__info}>
-      {isMe ? null : (
+      {isMe ? null : dateDiffFromToday(new Date(Number(user?.createdAt)))
+          .isNew ? (
         <Badge borderRadius="full" px="2" className={styles.user__info__badge}>
           New
+        </Badge>
+      ) : (
+        <Badge borderRadius="full" px="2" className={styles.user__info__badge}>
+          Old
         </Badge>
       )}
       <h1>
@@ -75,14 +84,21 @@ const UserInfo: React.FC<Props> = ({
         </span>
       </h5>
       <div>
+        <Avatar className={styles.user__info__avatar} />
+        <Avatar className={styles.user__info__avatar} />
+        <Avatar className={styles.user__info__avatar} />
+        <Avatar className={styles.user__info__avatar} />
+      </div>
+      <div>
         <p>
-          created at: {unixTimeStampToObject(user?.createdAt)?.formattedDate}
+          joined at: {unixTimeStampToObject(user?.createdAt)?.formattedDate}
         </p>
         <p>
           last updated at:{" "}
           {unixTimeStampToObject(user?.updatedAt)?.formattedDate}
         </p>
       </div>
+
       {isMe ? null : (
         <Button
           isLoading={loading}

@@ -28,8 +28,6 @@ const MoreInfo: React.FC<Props> = ({}) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(gender, bio, bday.toLocaleDateString());
-    // alert(startDate.toLocaleDateString());
     await updateProfile({
       variables: {
         input: {
@@ -47,6 +45,7 @@ const MoreInfo: React.FC<Props> = ({}) => {
       router.replace("/auth/profile");
     }
   }, [data, router]);
+
   return (
     <div className={styles.more__info}>
       <form onSubmit={onSubmit}>

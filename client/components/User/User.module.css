@@ -76,13 +76,12 @@
   color: gray;
   text-decoration: underline;
 }
-.user > p,
-.user > h5 {
+.user > p {
   color: gray;
   margin: 5px auto;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-align: center;
-}
-.user > h5 {
-  display: none;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

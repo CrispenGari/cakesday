@@ -25,7 +25,13 @@ const ProfileModal: React.FC<Props> = ({
         <h1>{`${isMe ? "Your " : username} ${title}`}</h1>
         <div className={styles.profile__modal__content__container}>
           {users.map((user) => (
-            <FlatUser key={user.id} user={user} btnTitle={"unfollow"} />
+            <FlatUser
+              color="primary"
+              size="normal"
+              key={user.id}
+              user={user}
+              btnTitle={"unfollow"}
+            />
           ))}
         </div>
         <Button onClick={onClose}>Close</Button>
