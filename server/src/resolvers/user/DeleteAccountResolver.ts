@@ -8,7 +8,6 @@ import { notifyUserThatTheAccountHasBeenDeleted } from "../../templates";
 import { deleteFileFromStorage, sendEmail } from "../../utils";
 import { Follower } from "../../entities/Follower/Follower";
 import { dataSource } from "../../db";
-import { Friend } from "../../entities/Friends/Friends";
 import { Following } from "../../entities/Following/Following";
 import { Profile } from "../../entities/Profile/Profile";
 import { Settings } from "../../entities/Settings/Settings";
@@ -41,7 +40,6 @@ export class DeleteAccountResolver {
         "followings",
         "settings",
         "followers",
-        "friends",
         "ignoredUsers",
         "notifications",
       ],
@@ -94,13 +92,6 @@ export class DeleteAccountResolver {
       .from(Following)
       .where("userId = :userId", { userId: user.id })
       .execute();
-    await dataSource
-      .createQueryBuilder()
-      .delete()
-      .from(Friend)
-      .where("userId = :userId", { userId: user.id })
-      .execute();
-
     // await dataSource
     //   .createQueryBuilder()
     //   .delete()

@@ -1,11 +1,15 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
 import {
+  FriendsSuggestionsDocument,
+  MeDocument,
+  useFollowUserMutation,
   useMeQuery,
   useTodaysBirthDaysQuery,
   useUserByIdLazyQuery,
   useUsersBelatedBirthdaysQuery,
 } from "../../graphql/generated/graphql";
+import { getAccessToken } from "../../state";
 import FlatUser from "../FlatUser/FlatUser";
 import styles from "./SideBarLeft.module.css";
 interface Props {}
@@ -17,6 +21,33 @@ const SideBarLeft: React.FC<Props> = ({}) => {
   const { data: todaysBirthdays } = useTodaysBirthDaysQuery({
     fetchPolicy: "network-only",
   });
+
+  const [followUser, { loading }] = useFollowUserMutation({
+    fetchPolicy: "network-only",
+    refetchQueries: [
+      { query: MeDocument, variables: {}, fetchPolicy: "network-only" },
+      {
+        query: FriendsSuggestionsDocument,
+        fetchPolicy: "network-only",
+        variables: {
+          input: {
+            accessToken: getAccessToken() as any,
+          },
+        },
+      },
+    ],
+  });
+
+  const followUserHandler = async (username: string): Promise<void> => {
+    await followUser({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          friendUsername: username,
+        },
+      },
+    });
+  };
 
   return (
     <div className={styles.sidebar__left}>
@@ -49,15 +80,24 @@ const SideBarLeft: React.FC<Props> = ({}) => {
       </div>
       <h1>Who follows you?</h1>
       <div className={styles.sidebar__left__lists}>
-        {me?.me?.followers.map((follower) => (
-          <FlatUser
-            key={follower.id}
-            user={follower as any}
-            btnTitle={"follow back"}
-            size="small"
-            color="secondary"
-          />
-        ))}
+        {me?.me
+          ?.followers!.filter(
+            (follower) =>
+              me.me?.followings
+                ?.map((f) => f.username)
+                .indexOf(follower.username) === -1
+          )
+          .map((follower) => (
+            <FlatUser
+              key={follower.id}
+              user={follower as any}
+              btnTitle={"follow back"}
+              size="small"
+              color="secondary"
+              onBtnClick={() => followUserHandler(follower.username)}
+              loading={loading}
+            />
+          ))}
       </div>
     </div>
   );

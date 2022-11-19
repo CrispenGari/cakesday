@@ -9,6 +9,7 @@ interface Props {
   onBtnClick?: () => void;
   size: "small" | "normal";
   color: "primary" | "secondary";
+  loading?: boolean;
 }
 const FlatUser: React.FC<Props> = ({
   user,
@@ -16,6 +17,7 @@ const FlatUser: React.FC<Props> = ({
   btnTitle,
   size,
   color,
+  loading,
 }) => {
   return (
     <div className={styles.flat__user}>
@@ -54,6 +56,7 @@ const FlatUser: React.FC<Props> = ({
             : styles.flat__user__secondary__btn
         }
         onClick={onBtnClick}
+        isLoading={loading}
       >
         {btnTitle}
       </Button>

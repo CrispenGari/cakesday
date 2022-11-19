@@ -18,14 +18,12 @@ interface Props {
   isMe: boolean;
   openFollowings: () => void;
   openFollowers: () => void;
-  openFriends: () => void;
 }
 const UserInfo: React.FC<Props> = ({
   user,
   isMe,
   openFollowers,
   openFollowings,
-  openFriends,
 }) => {
   const [followUser, { data, loading }] = useFollowUserMutation({
     refetchQueries: [
@@ -78,16 +76,18 @@ const UserInfo: React.FC<Props> = ({
         <span onClick={() => openFollowings()}>
           {user?.followings?.length} followings
         </span>
-        &bull;
-        <span onClick={() => openFriends()}>
-          {user?.friends?.length} friends
-        </span>
       </h5>
-      <div>
-        <Avatar className={styles.user__info__avatar} />
-        <Avatar className={styles.user__info__avatar} />
-        <Avatar className={styles.user__info__avatar} />
-        <Avatar className={styles.user__info__avatar} />
+      <h4>{"TOP 10 FOLLOWINGS"}</h4>
+      <div className={styles.user__info__top__10}>
+        {user?.followings?.slice(0, 10)?.map(({ photoURL, username, id }) => (
+          <Avatar
+            name={username}
+            key={id}
+            src={photoURL}
+            title={`@${username}`}
+            className={styles.user__info__avatar}
+          />
+        ))}
       </div>
       <div>
         <p>

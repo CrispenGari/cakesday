@@ -5,7 +5,7 @@ import { FollowUserResolver } from "./friend/FollowUserResolver";
 import { FriendsSuggestionsResolver } from "./friend/FriendsSuggestionsResolver";
 import { UnFollowUserResolver } from "./friend/UnFollowUserResolver";
 import { HelloWorldResolver } from "./hello/HelloWorldResolver";
-import { UpdateProfileResolver } from "./settings/UpdateProfile";
+import { UpdateProfileResolver } from "./profile/UpdateProfile";
 import { ChangeNotificationSettingsResolver } from "./settings/ChangeNotificationSettingsResolver";
 import { ChangePasswordSettingsResolver } from "./settings/ChangePasswordSettingsResolver";
 import { ChangePrivacySettingsResolver } from "./settings/ChangePrivacySettingsResolver";

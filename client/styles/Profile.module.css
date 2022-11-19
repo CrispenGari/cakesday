@@ -27,10 +27,20 @@
   width: 100%;
   color: white;
 }
-.profile > form > button:first-of-type {
-  background-color: var(--main-color);
+.profile > form > div {
+  display: flex;
+  justify-content: space-between;
 }
-.profile > form > button:last-of-type {
+.profile > form > div > button {
+  flex: 1;
+  color: white;
+}
+.profile > form > div > button:first-of-type {
+  background-color: var(--main-color);
+  margin-right: 10px;
+}
+.profile > form > button:last-of-type,
+.profile > form > div > button:last-of-type {
   background-color: var(--color-pink);
 }
 .profile > form > h1 {

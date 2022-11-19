@@ -9,9 +9,6 @@ fragment UserFragment on User {
   ignoredUsers {
     ...IgnoreUserFragment
   }
-  friends {
-    ...FriendFragment
-  }
   settings {
     ...SettingsFragment
   }

@@ -28,7 +28,6 @@ export class UsersBirthDaysResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -47,7 +46,6 @@ export class UsersBirthDaysResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -86,7 +84,6 @@ export class UsersBirthDaysResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -105,7 +102,6 @@ export class UsersBirthDaysResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,

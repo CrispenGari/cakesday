@@ -15,6 +15,7 @@
   background-size: cover;
   background-blend-mode: lighten;
   max-width: 400px;
+  user-select: none;
 }
 .card__center {
   user-select: none;
@@ -30,8 +31,53 @@
 .card__top {
   width: 100%;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.6);
   top: 0;
   padding: 15px 5px 5px 15px;
+  z-index: 10;
+  background-color: var(--main-color);
   border-top-left-radius: 30px;
+  color: white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.card__bottom {
+  /* overflow-y: hidden; */
+  display: flex;
+  width: 100%;
+  margin: 10px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.card__bottom::-webkit-scrollbar {
+  display: none;
+}
+.card__bottom > button {
+  color: white;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-brown);
+  border-radius: 999px;
+  margin: 5px;
+  transition: all 1s;
+}
+.card__bottom > button:hover {
+  background-color: var(--main-color);
+}
+.card > h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  position: relative;
+  color: var(--color-pink);
+  margin: 5px 0;
+}
+
+.card > h3 > span {
+  position: absolute;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: white;
+  text-decoration: underline;
 }

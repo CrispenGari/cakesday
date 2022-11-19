@@ -14,8 +14,13 @@
   width: 25px !important;
   height: 25px !important;
   margin-left: -8px !important;
+  border: 1px solid var(--main-color) !important;
 }
 
+.user__info__top__10 {
+  display: flex;
+  padding-bottom: 10px;
+}
 .user__info > h3 {
   font-weight: bold;
   font-size: 2rem;
@@ -37,17 +42,23 @@
   color: var(--main-color);
 }
 .user__info > h2,
-.user__info > h5 {
+.user__info > h5,
+.user__info > h4 {
   color: var(--color-purple);
   margin: 10px auto;
   font-size: 0.9rem;
 }
+
 .user__info > h5 {
   font-weight: bold;
 }
 .user__info > h5 > span {
   margin: 0px 5px !important;
   cursor: pointer;
+}
+.user__info > h4 {
+  font-weight: bold;
+  margin-top: unset;
 }
 .user__info > p {
   font-size: 0.9rem;

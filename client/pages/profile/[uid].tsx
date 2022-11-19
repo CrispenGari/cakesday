@@ -28,13 +28,8 @@ const Profile: React.FC<Props> = ({}) => {
     onOpen: openFollowings,
     onClose: onCloseFollowings,
   } = useDisclosure();
-  const {
-    isOpen: isOpenFriends,
-    onOpen: openFriends,
-    onClose: onCloseFriends,
-  } = useDisclosure();
 
-  const { loading, data } = useUserByIdQuery({
+  const { data } = useUserByIdQuery({
     variables: {
       input: { id: Number.parseInt(router.query.uid as any) },
     },
@@ -44,7 +39,6 @@ const Profile: React.FC<Props> = ({}) => {
   return (
     <div className={styles.profile}>
       <Header />
-
       <ProfileModal
         isOpen={isOpenFollowers}
         onClose={onCloseFollowers}
@@ -54,6 +48,7 @@ const Profile: React.FC<Props> = ({}) => {
           username: data?.user?.username ?? "",
           users: (me?.me?.followers as any) ?? [],
         }}
+        btnTitle="follow back"
       />
       <ProfileModal
         isOpen={isOpenFollowings}
@@ -64,18 +59,8 @@ const Profile: React.FC<Props> = ({}) => {
           username: data?.user?.username ?? "",
           users: (me?.me?.followings as any) ?? [],
         }}
+        btnTitle="unfollow"
       />
-      <ProfileModal
-        isOpen={isOpenFriends}
-        onClose={onCloseFriends}
-        data={{
-          isMe: me?.me?.username === data?.user?.username,
-          title: "Friends",
-          username: data?.user?.username as any,
-          users: (me?.me?.friends as any) ?? [],
-        }}
-      />
-
       <div className={styles.profile__main}>
         <Banner
           profile={data?.user?.profile as any}
@@ -86,7 +71,6 @@ const Profile: React.FC<Props> = ({}) => {
           isMe={me?.me?.username === data?.user?.username}
           openFollowings={openFollowings}
           openFollowers={openFollowers}
-          openFriends={openFriends}
         />
         <SignOutButton profile={me?.me?.profile as any} />
       </div>

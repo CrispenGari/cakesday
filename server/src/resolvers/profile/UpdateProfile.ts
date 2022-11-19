@@ -6,12 +6,12 @@ import {
   createRefreshToken,
   storeRefreshToken,
 } from "../../auth";
-import { UpdateProfileObjectType } from "../profile/ObjectTypes/UpdateProfileObjectType";
-import { ProfileInput } from "../profile/InputTypes/UpdateProfileInput";
+import { UpdateProfileObjectType } from "./ObjectTypes/UpdateProfileObjectType";
+import { ProfileInput } from "./InputTypes/UpdateProfileInput";
 import jwt from "jsonwebtoken";
 import { Profile } from "../../entities/Profile/Profile";
 import { uploadFileAndGetUrl } from "../../utils";
-import { UpdateProfileSettingInputType } from "./InputTypes/UpdateProfileSettingInputType";
+import { UpdateProfileSettingInputType } from "../settings/InputTypes/UpdateProfileSettingInputType";
 
 @Resolver()
 export class UpdateProfileResolver {
@@ -22,7 +22,6 @@ export class UpdateProfileResolver {
     @Ctx() { res }: ContextType
   ): Promise<UpdateProfileObjectType> {
     let payload: any = null;
-
     try {
       payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRETE);
     } catch (error) {
@@ -52,7 +51,6 @@ export class UpdateProfileResolver {
         username: user.username,
       },
     });
-
     if (bannerImage) {
       const { filename, createReadStream } = await bannerImage;
       const { url: uploadURL } = await uploadFileAndGetUrl(

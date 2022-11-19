@@ -25,7 +25,6 @@ export class UserResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -44,7 +43,6 @@ export class UserResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -74,7 +72,6 @@ export class UserResolver {
         relations: {
           followers: true,
           followings: true,
-          friends: true,
           profile: true,
           settings: {
             common: true,
@@ -104,13 +101,7 @@ export class UserResolver {
         where: {
           id,
         },
-        relations: [
-          "profile",
-          "followings",
-          "settings",
-          "followers",
-          "friends",
-        ],
+        relations: ["profile", "followings", "settings", "followers"],
       })) ?? undefined
     );
   }

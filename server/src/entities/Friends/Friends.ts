@@ -5,11 +5,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { User } from "../User/User";
 
 @ObjectType()
 @Entity()
@@ -55,9 +53,9 @@ export class Friend extends BaseEntity {
   verified: false | true;
 
   // Relations
-  @Field(() => User)
-  @ManyToOne(() => User, (user) => user.friends)
-  user: User;
+  // @Field(() => User)
+  // @ManyToOne(() => User, (user) => user.friends)
+  // user: User;
 
   @Field(() => String)
   @CreateDateColumn({ nullable: false })

@@ -43,6 +43,16 @@ const Profile: React.FC<Props> = ({}) => {
     });
   };
 
+  const skip = async () => {
+    await updateProfile({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+        },
+      },
+    });
+  };
+
   const handleFileChange = async (file: any, field: "banner" | "avatar") => {
     if (file) {
       setLoading(true);
@@ -114,9 +124,15 @@ const Profile: React.FC<Props> = ({}) => {
           </div>
         </div>
         <p>{error}</p>
-        <Button type="submit" isLoading={loading}>
-          Next
-        </Button>
+        <div>
+          <Button type="submit" isLoading={loading}>
+            Next
+          </Button>
+          <Button type="button" isLoading={loading} onClick={skip}>
+            Skip
+          </Button>
+        </div>
+
         <div>
           <span></span>
           <h1>Already Have an Account?</h1>
