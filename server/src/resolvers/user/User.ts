@@ -3,7 +3,6 @@ import { Arg, Ctx, Field, InputType, Int, Query, Resolver } from "type-graphql";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/User/User";
 import { dataSource } from "../../db";
-
 @InputType()
 export class UserInputType {
   @Field(() => Int)
@@ -86,6 +85,7 @@ export class UserResolver {
       if (user.tokenVersion !== payload.tokenVersion) {
         return undefined;
       }
+
       return user;
     } catch (error) {
       return undefined;
@@ -96,13 +96,14 @@ export class UserResolver {
   async user(
     @Arg("input", () => UserInputType) { id }: UserInputType
   ): Promise<User | undefined> {
-    return (
+    const user =
       (await User.findOne({
         where: {
           id,
         },
         relations: ["profile", "followings", "settings", "followers"],
-      })) ?? undefined
-    );
+      })) ?? undefined;
+
+    return user;
   }
 }

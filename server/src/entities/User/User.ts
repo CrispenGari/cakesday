@@ -92,7 +92,7 @@ export class User extends BaseEntity {
     onUpdate: "CASCADE",
     cascade: true,
   })
-  notifications: Follower[];
+  notifications: Notification[];
 
   // Ignored Users
   @Field(() => [IgnoredUser], { nullable: true })

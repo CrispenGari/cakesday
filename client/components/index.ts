@@ -13,6 +13,7 @@ export { default as VerifyEmailSettings } from "./VerifyEmailSettings/VerifyEmai
 
 export { default as Submitting } from "./Submitting/Submitting";
 export { default as Card } from "./Card/Card";
+export { default as NotificationModal } from "./NotificationModal/NotificationModal";
 
 export { default as ProfileSettings } from "./ProfileSettings/ProfileSettings";
 export { default as UserInfo } from "./UserInfo/UserInfo";

@@ -11,6 +11,7 @@
   align-items: center;
   padding: 5px 0;
   border-radius: 5px;
+  position: relative;
 }
 .header__icon__btn > h1 {
   color: white;
@@ -22,4 +23,28 @@
 }
 .header__icon__btn:hover {
   background-color: var(--color-purple);
+}
+.header__icon__btn__badge {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  border-radius: 50%;
+  background-color: var(--color-brown);
+  font-size: 0.8rem;
+}
+.header__icon__btn__badge__dot {
+  background-color: var(--color-brown);
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
 }

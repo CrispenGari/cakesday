@@ -4,15 +4,56 @@ import { Image } from "@chakra-ui/react";
 import { AiFillSetting, AiFillBell } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/react";
 import { HeaderIconButton } from "../../components";
-import { useMeQuery } from "../../graphql/generated/graphql";
+import {
+  MyNotificationsDocument,
+  useMeQuery,
+  useNotificationsSubscription,
+} from "../../graphql/generated/graphql";
 import { useRouter } from "next/router";
+import { getAccessToken } from "../../state";
+import { useDispatch, useSelector } from "react-redux";
+import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
+import { setNotifications } from "../../actions";
+import { StateType } from "../../types";
 interface Props {}
-
 const Header: React.FC<Props> = ({}) => {
-  const { loading: userLoading, data: user } = useMeQuery({
+  const { notifications } = useSelector((state: StateType) => state);
+  const { data: user } = useMeQuery({
     fetchPolicy: "network-only",
   });
+  const { data } = useNotificationsSubscription({
+    fetchPolicy: "network-only",
+    variables: {
+      input: {
+        accessToken: getAccessToken() as any,
+      },
+    },
+  });
   const router = useRouter();
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    let mounted: boolean = true;
+    if (mounted && data?.newNotification?.user.id === user?.me?.id) {
+      // this notification belongs to me
+      (async () => {
+        const { data: notifications } = await client.query({
+          query: MyNotificationsDocument,
+          fetchPolicy: "network-only",
+          variables: {
+            input: {
+              accessToken: getAccessToken() as any,
+            },
+          },
+        });
+        dispatch(setNotifications(notifications?.myNotifications));
+      })();
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [data, dispatch, user]);
+
   return (
     <div className={styles.header}>
       <div className={styles.header__left} onClick={() => router.push("/")}>
@@ -25,6 +66,7 @@ const Header: React.FC<Props> = ({}) => {
           onClick={() => {
             router.push(`/settings`);
           }}
+          // dot
         />
         <HeaderIconButton
           title="notifications"
@@ -32,6 +74,9 @@ const Header: React.FC<Props> = ({}) => {
           onClick={() => {
             router.push(`/notifications`);
           }}
+          content={
+            notifications.filter((notification) => !notification.read).length
+          }
         />
         <div
           className={styles.header__right__profile}

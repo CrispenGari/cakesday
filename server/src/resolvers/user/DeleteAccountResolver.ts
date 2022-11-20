@@ -12,7 +12,7 @@ import { Following } from "../../entities/Following/Following";
 import { Profile } from "../../entities/Profile/Profile";
 import { Settings } from "../../entities/Settings/Settings";
 import { IgnoredUser } from "../../entities/IngoredUser/IngoredUser";
-// import { Notification } from "../../entities/Notification/Notification";
+import { Notification } from "../../entities/Notification/Notification";
 
 @Resolver()
 export class DeleteAccountResolver {
@@ -92,12 +92,12 @@ export class DeleteAccountResolver {
       .from(Following)
       .where("userId = :userId", { userId: user.id })
       .execute();
-    // await dataSource
-    //   .createQueryBuilder()
-    //   .delete()
-    //   .from(Notification)
-    //   .where("email = :email", { email: user.email })
-    //   .execute();
+    await dataSource
+      .createQueryBuilder()
+      .delete()
+      .from(Notification)
+      .where("email = :email", { email: user.email })
+      .execute();
 
     await dataSource
       .createQueryBuilder()
@@ -110,7 +110,7 @@ export class DeleteAccountResolver {
       .createQueryBuilder()
       .delete()
       .from(Settings)
-      .where("id = :id", { id: user.settings.id })
+      .where("userId = :userId", { userId: user.id })
       .execute();
 
     await dataSource

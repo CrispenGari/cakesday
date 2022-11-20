@@ -1,4 +1,4 @@
-import { Friend } from "../graphql/generated/graphql";
+import { Notification } from "../graphql/generated/graphql";
 
 export type ThemeType = "dark" | "light";
 export interface ActionType<T> {
@@ -7,6 +7,7 @@ export interface ActionType<T> {
 }
 export interface StateType {
   emailCard: "CHANGE_EMAIL" | "VERIFY_EMAIL";
+  notifications: Notification[];
 }
 export interface EmojiType {
   name: string;
@@ -53,6 +54,5 @@ export type UserType = {
   profile?: ProfileType;
   followers?: FollowerType[];
   followings?: FollowingType[];
-  friends?: Friend[];
   __typename: string;
 };

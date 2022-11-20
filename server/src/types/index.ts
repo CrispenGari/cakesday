@@ -27,6 +27,11 @@ export enum NotificationType {
   NEW_FRIEND = "new_friend",
 }
 
+export enum NotificationsType {
+  NEW_NOTIFICATION = "NEW_NOTIFICATION",
+  GET_ALL_NOTIFICATION = "GET_ALL_NOTIFICATION",
+}
+
 export interface NewNotificationPayload {
   message: string;
   avatar?: string;

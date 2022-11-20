@@ -1,17 +1,15 @@
 import { GetServerSidePropsContext } from "next";
 import React from "react";
+import { Header, Main, SideBarLeft, SideBarRight } from "../components";
 import {
-  Explore,
-  Header,
-  Main,
-  SideBarLeft,
-  SideBarRight,
-} from "../components";
-import { ImAuthenticatedDocument } from "../graphql/generated/graphql";
+  ImAuthenticatedDocument,
+  useMyNotificationsQuery,
+} from "../graphql/generated/graphql";
 import { client } from "../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
+import { NextPage } from "next";
 import styles from "../styles/Home.module.css";
-interface Props {}
-const Home: React.FC<Props> = ({}) => {
+import { getAccessToken } from "../state";
+const Home: NextPage = () => {
   return (
     <div className={styles.home}>
       <div className={styles.home__feed}>
@@ -44,6 +42,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+
   return {
     props: {},
   };

@@ -1,13 +1,21 @@
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  PubSub,
+  PubSubEngine,
+  Resolver,
+} from "type-graphql";
 import jwt from "jsonwebtoken";
 import { FollowUserObjectType } from "./ObjectTypes/FollowUserObjectType";
 import { FollowUserInputType } from "./InputTypes/FollowUserInputType";
 import { User } from "../../entities/User/User";
-import { ContextType } from "../../types";
+import { ContextType, NotificationsType, NotificationType } from "../../types";
 import { __cookieName__ } from "../../constants";
 import { Follower } from "../../entities/Follower/Follower";
 import { Following } from "../../entities/Following/Following";
 import { dataSource } from "../../db";
+import { Notification } from "../../entities/Notification/Notification";
 
 @Resolver()
 export class FollowUserResolver {
@@ -15,7 +23,8 @@ export class FollowUserResolver {
   async followUser(
     @Ctx() {}: ContextType,
     @Arg("input", () => FollowUserInputType)
-    { friendUsername, accessToken }: FollowUserInputType
+    { friendUsername, accessToken }: FollowUserInputType,
+    @PubSub() pubSub: PubSubEngine
   ): Promise<FollowUserObjectType> {
     let payload: any = null;
     try {
@@ -36,6 +45,7 @@ export class FollowUserResolver {
         followers: true,
         followings: true,
         profile: true,
+        notifications: true,
       },
     });
 
@@ -55,6 +65,7 @@ export class FollowUserResolver {
         followers: true,
         followings: true,
         profile: true,
+        notifications: true,
       },
     });
 
@@ -86,7 +97,7 @@ export class FollowUserResolver {
         heIsFollowing: true,
       };
     }
-    const { imFollowing } = followingFollower;
+    const { imFollowing, heIsFollowing } = followingFollower;
     if (imFollowing) {
       return {
         success: true,
@@ -100,14 +111,30 @@ export class FollowUserResolver {
     const following = await Following.create({
       ...friend.profile,
     }).save();
-    me.followings = [...me.followings, following];
+    me.followings = [...new Set(me.followings), following];
+
     const follower = await Follower.create({
       ...me.profile,
     }).save();
 
-    friend.followers = [...friend.followers, follower];
+    const notification = await Notification.create({
+      message: heIsFollowing
+        ? `${me.username} follows you back.`
+        : `${me.username} started following you.`,
+      type: NotificationType.NEW_FOLLOWER,
+      fromId: me.id,
+      fromUsername: me.username,
+      fromEmail: me.email,
+      fromPhotoURL: me.profile?.photoURL,
+      fromBDay: me.profile?.bday,
+      fromGender: me.profile?.gender,
+      fromBannerURL: me.profile?.bannerURL,
+    }).save();
+    friend.followers = [...new Set(friend.followers), follower];
+    friend.notifications = [...new Set(friend.notifications), notification];
     await dataSource.manager.save(friend);
     await dataSource.manager.save(me);
+    await pubSub.publish(NotificationsType.NEW_NOTIFICATION, notification);
     return {
       success: true,
       message: {

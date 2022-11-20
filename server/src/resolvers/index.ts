@@ -21,7 +21,8 @@ import { VerifyEmailResolver } from "./user/VerifyEmail";
 import { IgnoreUserResolver } from "./friend/IgnoreUserResolver";
 import { ChangeEmailResolver } from "./user/ChangeEmailResolver";
 import { DeleteAccountResolver } from "./user/DeleteAccountResolver";
-import { UsersBirthDaysResolver } from "./user/BirthDayResolver";
+import { UsersBirthDaysResolver } from "./user/BirthDayResolver"
+import { MyNotificationResolver } from "./notifications/MyNotificationsResolver";
 
 export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   HelloWorldResolver,
@@ -46,4 +47,6 @@ export const Resolvers: NonEmptyArray<Function> | NonEmptyArray<string> = [
   ChangeEmailResolver,
   DeleteAccountResolver,
   UsersBirthDaysResolver,
+ 
+  MyNotificationResolver,
 ];

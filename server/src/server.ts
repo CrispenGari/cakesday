@@ -3,13 +3,12 @@ import "dotenv/config";
 import _ from "node-env-types";
 import ip from "ip";
 import { ApolloServer } from "apollo-server-express";
+import { execute, subscribe } from "graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import express from "express";
 import http from "http";
 import { buildSchema } from "type-graphql";
 import { Resolvers } from "./resolvers";
-import { WebSocketServer } from "ws";
-import { useServer } from "graphql-ws/lib/use/ws";
 import cors from "cors";
 import router from "./routes";
 import cookieParser from "cookie-parser";
@@ -17,6 +16,7 @@ import { dataSource } from "./db";
 import { join } from "path";
 import { graphqlUploadExpress } from "graphql-upload-minimal";
 import Redis from "ioredis";
+import { SubscriptionServer } from "subscriptions-transport-ws";
 
 _();
 const PORT: any = process.env.PORT || 3001;
@@ -43,12 +43,12 @@ const PORT: any = process.env.PORT || 3001;
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
   app.use(cookieParser());
   app.use(router);
+
   const httpServer = http.createServer(app);
-  const wsServer = new WebSocketServer({
-    server: httpServer,
-    path: "/",
-  });
-  const serverCleanup = useServer({ schema }, wsServer);
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: "/graphql" }
+  );
   const server = new ApolloServer({
     schema,
     context: ({ req, res }) => ({
@@ -61,7 +61,7 @@ const PORT: any = process.env.PORT || 3001;
         async serverWillStart() {
           return {
             async drainServer() {
-              await serverCleanup.dispose();
+              await subscriptionServer.close();
             },
           };
         },

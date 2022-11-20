@@ -1,41 +1,3 @@
-// import React from "react";
-// import { setContext } from "@apollo/client/link/context";
-// import { createUploadLink } from "apollo-upload-client";
-// import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
-// import { __server__base__url__ } from "../../constants";
-// import { getAccessToken } from "../../state";
-// const cache = new InMemoryCache({});
-// const httpLink = createUploadLink({
-//   uri: `${__server__base__url__}/graphql`,
-//   credentials: "include",
-// });
-
-// const authLink = setContext((_, { headers }) => {
-//   const accessToken = getAccessToken();
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: accessToken ? `Bearer ${accessToken}` : "",
-//     },
-//   };
-// });
-
-// export const client = new ApolloClient({
-//   link: authLink.concat(httpLink),
-//   cache,
-//   credentials: "include",
-// });
-
-// interface Props {
-//   children: React.ReactNode;
-// }
-// const ApolloGraphQLProvider: React.FC<Props> = ({ children }) => (
-//   <ApolloProvider client={client}>{children}</ApolloProvider>
-// );
-
-// export default ApolloGraphQLProvider;
-
-import { onError } from "apollo-link-error";
 import {
   ApolloProvider,
   InMemoryCache,
@@ -43,13 +5,26 @@ import {
   ApolloClient,
   ApolloLink,
   Observable,
+  split,
 } from "@apollo/client";
 import jwtDecode from "jwt-decode";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import { getAccessToken, setAccessToken } from "../../state";
 import { __server__base__url__ } from "../../constants";
 import { createUploadLink } from "apollo-upload-client";
-
+import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { WebSocketLink } from "@apollo/client/link/ws";
+const wsLink =
+  typeof window !== "undefined"
+    ? new WebSocketLink({
+        uri: "ws://localhost:3001/graphql",
+        options: {
+          reconnect: true,
+        },
+      })
+    : null;
 const cache = new InMemoryCache({});
 
 const tokenLink = new TokenRefreshLink({
@@ -105,7 +80,6 @@ const requestLink = new ApolloLink(
           });
         })
         .catch(observer.error.bind(observer));
-
       return () => {
         if (handle) handle.unsubscribe();
       };
@@ -117,8 +91,22 @@ const httpLink = createUploadLink({
   credentials: "include",
 });
 
+const splitLink =
+  typeof window !== "undefined" && wsLink !== null
+    ? split(
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          );
+        },
+        wsLink,
+        ApolloLink.from([tokenLink, requestLink, httpLink])
+      )
+    : ApolloLink.from([tokenLink, requestLink, httpLink]);
 export const client = new ApolloClient({
-  link: ApolloLink.from([tokenLink, requestLink, httpLink]),
+  link: splitLink,
   cache,
   credentials: "include",
 });

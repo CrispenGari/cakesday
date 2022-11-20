@@ -5,13 +5,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Profile } from "../Profile/Profile";
 import { User } from "../User/User";
 
 @ObjectType()
@@ -33,24 +30,41 @@ export class Notification extends BaseEntity {
   @Column({ nullable: false, type: "text" })
   message: String;
 
-  @Field(() => String)
+  @Field(() => Boolean)
   @Column({ nullable: false, type: "boolean", default: false })
-  read: String;
+  read: boolean;
 
-  // Relations
-  @Field(() => Profile)
-  @OneToOne(() => Profile, {
-    eager: true,
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-    cascade: true,
-  })
-  @JoinColumn()
-  from: Profile;
+  @Field(() => Int)
+  @Column({ nullable: false })
+  fromId: number;
+
+  @Field(() => String)
+  @Column({ nullable: false })
+  fromUsername: string;
+
+  @Field(() => String)
+  @Column({ nullable: false })
+  fromEmail: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  fromPhotoURL?: string;
+
+  @Field(() => String)
+  @Column({ nullable: false })
+  fromBDay: string;
+
+  @Field(() => String)
+  @Column({ nullable: false })
+  fromGender: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  fromBannerURL?: string;
 
   // Relations
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.notifications)
+  @ManyToOne(() => User, (user) => user.notifications, { eager: true })
   user: User;
 
   @Field(() => String)

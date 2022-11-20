@@ -222,6 +222,7 @@ export type Mutation = {
   ignoreUser: IgnoreUserObjectType;
   imAuthenticated: ImAuthenticatedObjectType;
   invalidateToken: InvalidateTokenObjectType;
+  markAsRead: Scalars['Boolean'];
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
   signIn: SignInObjectType;
@@ -276,6 +277,11 @@ export type MutationImAuthenticatedArgs = {
 
 export type MutationInvalidateTokenArgs = {
   input: InvalidateTokenInputType;
+};
+
+
+export type MutationMarkAsReadArgs = {
+  input: MyNotificationInputType;
 };
 
 
@@ -343,13 +349,24 @@ export type MutationVerifyNewEmailArgs = {
   input: VerifyNewEmailInputType;
 };
 
+export type MyNotificationInputType = {
+  accessToken: Scalars['String'];
+  notificationId?: InputMaybe<Scalars['Int']>;
+};
+
 export type Notification = {
   __typename?: 'Notification';
   createdAt: Scalars['String'];
-  from: Profile;
+  fromBDay: Scalars['String'];
+  fromBannerURL?: Maybe<Scalars['String']>;
+  fromEmail: Scalars['String'];
+  fromGender: Scalars['String'];
+  fromId: Scalars['Int'];
+  fromPhotoURL?: Maybe<Scalars['String']>;
+  fromUsername: Scalars['String'];
   id: Scalars['Int'];
   message: Scalars['String'];
-  read: Scalars['String'];
+  read: Scalars['Boolean'];
   type: Scalars['String'];
   updatedAt: Scalars['String'];
   user: User;
@@ -411,11 +428,17 @@ export type Query = {
   __typename?: 'Query';
   helloWorld: Scalars['String'];
   me?: Maybe<User>;
+  myNotifications: Array<Notification>;
   suggestions: FriendSuggestionObjectType;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersBelatedBirthdays?: Maybe<Array<User>>;
   usersBirthday?: Maybe<Array<User>>;
+};
+
+
+export type QueryMyNotificationsArgs = {
+  input: MyNotificationInputType;
 };
 
 
@@ -471,6 +494,16 @@ export type SignUpObjectType = {
   accessToken?: Maybe<Scalars['String']>;
   error?: Maybe<AuthError>;
   user?: Maybe<User>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newNotification?: Maybe<Notification>;
+};
+
+
+export type SubscriptionNewNotificationArgs = {
+  input: MyNotificationInputType;
 };
 
 export type UpdateCommonSettingsInputType = {
@@ -554,6 +587,8 @@ export type FollowingFragmentFragment = { __typename?: 'Following', id: number, 
 
 export type IgnoreUserFragmentFragment = { __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string };
 
+export type NotificationFragmentFragment = { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string };
+
 export type NotificationSettingsFragmentFragment = { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string };
 
 export type PrivacySettingsFragmentFragment = { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string };
@@ -626,6 +661,13 @@ export type InvalidateTokensMutationVariables = Exact<{
 
 
 export type InvalidateTokensMutation = { __typename?: 'Mutation', invalidateToken: { __typename?: 'InvalidateTokenObjectType', success: boolean, message: { __typename?: 'AuthError', message: string, field: string } } };
+
+export type MarkNotificationAsReadMutationVariables = Exact<{
+  input: MyNotificationInputType;
+}>;
+
+
+export type MarkNotificationAsReadMutation = { __typename?: 'Mutation', markAsRead: boolean };
 
 export type RequestChangePasswordEmailMutationVariables = Exact<{
   input: SendForgotPasswordEmailInputType;
@@ -723,15 +765,17 @@ export type FriendsSuggestionsQueryVariables = Exact<{
 
 export type FriendsSuggestionsQuery = { __typename?: 'Query', suggestions: { __typename?: 'FriendSuggestionObjectType', suggestions: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string, updatedAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string, createdAt: string, updatedAt: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null }>, error?: { __typename?: 'AuthError', message: string, field: string } | null } };
 
-export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HelloWorldQuery = { __typename?: 'Query', helloWorld: string };
-
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string, updatedAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string, createdAt: string, updatedAt: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null } | null };
+
+export type MyNotificationsQueryVariables = Exact<{
+  input: MyNotificationInputType;
+}>;
+
+
+export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
 
 export type UserByIdQueryVariables = Exact<{
   input: UserInputType;
@@ -755,6 +799,28 @@ export type TodaysBirthDaysQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type TodaysBirthDaysQuery = { __typename?: 'Query', usersBirthday?: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string, updatedAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string, createdAt: string, updatedAt: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null }> | null };
 
+export type NotificationsSubscriptionVariables = Exact<{
+  input: MyNotificationInputType;
+}>;
+
+
+export type NotificationsSubscription = { __typename?: 'Subscription', newNotification?: { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } } | null };
+
+export const NotificationFragmentFragmentDoc = gql`
+    fragment NotificationFragment on Notification {
+  id
+  type
+  message
+  fromId
+  fromUsername
+  fromEmail
+  fromPhotoURL
+  fromBDay
+  read
+  fromBannerURL
+  fromGender
+}
+    `;
 export const IgnoreUserFragmentFragmentDoc = gql`
     fragment IgnoreUserFragment on IgnoredUser {
   id
@@ -1235,6 +1301,37 @@ export function useInvalidateTokensMutation(baseOptions?: Apollo.MutationHookOpt
 export type InvalidateTokensMutationHookResult = ReturnType<typeof useInvalidateTokensMutation>;
 export type InvalidateTokensMutationResult = Apollo.MutationResult<InvalidateTokensMutation>;
 export type InvalidateTokensMutationOptions = Apollo.BaseMutationOptions<InvalidateTokensMutation, InvalidateTokensMutationVariables>;
+export const MarkNotificationAsReadDocument = gql`
+    mutation MarkNotificationAsRead($input: MyNotificationInputType!) {
+  markAsRead(input: $input)
+}
+    `;
+export type MarkNotificationAsReadMutationFn = Apollo.MutationFunction<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
+
+/**
+ * __useMarkNotificationAsReadMutation__
+ *
+ * To run a mutation, you first call `useMarkNotificationAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkNotificationAsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markNotificationAsReadMutation, { data, loading, error }] = useMarkNotificationAsReadMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMarkNotificationAsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>(MarkNotificationAsReadDocument, options);
+      }
+export type MarkNotificationAsReadMutationHookResult = ReturnType<typeof useMarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationResult = Apollo.MutationResult<MarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
 export const RequestChangePasswordEmailDocument = gql`
     mutation RequestChangePasswordEmail($input: SendForgotPasswordEmailInputType!) {
   sendForgotPasswordEmail(input: $input) {
@@ -1796,38 +1893,6 @@ export function useFriendsSuggestionsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type FriendsSuggestionsQueryHookResult = ReturnType<typeof useFriendsSuggestionsQuery>;
 export type FriendsSuggestionsLazyQueryHookResult = ReturnType<typeof useFriendsSuggestionsLazyQuery>;
 export type FriendsSuggestionsQueryResult = Apollo.QueryResult<FriendsSuggestionsQuery, FriendsSuggestionsQueryVariables>;
-export const HelloWorldDocument = gql`
-    query HelloWorld {
-  helloWorld
-}
-    `;
-
-/**
- * __useHelloWorldQuery__
- *
- * To run a query within a React component, call `useHelloWorldQuery` and pass it any options that fit your needs.
- * When your component renders, `useHelloWorldQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHelloWorldQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHelloWorldQuery(baseOptions?: Apollo.QueryHookOptions<HelloWorldQuery, HelloWorldQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HelloWorldQuery, HelloWorldQueryVariables>(HelloWorldDocument, options);
-      }
-export function useHelloWorldLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HelloWorldQuery, HelloWorldQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HelloWorldQuery, HelloWorldQueryVariables>(HelloWorldDocument, options);
-        }
-export type HelloWorldQueryHookResult = ReturnType<typeof useHelloWorldQuery>;
-export type HelloWorldLazyQueryHookResult = ReturnType<typeof useHelloWorldLazyQuery>;
-export type HelloWorldQueryResult = Apollo.QueryResult<HelloWorldQuery, HelloWorldQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
@@ -1862,6 +1927,50 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const MyNotificationsDocument = gql`
+    query MyNotifications($input: MyNotificationInputType!) {
+  myNotifications(input: $input) {
+    ...NotificationFragment
+    user {
+      username
+      id
+      email
+      isLoggedIn
+      confirmed
+      createdAt
+      updatedAt
+    }
+  }
+}
+    ${NotificationFragmentFragmentDoc}`;
+
+/**
+ * __useMyNotificationsQuery__
+ *
+ * To run a query within a React component, call `useMyNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyNotificationsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMyNotificationsQuery(baseOptions: Apollo.QueryHookOptions<MyNotificationsQuery, MyNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyNotificationsQuery, MyNotificationsQueryVariables>(MyNotificationsDocument, options);
+      }
+export function useMyNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyNotificationsQuery, MyNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyNotificationsQuery, MyNotificationsQueryVariables>(MyNotificationsDocument, options);
+        }
+export type MyNotificationsQueryHookResult = ReturnType<typeof useMyNotificationsQuery>;
+export type MyNotificationsLazyQueryHookResult = ReturnType<typeof useMyNotificationsLazyQuery>;
+export type MyNotificationsQueryResult = Apollo.QueryResult<MyNotificationsQuery, MyNotificationsQueryVariables>;
 export const UserByIdDocument = gql`
     query UserById($input: UserInputType!) {
   user(input: $input) {
@@ -1999,6 +2108,45 @@ export function useTodaysBirthDaysLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type TodaysBirthDaysQueryHookResult = ReturnType<typeof useTodaysBirthDaysQuery>;
 export type TodaysBirthDaysLazyQueryHookResult = ReturnType<typeof useTodaysBirthDaysLazyQuery>;
 export type TodaysBirthDaysQueryResult = Apollo.QueryResult<TodaysBirthDaysQuery, TodaysBirthDaysQueryVariables>;
+export const NotificationsDocument = gql`
+    subscription Notifications($input: MyNotificationInputType!) {
+  newNotification(input: $input) {
+    ...NotificationFragment
+    user {
+      username
+      id
+      email
+      isLoggedIn
+      confirmed
+      createdAt
+      updatedAt
+    }
+  }
+}
+    ${NotificationFragmentFragmentDoc}`;
+
+/**
+ * __useNotificationsSubscription__
+ *
+ * To run a query within a React component, call `useNotificationsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationsSubscription({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useNotificationsSubscription(baseOptions: Apollo.SubscriptionHookOptions<NotificationsSubscription, NotificationsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<NotificationsSubscription, NotificationsSubscriptionVariables>(NotificationsDocument, options);
+      }
+export type NotificationsSubscriptionHookResult = ReturnType<typeof useNotificationsSubscription>;
+export type NotificationsSubscriptionResult = Apollo.SubscriptionResult<NotificationsSubscription>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

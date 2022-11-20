@@ -2,6 +2,7 @@ import { EmojiType } from "../types";
 
 export const constants = {
   SET_EMAIL_CARD: "SET_EMAIL_CARD",
+  SET_NOTIFICATIONS: "SET_NOTIFICATIONS",
 };
 export const privacyOptions = ["only me", "friends", "everyone", "followers"];
 export const genders = ["male", "female", "transgender"];
