@@ -1,25 +1,54 @@
 .notification {
   display: flex;
-  flex-direction: column;
   background-color: white;
   margin: 2px 0;
   border-radius: 5px;
   cursor: pointer;
   padding: 10px;
+  justify-content: space-between;
 }
-.notification > h1 {
+.notification__main {
+  flex: 1;
+}
+.notification__main > h1 {
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: lowercase;
   color: var(--main-color);
 }
-.notification > p {
+.notification__main > div,
+.notification__main > div > p {
   width: 100%;
   justify-content: space-between;
   display: flex;
   font-size: 0.8rem;
 }
-.notification > p > span:last-of-type {
+.notification__main > div > p > span:last-of-type {
   color: gray;
-  margin-left: 5px;
+  margin: 0 5px;
+}
+.notification__buttons {
+  display: none;
+  transition: all 1s;
+  z-index: 10;
+}
+.notification__buttons > button {
+  width: fit-content;
+  height: 100%;
+  border-radius: 0 !important;
+  background-color: var(--color-purple);
+  padding: 5px 10px;
+  font-size: 1.3rem;
+  color: white;
+  transition: all 1s;
+}
+.notification__buttons > button:last-of-type {
+  background-color: var(--color-pink);
+}
+
+.notification__buttons > button:hover {
+  background-color: var(--main-color);
+}
+.notification:hover .notification__buttons {
+  display: flex;
 }

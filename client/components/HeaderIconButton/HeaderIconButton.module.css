@@ -1,4 +1,5 @@
-.header__icon__btn {
+.header__icon__btn,
+.header__icon__btn__active {
   display: flex;
   user-select: none;
   user-zoom: none;
@@ -13,7 +14,11 @@
   border-radius: 5px;
   position: relative;
 }
-.header__icon__btn > h1 {
+.header__icon__btn__active {
+  background-color: var(--color-purple);
+}
+.header__icon__btn > h1,
+.header__icon__btn__active > h1 {
   color: white;
   font-size: 0.7rem !important;
 }

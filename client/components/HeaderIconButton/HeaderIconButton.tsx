@@ -7,6 +7,7 @@ interface Props {
   Icon: IconType;
   dot?: boolean;
   content?: number;
+  active: boolean;
 }
 const HeaderIconButton: React.FC<Props> = ({
   title,
@@ -14,9 +15,16 @@ const HeaderIconButton: React.FC<Props> = ({
   Icon,
   dot,
   content,
+  active,
 }) => {
   return (
-    <div className={styles.header__icon__btn} title={title} onClick={onClick}>
+    <div
+      className={
+        active ? styles.header__icon__btn__active : styles.header__icon__btn
+      }
+      title={title}
+      onClick={onClick}
+    >
       <Icon className={styles.header__icon__btn__icon} />
       <h1>{title}</h1>
       {content && content > 0 ? (

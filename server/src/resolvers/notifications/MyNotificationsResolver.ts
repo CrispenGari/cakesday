@@ -135,4 +135,46 @@ export class MyNotificationResolver {
     }
     return true;
   }
+
+  @Mutation(() => Boolean)
+  async deleteNotification(
+    @Arg("input", () => MyNotificationInputType)
+    { accessToken, notificationId }: MyNotificationInputType
+  ): Promise<boolean> {
+    try {
+      const payload: any = jwt.verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRETE
+      );
+      const user = await dataSource.getRepository(User).findOne({
+        where: {
+          id: payload.userId,
+        },
+        relations: {
+          profile: true,
+          notifications: {
+            user: true,
+          },
+        },
+      });
+
+      if (!user) {
+        return false;
+      }
+      if (user.tokenVersion !== payload.tokenVersion) {
+        return false;
+      }
+      if (!notificationId) return false;
+      const notification = await Notification.findOne({
+        where: {
+          id: notificationId,
+        },
+      });
+      notification!?.remove();
+      await notification!.save();
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
 }

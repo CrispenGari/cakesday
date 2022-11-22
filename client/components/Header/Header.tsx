@@ -30,6 +30,7 @@ const Header: React.FC<Props> = ({}) => {
     },
   });
   const router = useRouter();
+  console.log(router.pathname);
   const dispatch = useDispatch();
   React.useEffect(() => {
     let mounted: boolean = true;
@@ -66,7 +67,7 @@ const Header: React.FC<Props> = ({}) => {
           onClick={() => {
             router.push(`/settings`);
           }}
-          // dot
+          active={router.pathname.includes("/settings")}
         />
         <HeaderIconButton
           title="notifications"
@@ -77,6 +78,7 @@ const Header: React.FC<Props> = ({}) => {
           content={
             notifications.filter((notification) => !notification.read).length
           }
+          active={router.pathname.includes("/notifications")}
         />
         <div
           className={styles.header__right__profile}

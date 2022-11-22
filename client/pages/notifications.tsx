@@ -31,13 +31,7 @@ const Notifications: React.FC<Props> = ({}) => {
   return (
     <div className={styles.notifications}>
       <Header />
-      <div
-        className={
-          data?.myNotifications.length !== 0
-            ? styles.notifications__main
-            : styles.notifications__main__none
-        }
-      >
+      <div className={styles.notifications__main}>
         <div className={styles.notifications__main__section}>
           <span>New Notifications</span> <span></span>
         </div>

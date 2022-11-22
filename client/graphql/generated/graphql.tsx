@@ -218,6 +218,7 @@ export type Mutation = {
   changePassword: ChangePasswordObjectType;
   changePasswordSettings: ChangePasswordSettingsObjectType;
   deleteAccount: DeleteAccountObjectType;
+  deleteNotification: Scalars['Boolean'];
   followUser: FollowUserObjectType;
   ignoreUser: IgnoreUserObjectType;
   imAuthenticated: ImAuthenticatedObjectType;
@@ -257,6 +258,11 @@ export type MutationChangePasswordSettingsArgs = {
 
 export type MutationDeleteAccountArgs = {
   input: DeleteAccountInputType;
+};
+
+
+export type MutationDeleteNotificationArgs = {
+  input: MyNotificationInputType;
 };
 
 
@@ -633,6 +639,13 @@ export type DeleteAccountMutationVariables = Exact<{
 
 
 export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount: { __typename?: 'DeleteAccountObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
+
+export type DeleteNotificationMutationVariables = Exact<{
+  input: MyNotificationInputType;
+}>;
+
+
+export type DeleteNotificationMutation = { __typename?: 'Mutation', deleteNotification: boolean };
 
 export type FollowUserMutationVariables = Exact<{
   input: FollowUserInputType;
@@ -1155,6 +1168,37 @@ export function useDeleteAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
 export type DeleteAccountMutationResult = Apollo.MutationResult<DeleteAccountMutation>;
 export type DeleteAccountMutationOptions = Apollo.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
+export const DeleteNotificationDocument = gql`
+    mutation DeleteNotification($input: MyNotificationInputType!) {
+  deleteNotification(input: $input)
+}
+    `;
+export type DeleteNotificationMutationFn = Apollo.MutationFunction<DeleteNotificationMutation, DeleteNotificationMutationVariables>;
+
+/**
+ * __useDeleteNotificationMutation__
+ *
+ * To run a mutation, you first call `useDeleteNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteNotificationMutation, { data, loading, error }] = useDeleteNotificationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteNotificationMutation(baseOptions?: Apollo.MutationHookOptions<DeleteNotificationMutation, DeleteNotificationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteNotificationMutation, DeleteNotificationMutationVariables>(DeleteNotificationDocument, options);
+      }
+export type DeleteNotificationMutationHookResult = ReturnType<typeof useDeleteNotificationMutation>;
+export type DeleteNotificationMutationResult = Apollo.MutationResult<DeleteNotificationMutation>;
+export type DeleteNotificationMutationOptions = Apollo.BaseMutationOptions<DeleteNotificationMutation, DeleteNotificationMutationVariables>;
 export const FollowUserDocument = gql`
     mutation FollowUser($input: FollowUserInputType!) {
   followUser(input: $input) {
