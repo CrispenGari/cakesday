@@ -587,7 +587,7 @@ export type FollowingFragmentFragment = { __typename?: 'Following', id: number, 
 
 export type IgnoreUserFragmentFragment = { __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string };
 
-export type NotificationFragmentFragment = { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string };
+export type NotificationFragmentFragment = { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string };
 
 export type NotificationSettingsFragmentFragment = { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string };
 
@@ -775,7 +775,7 @@ export type MyNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
+export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
 
 export type UserByIdQueryVariables = Exact<{
   input: UserInputType;
@@ -804,7 +804,7 @@ export type NotificationsSubscriptionVariables = Exact<{
 }>;
 
 
-export type NotificationsSubscription = { __typename?: 'Subscription', newNotification?: { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } } | null };
+export type NotificationsSubscription = { __typename?: 'Subscription', newNotification?: { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } } | null };
 
 export const NotificationFragmentFragmentDoc = gql`
     fragment NotificationFragment on Notification {
@@ -819,6 +819,8 @@ export const NotificationFragmentFragmentDoc = gql`
   read
   fromBannerURL
   fromGender
+  createdAt
+  updatedAt
 }
     `;
 export const IgnoreUserFragmentFragmentDoc = gql`

@@ -53,6 +53,11 @@ export const unixTimeStampToObject = (timestamp: string | undefined) => {
     month,
     year,
     formattedDate: `${day} ${month} ${year}`,
+    moment: `${year}${
+      date.getMonth().toString().length === 1
+        ? "0" + date.getMonth().toString()
+        : date.getMonth()
+    }${day.toString().length === 1 ? "0" + day : day}`,
   };
 };
 

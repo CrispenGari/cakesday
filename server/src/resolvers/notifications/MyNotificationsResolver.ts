@@ -43,7 +43,9 @@ export class MyNotificationResolver {
       if (user.tokenVersion !== payload.tokenVersion) {
         return [];
       }
-      return user.notifications;
+      return [...new Set(user.notifications)].sort(
+        (a: any, b: any) => b.createdAt - a.createdAt
+      );
     } catch (error) {
       return [];
     }

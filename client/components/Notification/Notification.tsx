@@ -1,13 +1,11 @@
 import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
-import {
-  MyNotificationsDocument,
-  Notification,
-  useMarkNotificationAsReadMutation,
-} from "../../graphql/generated/graphql";
-import { getAccessToken } from "../../state";
+import { Notification } from "../../graphql/generated/graphql";
+
 import NotificationModal from "../NotificationModal/NotificationModal";
 import styles from "./Notification.module.css";
+import moment from "moment";
+import { unixTimeStampToObject } from "../../utils";
 interface Props {
   notification: Notification;
 }
@@ -15,20 +13,6 @@ const Notification: React.FC<Props> = ({
   notification: { user, ...notification },
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [markAsRead, {}] = useMarkNotificationAsReadMutation({
-    fetchPolicy: "network-only",
-    refetchQueries: [
-      {
-        query: MyNotificationsDocument,
-        fetchPolicy: "network-only",
-        variables: {
-          input: {
-            accessToken: getAccessToken() as any,
-          },
-        },
-      },
-    ],
-  });
 
   return (
     <div
@@ -38,15 +22,7 @@ const Notification: React.FC<Props> = ({
         color: notification.read ? "black" : "white",
       }}
       onClick={async () => {
-        await markAsRead({
-          variables: {
-            input: {
-              accessToken: getAccessToken() as any,
-              notificationId: notification.id,
-            },
-          },
-        });
-        onOpen();
+        await onOpen();
       }}
     >
       <NotificationModal
@@ -61,7 +37,13 @@ const Notification: React.FC<Props> = ({
       {/* Notification Type  */}
       <p>
         {/* message and time */}
-        <span>{notification.message}</span> <span>just now</span>
+        <span>{notification.message}</span>
+        <span>
+          {moment(
+            unixTimeStampToObject(notification.createdAt).moment,
+            "YYYYMMDD"
+          ).fromNow()}
+        </span>
       </p>
     </div>
   );

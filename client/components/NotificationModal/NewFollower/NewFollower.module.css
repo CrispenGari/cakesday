@@ -1,0 +1,45 @@
+.new__follower {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+.new__follower > h1 {
+  color: var(--color-purple);
+  text-align: center;
+  margin: 5px 0;
+  font-weight: 600;
+}
+.new__follower > button {
+  color: white;
+  margin: 10px 0;
+  font-weight: 0.8rem !important;
+  background-color: var(--main-color);
+}
+.new__follower__user {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  margin: 10px 0;
+  padding: 5px 0;
+}
+.new__follower__user__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.new__follower__user__info > h1 {
+  font-weight: 600;
+  color: var(--main-color);
+}
+.new__follower__user__info > p {
+  color: gray;
+  font-size: 0.8rem !important;
+}
+.new__follower__user__avatar {
+  width: 80px !important;
+  height: 80px !important;
+}

@@ -1,4 +1,5 @@
 import { Avatar, Button } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { ProfileType } from "../../types";
 import { userBirthdayObject } from "../../utils";
@@ -19,10 +20,14 @@ const FlatUser: React.FC<Props> = ({
   color,
   loading,
 }) => {
+  const router = useRouter();
   return (
     <div className={styles.flat__user}>
       <div className={styles.flat__user__top}>
         <Avatar
+          onClick={() => {
+            router.push(`/profile/${user.id}`);
+          }}
           title={user?.username}
           className={
             size === "normal"
@@ -39,7 +44,13 @@ const FlatUser: React.FC<Props> = ({
               : styles.flat__user__info__small
           }
         >
-          <h1>{user?.username}</h1>
+          <h1
+            onClick={() => {
+              router.push(`/profile/${user.id}`);
+            }}
+          >
+            {user?.username}
+          </h1>
           <p>
             {user?.gender} &bull;{" "}
             {userBirthdayObject(user?.bday).formattedBirthday}

@@ -42,6 +42,9 @@ export class FriendsSuggestionsResolver {
     const ignoredUsers = user.ignoredUsers.map((f) => f.username);
     const suggestions = await User.find({
       relations: ["profile", "followers", "followings", "ignoredUsers"],
+      order: {
+        createdAt: "DESC",
+      },
     });
 
     const _suggestions = suggestions

@@ -1,17 +1,39 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotifications } from "../actions";
 import { Header, Notification } from "../components";
+import { useMyNotificationsQuery } from "../graphql/generated/graphql";
+import { getAccessToken } from "../state";
 import styles from "../styles/Notifications.module.css";
 import { StateType } from "../types";
 interface Props {}
 const Notifications: React.FC<Props> = ({}) => {
-  const { notifications } = useSelector((state: StateType) => state);
+  const { data } = useMyNotificationsQuery({
+    fetchPolicy: "network-only",
+    variables: {
+      input: {
+        accessToken: getAccessToken(),
+      },
+    },
+  });
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    let mounted: boolean = true;
+    if (mounted) {
+      dispatch(setNotifications(data?.myNotifications ?? []));
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [data, dispatch]);
+
   return (
     <div className={styles.notifications}>
       <Header />
       <div
         className={
-          notifications.length !== 0
+          data?.myNotifications.length !== 0
             ? styles.notifications__main
             : styles.notifications__main__none
         }
@@ -19,29 +41,32 @@ const Notifications: React.FC<Props> = ({}) => {
         <div className={styles.notifications__main__section}>
           <span>New Notifications</span> <span></span>
         </div>
-        {notifications.filter((notification) => !notification.read).length ===
-        0 ? (
-          <h1>No notifications.</h1>
+        {data?.myNotifications.filter((notification) => !notification.read)
+          .length === 0 ? (
+          <h2>No new notifications.</h2>
         ) : (
-          notifications
+          data?.myNotifications
             .filter((notification) => !notification.read)
             .map((notification) => (
-              <Notification notification={notification} key={notification.id} />
+              <Notification
+                notification={notification as any}
+                key={notification.id}
+              />
             ))
         )}
         <div className={styles.notifications__main__section}>
           <span>Old Notifications</span> <span></span>
         </div>
         {
-          notifications.filter((notification) => notification.read).length ===
-          0 ? (
-            <h1>No notifications.</h1>
+          data?.myNotifications.filter((notification) => notification.read)
+            .length === 0 ? (
+            <h2>No old notifications.</h2>
           ) : (
-            notifications
+            data?.myNotifications
               .filter((notification) => notification.read)
               .map((notification) => (
                 <Notification
-                  notification={notification}
+                  notification={notification as any}
                   key={notification.id}
                 />
               ))
