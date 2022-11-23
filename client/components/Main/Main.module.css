@@ -50,6 +50,33 @@
   color: var(--color-purple);
   font-size: 0.7rem;
 }
+.main__content__cards {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.main__content__cards__container {
+  display: flex;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.main__content__cards__container::-webkit-scrollbar {
+  height: 5px;
+}
+.main__content__cards__container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.main__content__cards__container::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+}
+.main__content__cards__container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple);
+  cursor: pointer;
+}
 @media only screen and (max-width: 1000px) {
   .main {
     flex: 1;

@@ -77,7 +77,7 @@ const UserInfo: React.FC<Props> = ({
           {user?.followings?.length} followings
         </span>
       </h5>
-      <h4>{"TOP 10 FOLLOWINGS"}</h4>
+      {user?.followings?.length !== 0 ? <h4>{"TOP 10 FOLLOWINGS"}</h4> : null}
       <div className={styles.user__info__top__10}>
         {user?.followings?.slice(0, 10)?.map(({ photoURL, username, id }) => (
           <Avatar

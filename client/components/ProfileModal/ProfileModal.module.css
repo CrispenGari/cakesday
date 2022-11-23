@@ -36,3 +36,10 @@
   background: var(--color-purple);
   cursor: pointer;
 }
+.profile__modal__content__empty {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}

@@ -84,19 +84,26 @@ const ProfileModal: React.FC<Props> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent className={styles.profile__modal__content}>
         <h1>{`${isMe ? "Your " : username} ${title}`}</h1>
-        <div className={styles.profile__modal__content__container}>
-          {users.map((user) => (
-            <FlatUser
-              color="primary"
-              size="normal"
-              key={user.id}
-              user={user}
-              btnTitle={btnTitle}
-              onBtnClick={() => handleEvent(user.username)}
-              loading={loading || loading0}
-            />
-          ))}
-        </div>
+
+        {users.length === 0 ? (
+          <div className={styles.profile__modal__content__empty}>
+            No {title}.
+          </div>
+        ) : (
+          <div className={styles.profile__modal__content__container}>
+            {users.map((user) => (
+              <FlatUser
+                color="primary"
+                size="normal"
+                key={user.id}
+                user={user}
+                btnTitle={btnTitle}
+                onBtnClick={() => handleEvent(user.username)}
+                loading={loading || loading0}
+              />
+            ))}
+          </div>
+        )}
         <Button onClick={onClose} disabled={loading || loading0}>
           Close
         </Button>

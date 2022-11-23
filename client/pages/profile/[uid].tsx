@@ -46,7 +46,7 @@ const Profile: React.FC<Props> = ({}) => {
           isMe: me?.me?.username === data?.user?.username,
           title: "Followers",
           username: data?.user?.username ?? "",
-          users: (me?.me?.followers as any) ?? [],
+          users: (data?.user?.followers as any) ?? [],
         }}
         btnTitle="follow back"
       />
@@ -57,7 +57,7 @@ const Profile: React.FC<Props> = ({}) => {
           isMe: me?.me?.username === data?.user?.username,
           title: "followings",
           username: data?.user?.username ?? "",
-          users: (me?.me?.followings as any) ?? [],
+          users: (data?.user?.followings as any) ?? [],
         }}
         btnTitle="unfollow"
       />

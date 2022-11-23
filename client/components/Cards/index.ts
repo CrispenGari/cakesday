@@ -1,0 +1,12 @@
+export const cards = {
+  BASIC_CARD: "BASIC",
+  // TEDDY_CARD = "TEDDY",
+  // ROCKET_CARD = "ROCKET",
+  // CAT_CARD = "CAT",
+  // ICE_CREAM_CARD = "ICE_CREAM",
+  // HEART_CARD = "HEART",
+  // PLANETS_CARD = "PLANETS",
+  // BALLON_CARD = "BALLON",
+  // SHOOTING_STAR_CARD = "SHOOTING_STAR",
+  // CANDLES_CARD = "CANDLES",
+};

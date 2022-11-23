@@ -1,14 +1,10 @@
 import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { Header, Main, SideBarLeft, SideBarRight } from "../components";
-import {
-  ImAuthenticatedDocument,
-  useMyNotificationsQuery,
-} from "../graphql/generated/graphql";
+import { ImAuthenticatedDocument } from "../graphql/generated/graphql";
 import { client } from "../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 import { NextPage } from "next";
 import styles from "../styles/Home.module.css";
-import { getAccessToken } from "../state";
 const Home: NextPage = () => {
   return (
     <div className={styles.home}>

@@ -1,4 +1,19 @@
-import { EmojiType } from "../types";
+import { BirthdayCardType, EmojiType } from "../types";
+
+export interface FreeCardType {
+  imagePath: string;
+  cardType: BirthdayCardType;
+}
+export const freeCards: FreeCardType[] = [
+  {
+    cardType: BirthdayCardType.BASIC_CARD,
+    imagePath: "http://localhost:3001/storage/images/cards/basic.png",
+  },
+  {
+    cardType: BirthdayCardType.TEDDY_CARD,
+    imagePath: "http://localhost:3001/storage/images/cards/teddy.png",
+  },
+];
 
 export const constants = {
   SET_EMAIL_CARD: "SET_EMAIL_CARD",
