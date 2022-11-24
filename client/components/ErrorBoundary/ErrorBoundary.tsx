@@ -1,13 +1,13 @@
+import { Button, Image } from "@chakra-ui/react";
 import React from "react";
-
+import styles from "./ErrorBoundary.module.css";
 interface PropsType {
   children: React.ReactNode;
 }
-
 interface StateType {
   hasError: boolean;
 }
-class ErrorBoundary extends React.Component<any, any> {
+class ErrorBoundary extends React.Component<PropsType, StateType> {
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };
@@ -24,16 +24,24 @@ class ErrorBoundary extends React.Component<any, any> {
   }
   render() {
     if (this.state.hasError) {
-      console.log({ error: this.state.hasError });
       return (
-        <div>
-          <h2>Oops, there is an error!</h2>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
+        <div className={styles.error__boundary}>
+          <h2>Oops, there is in cakesday app!</h2>
+          <Image alt="logo" src="/header-logo.png" />
+          <div>
+            <Button
+              type="button"
+              onClick={() => this.setState({ hasError: false })}
+            >
+              Try again?
+            </Button>
+            <Button
+              type="button"
+              onClick={() => this.setState({ hasError: false })}
+            >
+              Report Error
+            </Button>
+          </div>
         </div>
       );
     }

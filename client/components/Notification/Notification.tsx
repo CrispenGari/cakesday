@@ -131,14 +131,16 @@ const Notification: React.FC<Props> = ({
         >
           <AiOutlineDelete />
         </Button>
-        <Button
-          isLoading={reading}
-          disabled={deleting}
-          onClick={markAsRead}
-          title="mark as read"
-        >
-          <BiBookReader />
-        </Button>
+        {notification.read ? null : (
+          <Button
+            isLoading={reading}
+            disabled={deleting}
+            onClick={markAsRead}
+            title="mark as read"
+          >
+            <BiBookReader />
+          </Button>
+        )}
       </div>
     </div>
   );

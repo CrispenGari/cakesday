@@ -53,3 +53,8 @@
 .flat__user__secondary__btn {
   background-color: var(--color-purple) !important;
 }
+
+.flat__user > button:hover {
+  background-color: var(--color-pink) !important;
+  cursor: pointer;
+}

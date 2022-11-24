@@ -1,0 +1,42 @@
+.error__boundary {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--main-color);
+  user-select: none;
+  user-zoom: none;
+  color: white;
+}
+.error__boundary > img {
+  width: 100px;
+  -webkit-user-drag: none;
+  margin: 10px 0;
+}
+
+.error__boundary > div > button {
+  width: fit-content;
+  padding: 10px 30px;
+  cursor: pointer;
+  margin: 30px 0;
+  transition: all 1s;
+  font-weight: 500;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: var(--color-pink);
+}
+
+.error__boundary > div > button:first-of-type {
+  background-color: var(--color-purple);
+  margin-right: 10px;
+}
+
+.error__boundary > div > button:hover {
+  background-color: var(--main-color);
+}

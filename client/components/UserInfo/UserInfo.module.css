@@ -1,4 +1,9 @@
 .user__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user__info__container {
   margin: 10px;
   background-color: white;
   border-radius: 5px;
@@ -8,7 +13,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative !important;
+  position: relative;
 }
 .user__info__avatar {
   width: 25px !important;
@@ -21,14 +26,14 @@
   display: flex;
   padding-bottom: 10px;
 }
-.user__info > h3 {
+.user__info__container > h3 {
   font-weight: bold;
   font-size: 2rem;
   position: relative;
   color: var(--main-color);
 }
 
-.user__info > h3 > span {
+.user__info__container > h3 > span {
   position: absolute;
   font-size: 0.8rem;
   font-weight: 400;
@@ -36,38 +41,38 @@
   text-decoration: underline;
 }
 
-.user__info > h1 {
+.user__info__container > h1 {
   font-weight: bold;
   font-size: 1rem;
   color: var(--main-color);
 }
-.user__info > h2,
-.user__info > h5,
-.user__info > h4 {
+.user__info__container > h2,
+.user__info__container > h5,
+.user__info__container > h4 {
   color: var(--color-purple);
   margin: 10px auto;
   font-size: 0.9rem;
 }
 
-.user__info > h5 {
+.user__info__container > h5 {
   font-weight: bold;
 }
-.user__info > h5 > span {
+.user__info__container > h5 > span {
   margin: 0px 5px !important;
   cursor: pointer;
 }
-.user__info > h4 {
+.user__info__container > h4 {
   font-weight: bold;
   margin-top: unset;
 }
-.user__info > p {
+.user__info__container > p {
   font-size: 0.9rem;
   color: gray;
 }
-.user__info > div:last-of-type {
+.user__info__container > div:last-of-type {
   width: 100%;
 }
-.user__info > div > p {
+.user__info__container > div > p {
   color: var(--main-color);
   font-size: 0.9rem;
   font-weight: bold;
@@ -79,7 +84,7 @@
   top: 10px;
   left: 10px;
 }
-.user__info > button {
+.user__info__container > button {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -88,6 +93,6 @@
   width: 100px;
 }
 
-.user__info > h5 > span:hover {
+.user__info__container > h5 > span:hover {
   text-decoration: underline;
 }

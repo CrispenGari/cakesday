@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { ProfileType } from "../../types";
 import { userBirthdayObject } from "../../utils";
+
 import styles from "./FlatUser.module.css";
 interface Props {
   user: ProfileType;

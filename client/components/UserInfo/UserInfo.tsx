@@ -12,6 +12,9 @@ import {
   unixTimeStampToObject,
   userBirthdayObject,
 } from "../../utils";
+import BirthdayToday from "../BirthdayToday/BirthdayToday";
+import CardsModal from "../CardsModal/CardsModal";
+import Drops from "../Drops/Drops";
 import styles from "./UserInfo.module.css";
 interface Props {
   user: UserType;
@@ -47,68 +50,82 @@ const UserInfo: React.FC<Props> = ({
   });
   return (
     <div className={styles.user__info}>
-      {isMe ? null : dateDiffFromToday(new Date(Number(user?.createdAt)))
-          .isNew ? (
-        <Badge borderRadius="full" px="2" className={styles.user__info__badge}>
-          New
-        </Badge>
-      ) : (
-        <Badge borderRadius="full" px="2" className={styles.user__info__badge}>
-          Old
-        </Badge>
-      )}
-      <h1>
-        {user?.username} &bull; {user?.profile?.gender}
-      </h1>
-      <h2>
-        Birthday {userBirthdayObject(user?.profile?.bday).formattedBirthday}
-      </h2>
+      {!userBirthdayObject(user?.profile?.bday).isBirthday ? (
+        <BirthdayToday user={user} isMe={isMe} />
+      ) : null}
 
-      <h3>
-        {userBirthdayObject(user?.profile?.bday).age} <span>years</span>
-      </h3>
-      <p>{user?.profile?.bio}</p>
-      <h5>
-        <span onClick={() => openFollowers()}>
-          {user?.followers?.length} followers
-        </span>
-        &bull;
-        <span onClick={() => openFollowings()}>
-          {user?.followings?.length} followings
-        </span>
-      </h5>
-      {user?.followings?.length !== 0 ? <h4>{"TOP 10 FOLLOWINGS"}</h4> : null}
-      <div className={styles.user__info__top__10}>
-        {user?.followings?.slice(0, 10)?.map(({ photoURL, username, id }) => (
-          <Avatar
-            name={username}
-            key={id}
-            src={photoURL}
-            title={`@${username}`}
-            className={styles.user__info__avatar}
-          />
-        ))}
-      </div>
-      <div>
-        <p>
-          joined at: {unixTimeStampToObject(user?.createdAt)?.formattedDate}
-        </p>
-        <p>
-          last updated at:{" "}
-          {unixTimeStampToObject(user?.updatedAt)?.formattedDate}
-        </p>
-      </div>
+      <div className={styles.user__info__container}>
+        {isMe ? null : dateDiffFromToday(new Date(Number(user?.createdAt)))
+            .isNew ? (
+          <Badge
+            borderRadius="full"
+            px="2"
+            className={styles.user__info__badge}
+          >
+            New
+          </Badge>
+        ) : (
+          <Badge
+            borderRadius="full"
+            px="2"
+            className={styles.user__info__badge}
+          >
+            Old
+          </Badge>
+        )}
+        <h1>
+          {user?.username} &bull; {user?.profile?.gender}
+        </h1>
+        <h2>
+          Birthday {userBirthdayObject(user?.profile?.bday).formattedBirthday}
+        </h2>
 
-      {isMe ? null : (
-        <Button
-          isLoading={loading}
-          onClick={async () => {
-            await followUser();
-          }}
-        >
-          Add
-        </Button>
-      )}
+        <h3>
+          {userBirthdayObject(user?.profile?.bday).age} <span>years</span>
+        </h3>
+        <p>{user?.profile?.bio}</p>
+        <h5>
+          <span onClick={() => openFollowers()}>
+            {user?.followers?.length} followers
+          </span>
+          &bull;
+          <span onClick={() => openFollowings()}>
+            {user?.followings?.length} followings
+          </span>
+        </h5>
+        {user?.followings?.length !== 0 ? <h4>{"TOP 10 FOLLOWINGS"}</h4> : null}
+        <div className={styles.user__info__top__10}>
+          {user?.followings?.slice(0, 10)?.map(({ photoURL, username, id }) => (
+            <Avatar
+              name={username}
+              key={id}
+              src={photoURL}
+              title={`@${username}`}
+              className={styles.user__info__avatar}
+            />
+          ))}
+        </div>
+        <div>
+          <p>
+            joined at: {unixTimeStampToObject(user?.createdAt)?.formattedDate}
+          </p>
+          <p>
+            last updated at:{" "}
+            {unixTimeStampToObject(user?.updatedAt)?.formattedDate}
+          </p>
+        </div>
+
+        {isMe ? null : (
+          <Button
+            isLoading={loading}
+            onClick={async () => {
+              await followUser();
+            }}
+          >
+            Add
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

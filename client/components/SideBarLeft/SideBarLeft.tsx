@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import {
   FriendsSuggestionsDocument,
@@ -10,11 +10,14 @@ import {
   useUsersBelatedBirthdaysQuery,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import CardsModal from "../CardsModal/CardsModal";
 import FlatUser from "../FlatUser/FlatUser";
 import styles from "./SideBarLeft.module.css";
 interface Props {}
 const SideBarLeft: React.FC<Props> = ({}) => {
   const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedUser, setSelectedUser] = React.useState<any>(null);
   const { data: belatedBdays } = useUsersBelatedBirthdaysQuery({
     fetchPolicy: "network-only",
   });
@@ -52,6 +55,10 @@ const SideBarLeft: React.FC<Props> = ({}) => {
   return (
     <div className={styles.sidebar__left}>
       <h1>Birthdays</h1>
+      {selectedUser && (
+        <CardsModal isOpen={isOpen} onClose={onClose} user={selectedUser} />
+      )}
+
       <div className={styles.sidebar__left__lists}>
         <p>
           <span>Today</span> <span></span>
@@ -63,6 +70,12 @@ const SideBarLeft: React.FC<Props> = ({}) => {
             btnTitle={"Send Wish"}
             size="small"
             color="secondary"
+            onBtnClick={() => {
+              setSelectedUser(user);
+              if (!!selectedUser) {
+                onOpen();
+              }
+            }}
           />
         ))}
         <p>
@@ -75,6 +88,12 @@ const SideBarLeft: React.FC<Props> = ({}) => {
             btnTitle={"Send Wish"}
             size="small"
             color="secondary"
+            onBtnClick={() => {
+              setSelectedUser(user);
+              if (!!selectedUser) {
+                onOpen();
+              }
+            }}
           />
         ))}
       </div>

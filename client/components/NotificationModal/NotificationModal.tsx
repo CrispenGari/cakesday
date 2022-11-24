@@ -9,6 +9,7 @@ import {
 import NewFollower from "./NewFollower/NewFollower";
 import { getAccessToken } from "../../state";
 import BirthDayCard from "./BirthDayCard/BirthDayCard";
+import NewFriend from "./NewFriend/NewFriend";
 
 interface Props {
   onClose: () => void;
@@ -47,7 +48,7 @@ const NotificationModal: React.FC<Props> = ({
   }, [data, onClose]);
   const renderComponent: any = {
     new_follower: <NewFollower notification={notification} onClose={onClose} />,
-    new_friend: null,
+    new_friend: <NewFriend notification={notification} onClose={onClose} />,
     birthday_card: (
       <BirthDayCard notification={notification} onClose={onClose} />
     ),
