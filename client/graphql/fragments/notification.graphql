@@ -10,6 +10,11 @@ fragment NotificationFragment on Notification {
   read
   fromBannerURL
   fromGender
+  bdayCard
+  reaction
+  fromBDay
   createdAt
   updatedAt
+  bdayMessage
+  reaction
 }

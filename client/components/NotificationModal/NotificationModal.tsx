@@ -8,6 +8,7 @@ import {
 } from "../../graphql/generated/graphql";
 import NewFollower from "./NewFollower/NewFollower";
 import { getAccessToken } from "../../state";
+import BirthDayCard from "./BirthDayCard/BirthDayCard";
 
 interface Props {
   onClose: () => void;
@@ -33,7 +34,6 @@ const NotificationModal: React.FC<Props> = ({
       },
     ],
   });
-
   React.useEffect(() => {
     let mounted: boolean = true;
     if (mounted) {
@@ -45,6 +45,16 @@ const NotificationModal: React.FC<Props> = ({
       mounted = false;
     };
   }, [data, onClose]);
+  const renderComponent: any = {
+    new_follower: <NewFollower notification={notification} onClose={onClose} />,
+    new_friend: null,
+    birthday_card: (
+      <BirthDayCard notification={notification} onClose={onClose} />
+    ),
+    birthday_card_reaction: (
+      <BirthDayCard notification={notification} onClose={onClose} />
+    ),
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -62,7 +72,7 @@ const NotificationModal: React.FC<Props> = ({
       <ModalContent className={styles.notification__modal__content}>
         <h1>{notification.type.split("_").join(" ")}</h1>
         <div className={styles.notification__modal__content__container}>
-          <NewFollower notification={notification} onClose={onClose} />
+          {renderComponent[notification.type]}
         </div>
         <Button
           onClick={async () => {

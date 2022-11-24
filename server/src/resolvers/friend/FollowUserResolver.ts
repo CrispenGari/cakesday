@@ -121,7 +121,9 @@ export class FollowUserResolver {
       message: heIsFollowing
         ? `${me.username} follows you back.`
         : `${me.username} started following you.`,
-      type: NotificationType.NEW_FOLLOWER,
+      type: heIsFollowing
+        ? NotificationType.NEW_FRIEND
+        : NotificationType.NEW_FOLLOWER,
       fromId: me.id,
       fromUsername: me.username,
       fromEmail: me.email,

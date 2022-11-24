@@ -1,4 +1,4 @@
-import { BirthdayCardType, NotificationType } from "../../types";
+import { BirthdayCardType, NotificationType, EmotionType } from "../../types";
 import { ObjectType, Field, Int } from "type-graphql";
 import {
   BaseEntity,
@@ -33,6 +33,18 @@ export class Notification extends BaseEntity {
     enum: BirthdayCardType,
   })
   bdayCard: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({
+    nullable: true,
+    type: "enum",
+    enum: EmotionType,
+  })
+  reaction: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true, type: "text" })
+  bdayMessage: String;
 
   @Field(() => String)
   @Column({ nullable: false, type: "text" })

@@ -1,0 +1,151 @@
+.birthday__card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+.birthday__card > h1 {
+  color: var(--color-purple);
+  text-align: center;
+  margin: 5px 0;
+  font-weight: 600;
+}
+.birthday__card__buttons > p {
+  color: white;
+  text-align: center;
+  padding: 5px 10px;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+.birthday__card__container {
+  background-color: var(--color-brown);
+  border-radius: 5px;
+  margin-bottom: 5px;
+  height: 350px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightblue;
+}
+.birthday__card__preview {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.birthday__card__preview__image {
+  width: 200px;
+  -webkit-user-drag: none;
+  margin: 0px auto;
+  margin-top: 20px;
+  animation: animate 1s ease 0 infinite;
+}
+.birthday__card__preview > h1 {
+  color: var(--main-color);
+  z-index: 10;
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+}
+.birthday__card__preview > h1 > span:nth-child(even) {
+  color: var(--color-pink);
+}
+
+.birthday__card__buttons {
+  position: relative;
+  width: 100%;
+}
+.birthday__card__buttons > button {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 30px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-pink);
+  align-self: flex-end;
+  margin: 10px;
+  transition: all 1s;
+}
+
+.birthday__card__buttons > button:hover {
+  background-color: var(--main-color);
+}
+
+.birthday__card__reactions > button:nth-child(odd):hover {
+  background-color: var(--color-pink);
+}
+.birthday__card__reactions > button:nth-child(even):hover {
+  background-color: var(--color-purple);
+}
+
+.birthday__card__reactions {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  border-radius: 20px;
+  position: absolute;
+  z-index: 10;
+  width: 100px;
+  top: 10px;
+  left: 40px;
+  transition: all 1s;
+  display: flex;
+  width: fit-content !important;
+}
+.birthday__card__reactions > button {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: inherit;
+  transition: all 1s;
+  margin: 0px 5px;
+}
+
+.birthday__card__reaction__even {
+  background-color: var(--color-purple) !important;
+}
+.birthday__card__reaction__odd {
+  background-color: var(--color-pink) !important;
+}
+
+.birthday_card__user {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  margin: 10px 0;
+  padding: 5px 0;
+}
+.birthday_card__user__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.birthday_card__user__info > h1 {
+  font-weight: 600;
+  color: var(--main-color);
+}
+.birthday_card__user__info > p {
+  color: gray;
+  font-size: 0.8rem !important;
+}
+.birthday_card__user__avatar {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.birthday_card__user__info > button {
+  background-color: var(--color-pink);
+  color: white;
+  height: 30px !important;
+  width: fit-content !important;
+  margin-top: 5px;
+  transition: all 1s;
+}
+
+.birthday_card__user__info > button:hover {
+  background-color: var(--color-purple);
+}

@@ -175,6 +175,22 @@ export type IgnoreUserObjectType = {
   success: Scalars['Boolean'];
 };
 
+export type IgnoredBirthdays = {
+  __typename?: 'IgnoredBirthdays';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
 export type IgnoredUser = {
   __typename?: 'IgnoredUser';
   bannerURL?: Maybe<Scalars['String']>;
@@ -220,12 +236,15 @@ export type Mutation = {
   deleteAccount: DeleteAccountObjectType;
   deleteNotification: Scalars['Boolean'];
   followUser: FollowUserObjectType;
+  ignoreBirthday: Scalars['Boolean'];
   ignoreUser: IgnoreUserObjectType;
   imAuthenticated: ImAuthenticatedObjectType;
   invalidateToken: InvalidateTokenObjectType;
   markAsRead: Scalars['Boolean'];
+  reactToCard: Scalars['Boolean'];
   resendVerificationCode: Scalars['Boolean'];
   sendForgotPasswordEmail: SendForgotPasswordEmailObjectType;
+  sendWish: Scalars['Boolean'];
   signIn: SignInObjectType;
   signOut: Scalars['Boolean'];
   signUp: SignUpObjectType;
@@ -271,6 +290,11 @@ export type MutationFollowUserArgs = {
 };
 
 
+export type MutationIgnoreBirthdayArgs = {
+  input: UserBirthdayInputType;
+};
+
+
 export type MutationIgnoreUserArgs = {
   input: IgnoreUserInputType;
 };
@@ -291,6 +315,11 @@ export type MutationMarkAsReadArgs = {
 };
 
 
+export type MutationReactToCardArgs = {
+  input: UserBirthdayInputType;
+};
+
+
 export type MutationResendVerificationCodeArgs = {
   input: VerifyEmailInput;
 };
@@ -298,6 +327,11 @@ export type MutationResendVerificationCodeArgs = {
 
 export type MutationSendForgotPasswordEmailArgs = {
   input: SendForgotPasswordEmailInputType;
+};
+
+
+export type MutationSendWishArgs = {
+  input: UserBirthdayInputType;
 };
 
 
@@ -362,6 +396,8 @@ export type MyNotificationInputType = {
 
 export type Notification = {
   __typename?: 'Notification';
+  bdayCard?: Maybe<Scalars['String']>;
+  bdayMessage?: Maybe<Scalars['String']>;
   createdAt: Scalars['String'];
   fromBDay: Scalars['String'];
   fromBannerURL?: Maybe<Scalars['String']>;
@@ -372,6 +408,7 @@ export type Notification = {
   fromUsername: Scalars['String'];
   id: Scalars['Int'];
   message: Scalars['String'];
+  reaction?: Maybe<Scalars['String']>;
   read: Scalars['Boolean'];
   type: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -555,6 +592,7 @@ export type User = {
   followers?: Maybe<Array<Follower>>;
   followings?: Maybe<Array<Following>>;
   id: Scalars['Int'];
+  ignoredBirthdays?: Maybe<Array<IgnoredBirthdays>>;
   ignoredUsers?: Maybe<Array<IgnoredUser>>;
   isLoggedIn: Scalars['Boolean'];
   notifications?: Maybe<Array<Notification>>;
@@ -562,6 +600,16 @@ export type User = {
   settings?: Maybe<Settings>;
   updatedAt: Scalars['String'];
   username: Scalars['String'];
+  wished?: Maybe<Array<Wished>>;
+};
+
+export type UserBirthdayInputType = {
+  accessToken: Scalars['String'];
+  bdayCard?: InputMaybe<Scalars['String']>;
+  friendUsername: Scalars['String'];
+  message?: InputMaybe<Scalars['String']>;
+  notificationId?: InputMaybe<Scalars['Int']>;
+  reaction?: InputMaybe<Scalars['String']>;
 };
 
 export type UserInputType = {
@@ -585,6 +633,22 @@ export type VerifyNewEmailInputType = {
   verificationCode: Scalars['String'];
 };
 
+export type Wished = {
+  __typename?: 'Wished';
+  bannerURL?: Maybe<Scalars['String']>;
+  bday: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['Int'];
+  photoURL?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['String'];
+  user: User;
+  username: Scalars['String'];
+  verified: Scalars['Boolean'];
+};
+
 export type CommonSettingsFragmentFragment = { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string, updatedAt: string };
 
 export type FollowerFragmentFragment = { __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string };
@@ -593,7 +657,7 @@ export type FollowingFragmentFragment = { __typename?: 'Following', id: number, 
 
 export type IgnoreUserFragmentFragment = { __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string };
 
-export type NotificationFragmentFragment = { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string };
+export type NotificationFragmentFragment = { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, bdayCard?: string | null, reaction?: string | null, createdAt: string, updatedAt: string, bdayMessage?: string | null };
 
 export type NotificationSettingsFragmentFragment = { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string };
 
@@ -654,6 +718,13 @@ export type FollowUserMutationVariables = Exact<{
 
 export type FollowUserMutation = { __typename?: 'Mutation', followUser: { __typename?: 'FollowUserObjectType', success: boolean, message: { __typename?: 'AuthError', field: string, message: string } } };
 
+export type IgnoreBirthdayMutationVariables = Exact<{
+  input: UserBirthdayInputType;
+}>;
+
+
+export type IgnoreBirthdayMutation = { __typename?: 'Mutation', ignoreBirthday: boolean };
+
 export type IgnoreUserMutationVariables = Exact<{
   input: IgnoreUserInputType;
 }>;
@@ -682,6 +753,13 @@ export type MarkNotificationAsReadMutationVariables = Exact<{
 
 export type MarkNotificationAsReadMutation = { __typename?: 'Mutation', markAsRead: boolean };
 
+export type ReactToBirthDayCardMutationVariables = Exact<{
+  input: UserBirthdayInputType;
+}>;
+
+
+export type ReactToBirthDayCardMutation = { __typename?: 'Mutation', reactToCard: boolean };
+
 export type RequestChangePasswordEmailMutationVariables = Exact<{
   input: SendForgotPasswordEmailInputType;
 }>;
@@ -695,6 +773,13 @@ export type ResendVerificationCodeMutationVariables = Exact<{
 
 
 export type ResendVerificationCodeMutation = { __typename?: 'Mutation', resendVerificationCode: boolean };
+
+export type SendBirthdayCardMutationVariables = Exact<{
+  input: UserBirthdayInputType;
+}>;
+
+
+export type SendBirthdayCardMutation = { __typename?: 'Mutation', sendWish: boolean };
 
 export type SignInMutationVariables = Exact<{
   input: SignInInput;
@@ -788,7 +873,7 @@ export type MyNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
+export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, bdayCard?: string | null, reaction?: string | null, createdAt: string, updatedAt: string, bdayMessage?: string | null, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
 
 export type UserByIdQueryVariables = Exact<{
   input: UserInputType;
@@ -817,7 +902,7 @@ export type NotificationsSubscriptionVariables = Exact<{
 }>;
 
 
-export type NotificationsSubscription = { __typename?: 'Subscription', newNotification?: { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, createdAt: string, updatedAt: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } } | null };
+export type NotificationsSubscription = { __typename?: 'Subscription', newNotification?: { __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, bdayCard?: string | null, reaction?: string | null, createdAt: string, updatedAt: string, bdayMessage?: string | null, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } } | null };
 
 export const NotificationFragmentFragmentDoc = gql`
     fragment NotificationFragment on Notification {
@@ -832,8 +917,13 @@ export const NotificationFragmentFragmentDoc = gql`
   read
   fromBannerURL
   fromGender
+  bdayCard
+  reaction
+  fromBDay
   createdAt
   updatedAt
+  bdayMessage
+  reaction
 }
     `;
 export const IgnoreUserFragmentFragmentDoc = gql`
@@ -1236,6 +1326,37 @@ export function useFollowUserMutation(baseOptions?: Apollo.MutationHookOptions<F
 export type FollowUserMutationHookResult = ReturnType<typeof useFollowUserMutation>;
 export type FollowUserMutationResult = Apollo.MutationResult<FollowUserMutation>;
 export type FollowUserMutationOptions = Apollo.BaseMutationOptions<FollowUserMutation, FollowUserMutationVariables>;
+export const IgnoreBirthdayDocument = gql`
+    mutation IgnoreBirthday($input: UserBirthdayInputType!) {
+  ignoreBirthday(input: $input)
+}
+    `;
+export type IgnoreBirthdayMutationFn = Apollo.MutationFunction<IgnoreBirthdayMutation, IgnoreBirthdayMutationVariables>;
+
+/**
+ * __useIgnoreBirthdayMutation__
+ *
+ * To run a mutation, you first call `useIgnoreBirthdayMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIgnoreBirthdayMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [ignoreBirthdayMutation, { data, loading, error }] = useIgnoreBirthdayMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useIgnoreBirthdayMutation(baseOptions?: Apollo.MutationHookOptions<IgnoreBirthdayMutation, IgnoreBirthdayMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<IgnoreBirthdayMutation, IgnoreBirthdayMutationVariables>(IgnoreBirthdayDocument, options);
+      }
+export type IgnoreBirthdayMutationHookResult = ReturnType<typeof useIgnoreBirthdayMutation>;
+export type IgnoreBirthdayMutationResult = Apollo.MutationResult<IgnoreBirthdayMutation>;
+export type IgnoreBirthdayMutationOptions = Apollo.BaseMutationOptions<IgnoreBirthdayMutation, IgnoreBirthdayMutationVariables>;
 export const IgnoreUserDocument = gql`
     mutation IgnoreUser($input: IgnoreUserInputType!) {
   ignoreUser(input: $input) {
@@ -1378,6 +1499,37 @@ export function useMarkNotificationAsReadMutation(baseOptions?: Apollo.MutationH
 export type MarkNotificationAsReadMutationHookResult = ReturnType<typeof useMarkNotificationAsReadMutation>;
 export type MarkNotificationAsReadMutationResult = Apollo.MutationResult<MarkNotificationAsReadMutation>;
 export type MarkNotificationAsReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
+export const ReactToBirthDayCardDocument = gql`
+    mutation ReactToBirthDayCard($input: UserBirthdayInputType!) {
+  reactToCard(input: $input)
+}
+    `;
+export type ReactToBirthDayCardMutationFn = Apollo.MutationFunction<ReactToBirthDayCardMutation, ReactToBirthDayCardMutationVariables>;
+
+/**
+ * __useReactToBirthDayCardMutation__
+ *
+ * To run a mutation, you first call `useReactToBirthDayCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReactToBirthDayCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reactToBirthDayCardMutation, { data, loading, error }] = useReactToBirthDayCardMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReactToBirthDayCardMutation(baseOptions?: Apollo.MutationHookOptions<ReactToBirthDayCardMutation, ReactToBirthDayCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReactToBirthDayCardMutation, ReactToBirthDayCardMutationVariables>(ReactToBirthDayCardDocument, options);
+      }
+export type ReactToBirthDayCardMutationHookResult = ReturnType<typeof useReactToBirthDayCardMutation>;
+export type ReactToBirthDayCardMutationResult = Apollo.MutationResult<ReactToBirthDayCardMutation>;
+export type ReactToBirthDayCardMutationOptions = Apollo.BaseMutationOptions<ReactToBirthDayCardMutation, ReactToBirthDayCardMutationVariables>;
 export const RequestChangePasswordEmailDocument = gql`
     mutation RequestChangePasswordEmail($input: SendForgotPasswordEmailInputType!) {
   sendForgotPasswordEmail(input: $input) {
@@ -1446,6 +1598,37 @@ export function useResendVerificationCodeMutation(baseOptions?: Apollo.MutationH
 export type ResendVerificationCodeMutationHookResult = ReturnType<typeof useResendVerificationCodeMutation>;
 export type ResendVerificationCodeMutationResult = Apollo.MutationResult<ResendVerificationCodeMutation>;
 export type ResendVerificationCodeMutationOptions = Apollo.BaseMutationOptions<ResendVerificationCodeMutation, ResendVerificationCodeMutationVariables>;
+export const SendBirthdayCardDocument = gql`
+    mutation SendBirthdayCard($input: UserBirthdayInputType!) {
+  sendWish(input: $input)
+}
+    `;
+export type SendBirthdayCardMutationFn = Apollo.MutationFunction<SendBirthdayCardMutation, SendBirthdayCardMutationVariables>;
+
+/**
+ * __useSendBirthdayCardMutation__
+ *
+ * To run a mutation, you first call `useSendBirthdayCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendBirthdayCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendBirthdayCardMutation, { data, loading, error }] = useSendBirthdayCardMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendBirthdayCardMutation(baseOptions?: Apollo.MutationHookOptions<SendBirthdayCardMutation, SendBirthdayCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendBirthdayCardMutation, SendBirthdayCardMutationVariables>(SendBirthdayCardDocument, options);
+      }
+export type SendBirthdayCardMutationHookResult = ReturnType<typeof useSendBirthdayCardMutation>;
+export type SendBirthdayCardMutationResult = Apollo.MutationResult<SendBirthdayCardMutation>;
+export type SendBirthdayCardMutationOptions = Apollo.BaseMutationOptions<SendBirthdayCardMutation, SendBirthdayCardMutationVariables>;
 export const SignInDocument = gql`
     mutation SignIn($input: SignInInput!) {
   signIn(input: $input) {

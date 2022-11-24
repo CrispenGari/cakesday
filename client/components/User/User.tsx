@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./User.module.css";
-import { Box, Image, Badge, Button, Avatar } from "@chakra-ui/react";
+import { Badge, Button, Avatar } from "@chakra-ui/react";
 import { UserType } from "../../types";
 import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import { useRouter } from "next/router";
@@ -15,7 +15,7 @@ interface Props {
   friend: UserType;
 }
 const User: React.FC<Props> = ({
-  friend: { profile, followers, followings, username, id, friends, createdAt },
+  friend: { profile, username, id, createdAt },
 }) => {
   const router = useRouter();
 

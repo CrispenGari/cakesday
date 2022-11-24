@@ -5,7 +5,6 @@ import { Header, Notification } from "../components";
 import { useMyNotificationsQuery } from "../graphql/generated/graphql";
 import { getAccessToken } from "../state";
 import styles from "../styles/Notifications.module.css";
-import { StateType } from "../types";
 interface Props {}
 const Notifications: React.FC<Props> = ({}) => {
   const { data } = useMyNotificationsQuery({
@@ -16,7 +15,6 @@ const Notifications: React.FC<Props> = ({}) => {
       },
     },
   });
-
   const dispatch = useDispatch();
   React.useEffect(() => {
     let mounted: boolean = true;

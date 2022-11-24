@@ -17,7 +17,12 @@ const CardsModal: React.FC<Props> = ({ onClose, isOpen, user }) => {
         <h1>Send Birthday card to {user.username}.</h1>
         <div className={styles.cards__modal__content__container}>
           {freeCards.map((card, index) => (
-            <FreeBirthdayCard key={index} card={card} user={user} />
+            <FreeBirthdayCard
+              key={index}
+              card={card}
+              user={user}
+              onClose={onClose}
+            />
           ))}
         </div>
         <Button onClick={onClose}>Close</Button>

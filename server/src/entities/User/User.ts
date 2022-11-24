@@ -12,11 +12,13 @@ import {
 } from "typeorm";
 import { Follower } from "../Follower/Follower";
 import { Following } from "../Following/Following";
+import { IgnoredBirthdays } from "../IgnoredBirthdays/IgnoredBirthdays";
 // import { Friend } from "../Friends/Friends";
 import { IgnoredUser } from "../IngoredUser/IngoredUser";
 import { Notification } from "../Notification/Notification";
 import { Profile } from "../Profile/Profile";
 import { Settings } from "../Settings/Settings";
+import { Wished } from "../Wished/Wished";
 
 @ObjectType()
 @Entity()
@@ -102,6 +104,24 @@ export class User extends BaseEntity {
     cascade: true,
   })
   ignoredUsers: IgnoredUser[];
+
+  // Ignored Birthdays
+  @Field(() => [IgnoredBirthdays], { nullable: true })
+  @OneToMany(() => IgnoredBirthdays, ({ user }) => user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
+  ignoredBirthdays: IgnoredBirthdays[];
+
+  // Wished Birthdays
+  @Field(() => [Wished], { nullable: true })
+  @OneToMany(() => Wished, ({ user }) => user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    cascade: true,
+  })
+  wished: Wished[];
 
   // Followers
   @Field(() => [Follower], { nullable: true })

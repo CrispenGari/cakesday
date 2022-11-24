@@ -69,3 +69,10 @@ export enum BirthdayCardType {
   SHOOTING_STAR_CARD = "SHOOTING_STAR",
   CANDLES_CARD = "CANDLES",
 }
+
+export enum NotificationType {
+  NEW_FOLLOWER = "new_follower",
+  NEW_FRIEND = "new_friend",
+  BIRTHDAY_CARD = "birthday_card",
+  CARD_REACTION = "birthday_card_reaction",
+}

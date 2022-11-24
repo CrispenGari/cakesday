@@ -29,7 +29,7 @@ export { default as ChangeThemeSettings } from "./ChangeThemeSettings/ChangeThem
 export { default as Explore } from "./Explore/Explore";
 export { default as Footer } from "./Footer/Footer";
 export { default as User } from "./User/User";
-export { default as BirthDayCard } from "./BirthDayCard/BirthDayCard";
+export { default as BirthDayCard } from "./NotificationModal/BirthDayCard/BirthDayCard";
 export { default as SideBarRight } from "./SideBarRight/SideBarRight";
 export { default as SideBarLeft } from "./SideBarLeft/SideBarLeft";
 export { default as HeaderIconButton } from "./HeaderIconButton/HeaderIconButton";

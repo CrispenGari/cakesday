@@ -13,6 +13,8 @@ import { unixTimeStampToObject } from "../../utils";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiBookReader } from "react-icons/bi";
 import { getAccessToken } from "../../state";
+import { Emoji } from "@crispengari/react-emojify";
+import { reactions } from "../../constants";
 
 interface Props {
   notification: Notification;
@@ -93,7 +95,21 @@ const Notification: React.FC<Props> = ({
           await onOpen();
         }}
       >
-        <h1>{notification.type.split("_").join(" ")}</h1>{" "}
+        <h1>
+          {notification.type.split("_").join(" ")}
+
+          {notification.reaction && (
+            <Emoji
+              style={{
+                marginLeft: 10,
+              }}
+              emojiId={
+                reactions.find((r) => r.reaction === notification.reaction)!
+                  .emojiId
+              }
+            />
+          )}
+        </h1>{" "}
         <div>
           <p>
             <span>{notification.message}</span>

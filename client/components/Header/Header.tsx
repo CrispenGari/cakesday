@@ -21,7 +21,7 @@ const Header: React.FC<Props> = ({}) => {
   const { data: user } = useMeQuery({
     fetchPolicy: "network-only",
   });
-  const { data } = useNotificationsSubscription({
+  const { data: notification } = useNotificationsSubscription({
     fetchPolicy: "network-only",
     variables: {
       input: {
@@ -30,11 +30,10 @@ const Header: React.FC<Props> = ({}) => {
     },
   });
   const router = useRouter();
-  console.log(router.pathname);
   const dispatch = useDispatch();
   React.useEffect(() => {
     let mounted: boolean = true;
-    if (mounted && data?.newNotification?.user.id === user?.me?.id) {
+    if (mounted && notification?.newNotification?.user.id === user?.me?.id) {
       // this notification belongs to me
       (async () => {
         const { data: notifications } = await client.query({
@@ -53,7 +52,7 @@ const Header: React.FC<Props> = ({}) => {
     return () => {
       mounted = false;
     };
-  }, [data, dispatch, user]);
+  }, [notification, dispatch, user]);
 
   return (
     <div className={styles.header}>

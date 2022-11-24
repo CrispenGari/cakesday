@@ -25,6 +25,8 @@ export enum GenderType {
 export enum NotificationType {
   NEW_FOLLOWER = "new_follower",
   NEW_FRIEND = "new_friend",
+  BIRTHDAY_CARD = "birthday_card",
+  CARD_REACTION = "birthday_card_reaction",
 }
 
 export enum NotificationsType {
@@ -43,6 +45,16 @@ export enum BirthdayCardType {
   BALLON_CARD = "BALLON",
   SHOOTING_STAR_CARD = "SHOOTING_STAR",
   CANDLES_CARD = "CANDLES",
+}
+
+export enum EmotionType {
+  LOVE = "LOVE",
+  LIKE = "LIKE",
+  BLUSH = "BLUSH",
+  HAHA = "HAHA",
+  ICE_CREAM = "ICE_CREAM",
+  CAKE = "CAKE",
+  CLAP = "CLAP",
 }
 
 export enum UserMoodType {

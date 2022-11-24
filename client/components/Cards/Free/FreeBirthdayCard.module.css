@@ -1,5 +1,5 @@
 .free__card {
-  background-color: var(--main-color);
+  background-color: var(--color-brown);
   border-radius: 5px;
   margin-bottom: 5px;
 
@@ -42,12 +42,27 @@
 .free__card__buttons > button:hover {
   background-color: var(--main-color);
 }
+.free__card__buttons > textarea {
+  resize: none;
+  background-color: #f5f5f5;
+  flex: 1;
+  margin: 0 5px;
+  outline: none;
+  padding: 5px 10px;
+  height: 50px;
+  font-size: 0.9rem;
+}
+.free__card__preview > h1 {
+  color: var(--main-color);
+  z-index: 10;
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+}
+.free__card__preview > h1 > span {
+  position: relative;
+}
 
-@keyframes animate {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.09);
-  }
+.free__card__preview > h1 > span:nth-child(even) {
+  color: var(--color-pink);
 }

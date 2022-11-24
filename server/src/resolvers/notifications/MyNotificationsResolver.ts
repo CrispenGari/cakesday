@@ -69,26 +69,26 @@ export class MyNotificationResolver {
         accessToken,
         process.env.ACCESS_TOKEN_SECRETE
       );
+
       const user = await dataSource.getRepository(User).findOne({
         where: {
           id: payload.userId,
         },
       });
-      if (!user) {
-        return undefined;
-      }
-      if (user.tokenVersion !== payload.tokenVersion) {
+      if (!!!user) {
         return undefined;
       }
 
+      if (user.tokenVersion !== payload.tokenVersion) {
+        return undefined;
+      }
       const noti = await dataSource
         .getRepository(Notification)
         .createQueryBuilder("notification")
         .where("notification.id = :id", { id: notification.id })
         .leftJoinAndSelect("notification.user", "user")
         .getOne();
-
-      return noti ?? undefined;
+      return !!noti ? noti : undefined;
     } catch (error) {
       return undefined;
     }

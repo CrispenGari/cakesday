@@ -3,6 +3,12 @@ import { Emoji } from "@crispengari/react-emojify";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import {
+  TodaysBirthDaysDocument,
+  useIgnoreBirthdayMutation,
+  UsersBelatedBirthdaysDocument,
+} from "../../graphql/generated/graphql";
+import { getAccessToken } from "../../state";
 import { UserType } from "../../types";
 import { userBirthdayObject } from "../../utils";
 import CardsModal from "../CardsModal/CardsModal";
@@ -14,6 +20,33 @@ interface Props {
 const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [ignore, { loading }] = useIgnoreBirthdayMutation({
+    fetchPolicy: "network-only",
+  });
+
+  const ignoreBirthday = async () => {
+    await ignore({
+      variables: {
+        input: {
+          accessToken: getAccessToken(),
+          friendUsername: user.username,
+        },
+      },
+      refetchQueries: [
+        {
+          query: TodaysBirthDaysDocument,
+          variables: {},
+          fetchPolicy: "network-only",
+        },
+        {
+          query: UsersBelatedBirthdaysDocument,
+          variables: {},
+          fetchPolicy: "network-only",
+        },
+      ],
+    });
+  };
   return (
     <div
       className={styles.card}
@@ -57,8 +90,12 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
             {userBirthdayObject(profile?.bday).age} <span>years</span>
           </h3>
           <div className={styles.card__bottom}>
-            <Button onClick={onOpen}>SEND WISH</Button>
-            <Button>IGNORE</Button>
+            <Button onClick={onOpen} disabled={loading}>
+              SEND WISH
+            </Button>
+            <Button onClick={ignoreBirthday} isLoading={loading}>
+              IGNORE
+            </Button>
           </div>
           <div className={styles.card__bio}>
             <p>

@@ -13,6 +13,14 @@ export const freeCards: FreeCardType[] = [
     cardType: BirthdayCardType.TEDDY_CARD,
     imagePath: "http://localhost:3001/storage/images/cards/teddy.png",
   },
+  {
+    cardType: BirthdayCardType.HEART_CARD,
+    imagePath: "http://localhost:3001/storage/images/cards/heart.png",
+  },
+  {
+    cardType: BirthdayCardType.BALLON_CARD,
+    imagePath: "http://localhost:3001/storage/images/cards/baloons.png",
+  },
 ];
 
 export const constants = {
@@ -37,49 +45,54 @@ export const months = [
   "November",
   "December",
 ];
-export const emotions: Array<EmojiType> = [
+
+export enum EmotionType {
+  LOVE = "LOVE",
+  LIKE = "LIKE",
+  BLUSH = "BLUSH",
+  HAHA = "HAHA",
+  ICE_CREAM = "ICE_CREAM",
+  CAKE = "CAKE",
+  CLAP = "CLAP",
+}
+export const reactions: {
+  reaction: EmotionType;
+  id: number;
+  emojiId: string;
+}[] = [
   {
-    name: "grinning",
-    code: "0x1F600",
+    id: 0,
+    emojiId: "react@emojify-15",
+    reaction: EmotionType.BLUSH,
   },
   {
-    name: "sweat",
-    code: "0x1F605",
+    id: 1,
+    emojiId: "react@emojify-16",
+    reaction: EmotionType.LOVE,
   },
   {
-    name: "laughing",
-    code: "0x1F923",
+    id: 2,
+    emojiId: "react@emojify-194",
+    reaction: EmotionType.LIKE,
   },
   {
-    name: "joy",
-    code: "0x1F602",
+    id: 3,
+    emojiId: "react@emojify-8",
+    reaction: EmotionType.HAHA,
   },
   {
-    name: "smile",
-    code: "0x1F642",
+    id: 4,
+    emojiId: "react@emojify-785",
+    reaction: EmotionType.ICE_CREAM,
   },
   {
-    name: "upside-down",
-    code: "0x1F643",
+    id: 5,
+    emojiId: "react@emojify-783",
+    reaction: EmotionType.CAKE,
   },
   {
-    name: "halo",
-    code: "0x1F607",
-  },
-  {
-    name: "star-struck",
-    code: "0x1F929",
-  },
-  {
-    name: "hearts",
-    code: "0x1F970",
-  },
-  {
-    name: "heart-eyes",
-    code: "0x1F60D",
-  },
-  {
-    name: "kiss",
-    code: "0x1F618",
+    id: 6,
+    emojiId: "react@emojify-200",
+    reaction: EmotionType.CLAP,
   },
 ];
