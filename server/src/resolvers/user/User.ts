@@ -1,5 +1,15 @@
 import { ContextType } from "../../types";
-import { Arg, Ctx, Field, InputType, Int, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Field,
+  FieldResolver,
+  InputType,
+  Int,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/User/User";
 import { dataSource } from "../../db";
@@ -8,8 +18,17 @@ export class UserInputType {
   @Field(() => Int)
   id: number;
 }
-@Resolver()
+@Resolver(() => User)
 export class UserResolver {
+  @FieldResolver()
+  createdAtFormattedForMoment(@Root() { createdAt }: User): string {
+    return createdAt.toString();
+  }
+  @FieldResolver()
+  updatedAtFormattedForMoment(@Root() { updatedAt }: User): string {
+    return updatedAt.toString();
+  }
+
   @Query(() => [User], { nullable: true })
   async users(@Ctx() { req }: ContextType): Promise<User[] | undefined> {
     const authorization = req.headers["authorization"];

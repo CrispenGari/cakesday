@@ -71,5 +71,9 @@
   border-bottom: unset !important;
   font-size: 0.8rem !important;
   color: var(--main-color);
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  color: var(--color-purple);
+}
+.notifications__main__section:first-of-type > span {
+  color: var(--color-pink);
 }

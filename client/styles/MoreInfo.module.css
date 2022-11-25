@@ -105,3 +105,20 @@
 .more__info > form > div:last-of-type {
   margin: 10px 0;
 }
+
+.more__info > form > div {
+  display: flex;
+  justify-content: space-between;
+}
+.more__info > form > div > button {
+  flex: 1;
+  color: white;
+}
+.more__info > form > div > button:first-of-type {
+  background-color: var(--main-color);
+  margin-right: 10px;
+}
+.more__info > form > button:last-of-type,
+.more__info > form > div > button:last-of-type {
+  background-color: var(--color-pink);
+}

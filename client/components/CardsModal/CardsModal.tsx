@@ -1,5 +1,4 @@
 import { Modal, ModalContent, Button } from "@chakra-ui/react";
-import { title } from "process";
 import React from "react";
 import { freeCards } from "../../constants";
 import { User } from "../../graphql/generated/graphql";

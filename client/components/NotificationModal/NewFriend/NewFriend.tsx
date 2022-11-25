@@ -1,49 +1,14 @@
 import { Button, Avatar } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import {
-  FriendsSuggestionsDocument,
-  MeDocument,
-  Notification,
-  useFollowUserMutation,
-} from "../../../graphql/generated/graphql";
-import { getAccessToken } from "../../../state";
+import { Notification } from "../../../graphql/generated/graphql";
 import { userBirthdayObject } from "../../../utils";
 import styles from "./NewFriend.module.css";
 interface Props {
   notification: Notification;
-  onClose: () => void;
 }
-const NewFriend: React.FC<Props> = ({ notification, onClose }) => {
+const NewFriend: React.FC<Props> = ({ notification }) => {
   const router = useRouter();
-  const [followUser, { loading, data }] = useFollowUserMutation({
-    fetchPolicy: "network-only",
-    refetchQueries: [
-      { query: MeDocument, variables: {}, fetchPolicy: "network-only" },
-      {
-        query: FriendsSuggestionsDocument,
-        fetchPolicy: "network-only",
-        variables: {
-          input: {
-            accessToken: getAccessToken(),
-          },
-        },
-      },
-    ],
-  });
-
-  React.useEffect(() => {
-    let mounted: boolean = true;
-
-    if (mounted) {
-      if (data?.followUser.success) {
-        onClose();
-      }
-    }
-    return () => {
-      mounted = false;
-    };
-  }, [data, onClose]);
   return (
     <div className={styles.new__friend}>
       <h1>{notification.message}</h1>

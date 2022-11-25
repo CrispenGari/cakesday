@@ -44,10 +44,17 @@ export const userBirthdayObject = (
 export const unixTimeStampToObject = (timestamp: string | undefined) => {
   if (!timestamp) return {};
   const date = new Date(Number.parseInt(timestamp));
-  const now = new Date();
   const day = date.getDay();
   const month = months[date.getMonth()];
   const year = date.getFullYear();
+
+  console.log(
+    `${year}${
+      date.getMonth().toString().length === 1
+        ? "0" + date.getMonth().toString()
+        : date.getMonth()
+    }${day.toString().length === 1 ? "0" + day : day}`
+  );
   return {
     day,
     month,

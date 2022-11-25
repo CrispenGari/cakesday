@@ -1,13 +1,14 @@
 import { Modal, ModalContent, Button } from "@chakra-ui/react";
 import React from "react";
 import {
+  Follower,
   FriendsSuggestionsDocument,
   MeDocument,
+  Profile,
   useFollowUserMutation,
   useUnFollowUserMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
-import { FollowerType, ProfileType } from "../../types";
 import FlatUser from "../FlatUser/FlatUser";
 import styles from "./ProfileModal.module.css";
 
@@ -18,7 +19,7 @@ interface Props {
     isMe: boolean;
     title: string;
     username: string;
-    users: ProfileType[] | FollowerType[] | FollowerType[];
+    users: Profile[] | Follower[];
   };
   btnTitle: "unfollow" | "follow" | "unfriend" | "follow back";
 }
@@ -28,7 +29,7 @@ const ProfileModal: React.FC<Props> = ({
   data: { title, isMe, username, users },
   btnTitle,
 }) => {
-  const [unFollowUser, { loading, data: data2 }] = useUnFollowUserMutation({
+  const [unFollowUser, { loading }] = useUnFollowUserMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
       { query: MeDocument, variables: {}, fetchPolicy: "network-only" },
@@ -43,7 +44,7 @@ const ProfileModal: React.FC<Props> = ({
       },
     ],
   });
-  const [followUser, { loading: loading0, data }] = useFollowUserMutation({
+  const [followUser, { loading: loading0 }] = useFollowUserMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
       { query: MeDocument, variables: {}, fetchPolicy: "network-only" },

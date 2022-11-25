@@ -3,10 +3,9 @@ import styles from "./Explore.module.css";
 import { User } from "../../components";
 import { useFriendsSuggestionsQuery } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
-import { UserType } from "../../types";
 interface Props {}
 const Explore: React.FC<Props> = ({}) => {
-  const { loading, data } = useFriendsSuggestionsQuery({
+  const { data } = useFriendsSuggestionsQuery({
     fetchPolicy: "network-only",
     variables: {
       input: {

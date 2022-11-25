@@ -1,4 +1,4 @@
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import {
   FriendsSuggestionsDocument,
@@ -6,7 +6,6 @@ import {
   useFollowUserMutation,
   useMeQuery,
   useTodaysBirthDaysQuery,
-  useUserByIdLazyQuery,
   useUsersBelatedBirthdaysQuery,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";

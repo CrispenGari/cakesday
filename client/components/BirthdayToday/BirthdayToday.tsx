@@ -1,13 +1,13 @@
 import { Button, useDisclosure } from "@chakra-ui/react";
 import React from "react";
-import { UserType } from "../../types";
+import { User } from "../../graphql/generated/graphql";
 import { userBirthdayObject } from "../../utils";
 import CardsModal from "../CardsModal/CardsModal";
 import Drops from "../Drops/Drops";
 import styles from "./BirthdayToday.module.css";
 
 interface Props {
-  user: UserType;
+  user: User;
   isMe: boolean;
 }
 const BirthdayToday: React.FC<Props> = ({ user, isMe }) => {
@@ -26,7 +26,7 @@ const BirthdayToday: React.FC<Props> = ({ user, isMe }) => {
           <h3>
             {userBirthdayObject(user?.profile?.bday)?.age} <span>years</span>
           </h3>
-          <Button onClick={onOpen}>Send Birthday Card</Button>
+          {isMe ? null : <Button onClick={onOpen}>Send Birthday Card</Button>}
         </div>
       </Drops>
     </div>

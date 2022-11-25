@@ -5,6 +5,7 @@ import {
   Query,
   Arg,
   Mutation,
+  FieldResolver,
 } from "type-graphql";
 import { Notification } from "../../entities/Notification/Notification";
 import { dataSource } from "../../db";
@@ -13,8 +14,18 @@ import jwt from "jsonwebtoken";
 import { NotificationsType } from "../../types";
 import { MyNotificationInputType } from "./inputTypes/MyNotificationInputType";
 
-@Resolver()
+@Resolver(() => Notification)
 export class MyNotificationResolver {
+  // Field Resolvers
+  @FieldResolver()
+  createdAtFormattedForMoment(@Root() { createdAt }: Notification): string {
+    return createdAt.toString();
+  }
+  @FieldResolver()
+  updatedAtFormattedForMoment(@Root() { updatedAt }: Notification): string {
+    return updatedAt.toString();
+  }
+
   @Query(() => [Notification])
   async myNotifications(
     @Arg("input", () => MyNotificationInputType)

@@ -11,13 +11,15 @@ import { HiOutlineLockClosed } from "react-icons/hi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { setEmailCard } from "../../actions";
-import { useChangeEmailMutation } from "../../graphql/generated/graphql";
+import {
+  Profile,
+  useChangeEmailMutation,
+} from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
-import { ProfileType } from "../../types";
 
 import styles from "./ChangeEmailSettings.module.css";
 interface Props {
-  profile: ProfileType;
+  profile: Profile;
 }
 const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
   const [email, setEmail] = useState("");

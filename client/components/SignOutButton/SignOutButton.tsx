@@ -1,11 +1,10 @@
 import { Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { useSignOutMutation } from "../../graphql/generated/graphql";
-import { ProfileType } from "../../types";
+import { Profile, useSignOutMutation } from "../../graphql/generated/graphql";
 import styles from "./SignOutButton.module.css";
 interface Props {
-  profile: ProfileType;
+  profile: Profile;
 }
 const SignOutButton: React.FC<Props> = ({ profile }) => {
   const [signout, { loading }] = useSignOutMutation({

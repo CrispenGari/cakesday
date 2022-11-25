@@ -1,14 +1,4 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { Banner, Header, UserInfo, SignOutButton } from "../../components";
@@ -66,12 +56,14 @@ const Profile: React.FC<Props> = ({}) => {
           profile={data?.user?.profile as any}
           isMe={me?.me?.username === data?.user?.username}
         />
-        <UserInfo
-          user={data?.user as any}
-          isMe={me?.me?.username === data?.user?.username}
-          openFollowings={openFollowings}
-          openFollowers={openFollowers}
-        />
+        {!!data?.user && (
+          <UserInfo
+            user={data.user as any}
+            isMe={me?.me?.username === data?.user?.username}
+            openFollowings={openFollowings}
+            openFollowers={openFollowers}
+          />
+        )}
         <SignOutButton profile={me?.me?.profile as any} />
       </div>
     </div>

@@ -5,7 +5,6 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/ForgotPassword.module.css";
@@ -22,7 +21,7 @@ interface Props {}
 const ForgotPassword: React.FC<Props> = ({}) => {
   const [error, setError] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [sendEmail, { data, loading }] = useRequestChangePasswordEmailMutation({
+  const [sendEmail, { data }] = useRequestChangePasswordEmailMutation({
     fetchPolicy: "network-only",
   });
   const router = useRouter();
@@ -93,7 +92,7 @@ export default ForgotPassword;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

@@ -6,7 +6,7 @@ import { client } from "../providers/ApolloGraphQLProvider/ApolloGraphQLProvider
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

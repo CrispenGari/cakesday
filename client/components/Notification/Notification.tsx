@@ -9,7 +9,6 @@ import {
 import NotificationModal from "../NotificationModal/NotificationModal";
 import styles from "./Notification.module.css";
 import moment from "moment";
-import { unixTimeStampToObject } from "../../utils";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiBookReader } from "react-icons/bi";
 import { getAccessToken } from "../../state";
@@ -74,13 +73,7 @@ const Notification: React.FC<Props> = ({
     });
   };
   return (
-    <div
-      className={styles.notification}
-      style={{
-        background: notification.read ? "white" : "#ef8c86",
-        color: notification.read ? "black" : "white",
-      }}
-    >
+    <div className={styles.notification}>
       <NotificationModal
         isOpen={isOpen}
         notification={{
@@ -89,12 +82,7 @@ const Notification: React.FC<Props> = ({
         }}
         onClose={onClose}
       />
-      <div
-        className={styles.notification__main}
-        onClick={async () => {
-          await onOpen();
-        }}
-      >
+      <div className={styles.notification__main} onClick={onOpen}>
         <h1>
           {notification.type.split("_").join(" ")}
 
@@ -114,10 +102,7 @@ const Notification: React.FC<Props> = ({
           <p>
             <span>{notification.message}</span>
             <span>
-              {moment(
-                unixTimeStampToObject(notification.createdAt).moment,
-                "YYYYMMDD"
-              ).fromNow()}
+              {moment(notification.updatedAtFormattedForMoment).fromNow()}
             </span>
           </p>
         </div>

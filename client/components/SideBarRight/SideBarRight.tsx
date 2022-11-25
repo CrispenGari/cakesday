@@ -14,7 +14,7 @@ const SideBarRight: React.FC<Props> = ({}) => {
   const [logout, { loading, data }] = useSignOutMutation({
     fetchPolicy: "network-only",
   });
-  const { loading: userLoading, data: user } = useMeQuery({
+  const { data: user } = useMeQuery({
     fetchPolicy: "network-only",
   });
   const router = useRouter();

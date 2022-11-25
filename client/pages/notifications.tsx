@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setNotifications } from "../actions";
 import { Header, Notification } from "../components";
 import { useMyNotificationsQuery } from "../graphql/generated/graphql";
@@ -19,7 +19,7 @@ const Notifications: React.FC<Props> = ({}) => {
   React.useEffect(() => {
     let mounted: boolean = true;
     if (mounted) {
-      dispatch(setNotifications(data?.myNotifications ?? []));
+      dispatch(setNotifications((data?.myNotifications as any) ?? []));
     }
     return () => {
       mounted = false;
@@ -31,11 +31,11 @@ const Notifications: React.FC<Props> = ({}) => {
       <Header />
       <div className={styles.notifications__main}>
         <div className={styles.notifications__main__section}>
-          <span>New Notifications</span> <span></span>
+          <span>UnRead Notifications</span> <span></span>
         </div>
         {data?.myNotifications.filter((notification) => !notification.read)
           .length === 0 ? (
-          <h2>No new notifications.</h2>
+          <h2>No unread notifications.</h2>
         ) : (
           data?.myNotifications
             .filter((notification) => !notification.read)
@@ -47,12 +47,12 @@ const Notifications: React.FC<Props> = ({}) => {
             ))
         )}
         <div className={styles.notifications__main__section}>
-          <span>Old Notifications</span> <span></span>
+          <span>Read Notifications</span> <span></span>
         </div>
         {
           data?.myNotifications.filter((notification) => notification.read)
             .length === 0 ? (
-            <h2>No old notifications.</h2>
+            <h2>No read notifications.</h2>
           ) : (
             data?.myNotifications
               .filter((notification) => notification.read)

@@ -1,12 +1,12 @@
 import { Avatar, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { ProfileType } from "../../types";
+import { Profile } from "../../graphql/generated/graphql";
 import { userBirthdayObject } from "../../utils";
 
 import styles from "./FlatUser.module.css";
 interface Props {
-  user: ProfileType;
+  user: Profile;
   btnTitle?: string;
   onBtnClick?: () => void;
   size: "small" | "normal";
@@ -36,7 +36,7 @@ const FlatUser: React.FC<Props> = ({
               : styles.flat__user__avatar__small
           }
           name={user?.username}
-          src={user?.photoURL}
+          src={user?.photoURL ?? ""}
         />
         <div
           className={

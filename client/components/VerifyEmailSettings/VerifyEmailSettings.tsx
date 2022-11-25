@@ -1,11 +1,4 @@
-import {
-  InputGroup,
-  InputLeftElement,
-  Input,
-  InputRightElement,
-  Button,
-} from "@chakra-ui/react";
-import error from "next/error";
+import { InputGroup, InputLeftElement, Input, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { BiCheck } from "react-icons/bi";
 import { useDispatch } from "react-redux";

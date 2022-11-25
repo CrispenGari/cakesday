@@ -45,7 +45,6 @@ const NewFollower: React.FC<Props> = ({ notification, onClose }) => {
 
   React.useEffect(() => {
     let mounted: boolean = true;
-
     if (mounted) {
       if (data?.followUser.success) {
         onClose();

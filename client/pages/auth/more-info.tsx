@@ -28,13 +28,36 @@ const MoreInfo: React.FC<Props> = ({}) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const m = bday.getMonth() + 1;
+    const d = bday.getDate();
+    const year = bday.getFullYear();
+    const month: string = m < 10 ? "0" + m : "" + m;
+    const day: string = d < 10 ? "0" + d : "" + d;
+    const _bday = `${day}/${month}/${year}`;
     await updateProfile({
       variables: {
         input: {
           accessToken: getAccessToken() as any,
           gender,
-          bday: bday.toLocaleDateString(),
+          bday: _bday,
           bio,
+        },
+      },
+    });
+  };
+
+  const skip = async () => {
+    const m = bday.getMonth() + 1;
+    const d = bday.getDate();
+    const year = bday.getFullYear();
+    const month: string = m < 10 ? "0" + m : "" + m;
+    const day: string = d < 10 ? "0" + d : "" + d;
+    const _bday = `${day}/${month}/${year}`;
+    await updateProfile({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          bday: _bday,
         },
       },
     });
@@ -43,6 +66,9 @@ const MoreInfo: React.FC<Props> = ({}) => {
   useEffect(() => {
     if (data?.updateProfile.accessToken) {
       router.replace("/auth/profile");
+    }
+    if (data?.updateProfile.error) {
+      setError(data.updateProfile.error.message);
     }
   }, [data, router]);
 
@@ -68,7 +94,14 @@ const MoreInfo: React.FC<Props> = ({}) => {
           ))}
         </select>
         <p>{error}</p>
-        <Button type="submit">Next</Button>
+        <div>
+          <Button type="submit" isLoading={loading}>
+            Next
+          </Button>
+          <Button type="button" isLoading={loading} onClick={skip}>
+            Skip
+          </Button>
+        </div>
         <div>
           <span></span>
           <h1>Already Have an Account?</h1>
@@ -85,7 +118,7 @@ export default MoreInfo;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

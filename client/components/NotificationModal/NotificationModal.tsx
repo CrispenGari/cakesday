@@ -46,50 +46,47 @@ const NotificationModal: React.FC<Props> = ({
       mounted = false;
     };
   }, [data, onClose]);
+
+  const closeModalAndReadNotification = async () => {
+    await markAsRead({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          notificationId: notification.id,
+        },
+      },
+    });
+    onClose();
+  };
   const renderComponent: any = {
-    new_follower: <NewFollower notification={notification} onClose={onClose} />,
-    new_friend: <NewFriend notification={notification} onClose={onClose} />,
+    new_follower: (
+      <NewFollower
+        notification={notification}
+        onClose={closeModalAndReadNotification}
+      />
+    ),
+    new_friend: <NewFriend notification={notification} />,
     birthday_card: (
-      <BirthDayCard notification={notification} onClose={onClose} />
+      <BirthDayCard
+        notification={notification}
+        onClose={closeModalAndReadNotification}
+      />
     ),
     birthday_card_reaction: (
-      <BirthDayCard notification={notification} onClose={onClose} />
+      <BirthDayCard
+        notification={notification}
+        onClose={closeModalAndReadNotification}
+      />
     ),
   };
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={async () => {
-        await markAsRead({
-          variables: {
-            input: {
-              accessToken: getAccessToken() as any,
-              notificationId: notification.id,
-            },
-          },
-        });
-      }}
-    >
+    <Modal isOpen={isOpen} onClose={closeModalAndReadNotification}>
       <ModalContent className={styles.notification__modal__content}>
         <h1>{notification.type.split("_").join(" ")}</h1>
         <div className={styles.notification__modal__content__container}>
           {renderComponent[notification.type]}
         </div>
-        <Button
-          onClick={async () => {
-            await markAsRead({
-              variables: {
-                input: {
-                  accessToken: getAccessToken() as any,
-                  notificationId: notification.id,
-                },
-              },
-            });
-            onClose();
-          }}
-        >
-          Close
-        </Button>
+        <Button onClick={closeModalAndReadNotification}>Close</Button>
       </ModalContent>
     </Modal>
   );

@@ -1,21 +1,20 @@
 import { Avatar, Button, useDisclosure } from "@chakra-ui/react";
-import { Emoji } from "@crispengari/react-emojify";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import {
   TodaysBirthDaysDocument,
   useIgnoreBirthdayMutation,
+  User,
   UsersBelatedBirthdaysDocument,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
-import { UserType } from "../../types";
 import { userBirthdayObject } from "../../utils";
 import CardsModal from "../CardsModal/CardsModal";
 import Drops from "../Drops/Drops";
 import styles from "./Card.module.css";
 interface Props {
-  user: UserType;
+  user: User;
 }
 const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
   const router = useRouter();
@@ -83,7 +82,7 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
               title={user?.username}
               className={styles.card__avatar}
               name={user?.username}
-              src={profile?.photoURL}
+              src={profile?.photoURL ?? ""}
             />
           </div>
           <h3>

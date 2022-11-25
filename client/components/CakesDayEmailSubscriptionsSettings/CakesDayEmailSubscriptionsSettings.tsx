@@ -1,4 +1,4 @@
-import { theme, Switch, Button } from "@chakra-ui/react";
+import { Switch, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
   CommonSettings,

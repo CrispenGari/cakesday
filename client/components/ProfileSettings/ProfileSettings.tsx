@@ -5,15 +5,16 @@ import styles from "./ProfileSettings.module.css";
 import DatePicker from "react-datepicker";
 import { genders } from "../../constants";
 import { HiOutlineCake } from "react-icons/hi";
-import { ProfileType } from "../../types";
+
 import {
   FriendsSuggestionsDocument,
   MeDocument,
+  Profile,
   useUpdateProfileSettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
 interface Props {
-  profile: ProfileType;
+  profile: Profile;
 }
 const ProfileSettings: React.FC<Props> = ({ profile }) => {
   const [gender, setGender] = useState("male");
@@ -38,7 +39,6 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
       },
     ],
   });
-
   React.useEffect(() => {
     if (profile) {
       setGender(profile?.gender);
@@ -60,11 +60,17 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const m = bday.getMonth() + 1;
+    const d = bday.getDate();
+    const year = bday.getFullYear();
+    const month: string = m < 10 ? "0" + m : "" + m;
+    const day: string = d < 10 ? "0" + d : "" + d;
+    const _bday = `${day}/${month}/${year}`;
     await updateProfile({
       variables: {
         input: {
           accessToken: getAccessToken() as any,
-          bday: bday.toLocaleDateString() ?? "",
+          bday: _bday,
           bio: bio ?? "",
           username: username ?? "",
           gender: gender ?? "",
@@ -100,7 +106,7 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
               className={styles.profile__settings__date__picker}
             />
           </div>
-          <p>date of birth: dd/mm/yy</p>
+          <p>date of birth: mm/dd/yyyy</p>
         </div>
       </div>
       <div>
@@ -117,6 +123,7 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
           ))}
         </select>
       </div>
+
       <p
         className={
           data?.updateProfileSettings.success

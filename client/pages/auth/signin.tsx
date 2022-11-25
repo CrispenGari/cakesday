@@ -21,7 +21,6 @@ import {
 import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 import { setAccessToken } from "../../state";
 import styles from "../../styles/SignIn.module.css";
-interface Props {}
 const SignIn: NextPage = ({}) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -57,7 +56,6 @@ const SignIn: NextPage = ({}) => {
       }
     }
   }, [data, submitting, router]);
-  console.log(me);
   useEffect(() => {
     if (!loading && me?.me) {
       if (me.me.isLoggedIn && me.me.confirmed) {
@@ -141,7 +139,7 @@ export default SignIn;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

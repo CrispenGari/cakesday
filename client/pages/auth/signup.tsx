@@ -8,7 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { ImAuthenticatedDocument, useSignUpMutation } from "../../graphql/generated/graphql";
+import {
+  ImAuthenticatedDocument,
+  useSignUpMutation,
+} from "../../graphql/generated/graphql";
 import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineLockClosed } from "react-icons/hi";
@@ -61,7 +64,6 @@ const SignUp: React.FC<Props> = ({}) => {
       }
     }
   }, [data, loading, router]);
-  console.log(loading, data);
   return (
     <div className={styles.signup}>
       <form onSubmit={onSubmit}>
@@ -170,10 +172,9 @@ const SignUp: React.FC<Props> = ({}) => {
 
 export default SignUp;
 
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

@@ -1,6 +1,5 @@
 import { Avatar, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { ProfileType } from "../../types";
 import styles from "./Banner.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineCamera } from "react-icons/ai";
@@ -8,11 +7,12 @@ import { getBase64, userBirthdayObject } from "../../utils";
 import {
   FriendsSuggestionsDocument,
   MeDocument,
+  Profile,
   useUpdateProfileOrBannerMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken, setAccessToken } from "../../state";
 interface Props {
-  profile: ProfileType;
+  profile: Profile;
   isMe: boolean;
 }
 const Banner: React.FC<Props> = ({ profile, isMe }) => {

@@ -2,19 +2,11 @@ import {
   Avatar,
   Button,
   Image,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Portal,
+ 
   useToast,
 } from "@chakra-ui/react";
 import { Emoji } from "@crispengari/react-emojify";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { freeCards, reactions } from "../../../constants";
 import {
@@ -24,7 +16,7 @@ import {
 } from "../../../graphql/generated/graphql";
 import { getAccessToken } from "../../../state";
 import { NotificationType } from "../../../types";
-import { emotions, userBirthdayObject } from "../../../utils";
+import {  userBirthdayObject } from "../../../utils";
 import Drops from "../../Drops/Drops";
 import styles from "./BirthDayCard.module.css";
 interface Props {

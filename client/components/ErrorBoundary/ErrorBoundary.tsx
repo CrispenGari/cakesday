@@ -13,20 +13,17 @@ class ErrorBoundary extends React.Component<PropsType, StateType> {
     this.state = { hasError: false };
   }
   static getDerivedStateFromError(error: any) {
-    console.log({ error });
+    console.error(error);
     return { hasError: true };
   }
   componentDidCatch(error: any, errorInfo: any) {
     console.log({ error, errorInfo });
   }
-  componentDidMount(): void {
-    console.log({ hi: 2 });
-  }
   render() {
     if (this.state.hasError) {
       return (
         <div className={styles.error__boundary}>
-          <h2>Oops, there is in cakesday app!</h2>
+          <h2>Oops, there is an error in cakesday app!</h2>
           <Image alt="logo" src="/header-logo.png" />
           <div>
             <Button

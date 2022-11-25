@@ -1,23 +1,18 @@
 import { Avatar, Badge, Button } from "@chakra-ui/react";
+import moment from "moment";
 import React from "react";
 import {
   useFollowUserMutation,
   MeDocument,
   FriendsSuggestionsDocument,
+  User,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
-import { UserType } from "../../types";
-import {
-  dateDiffFromToday,
-  unixTimeStampToObject,
-  userBirthdayObject,
-} from "../../utils";
+import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import BirthdayToday from "../BirthdayToday/BirthdayToday";
-import CardsModal from "../CardsModal/CardsModal";
-import Drops from "../Drops/Drops";
 import styles from "./UserInfo.module.css";
 interface Props {
-  user: UserType;
+  user: User;
   isMe: boolean;
   openFollowings: () => void;
   openFollowers: () => void;
@@ -28,7 +23,7 @@ const UserInfo: React.FC<Props> = ({
   openFollowers,
   openFollowings,
 }) => {
-  const [followUser, { data, loading }] = useFollowUserMutation({
+  const [followUser, { loading }] = useFollowUserMutation({
     refetchQueries: [
       { query: MeDocument },
       {
@@ -50,7 +45,7 @@ const UserInfo: React.FC<Props> = ({
   });
   return (
     <div className={styles.user__info}>
-      {!userBirthdayObject(user?.profile?.bday).isBirthday ? (
+      {userBirthdayObject(user?.profile?.bday).isBirthday ? (
         <BirthdayToday user={user} isMe={isMe} />
       ) : null}
 
@@ -99,22 +94,19 @@ const UserInfo: React.FC<Props> = ({
             <Avatar
               name={username}
               key={id}
-              src={photoURL}
+              src={photoURL ?? ""}
               title={`@${username}`}
               className={styles.user__info__avatar}
             />
           ))}
         </div>
         <div>
-          <p>
-            joined at: {unixTimeStampToObject(user?.createdAt)?.formattedDate}
-          </p>
+          <p>joined at: {moment(user.createdAtFormattedForMoment).fromNow()}</p>
           <p>
             last updated at:{" "}
-            {unixTimeStampToObject(user?.updatedAt)?.formattedDate}
+            {moment(user.updatedAtFormattedForMoment).fromNow()}
           </p>
         </div>
-
         {isMe ? null : (
           <Button
             isLoading={loading}

@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { BiHide, BiShowAlt, BiUser } from "react-icons/bi";
+import { BiHide, BiShowAl } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import styles from "../../styles/NewPassword.module.css";
 import { setAccessToken } from "../../state";
@@ -143,7 +143,7 @@ export default NewPassword;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const refreshToken = context.req.cookies?.qid ?? "";
-  const { data, errors } = await client.mutate({
+  const { data } = await client.mutate({
     mutation: ImAuthenticatedDocument,
     variables: {
       input: {

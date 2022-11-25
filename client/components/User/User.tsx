@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./User.module.css";
 import { Badge, Button, Avatar } from "@chakra-ui/react";
-import { UserType } from "../../types";
 import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import { useRouter } from "next/router";
 import {
@@ -9,10 +8,11 @@ import {
   MeDocument,
   useFollowUserMutation,
   useIgnoreUserMutation,
+  User,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
 interface Props {
-  friend: UserType;
+  friend: User;
 }
 const User: React.FC<Props> = ({
   friend: { profile, username, id, createdAt },
@@ -84,7 +84,7 @@ const User: React.FC<Props> = ({
           title={username}
           className={styles.user__avatar}
           name={username}
-          src={profile?.photoURL}
+          src={profile?.photoURL ?? ""}
         />
       </div>
       <h1

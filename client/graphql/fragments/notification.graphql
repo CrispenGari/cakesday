@@ -17,4 +17,6 @@ fragment NotificationFragment on Notification {
   updatedAt
   bdayMessage
   reaction
+  createdAtFormattedForMoment
+  updatedAtFormattedForMoment
 }

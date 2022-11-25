@@ -66,6 +66,7 @@ export class UsersBirthDaysResolver {
       //   belated birthdays are enabled only for 1 to 5 days
       const _wished = user.wished.map(({ username }) => username);
       const _ignored = user.ignoredBirthdays.map(({ username }) => username);
+
       return users
         .filter((u) => u.confirmed)
         .filter(
@@ -134,8 +135,8 @@ export class UsersBirthDaysResolver {
         .filter((u) => u.confirmed)
         .filter((u) => isUserBirthday(u.profile.bday))
         .filter((u) => u.id !== user.id)
-        .filter((u) => _wished.indexOf(u.username) !== -1)
-        .filter((u) => _ignored.indexOf(u.username) !== -1);
+        .filter((u) => _wished.indexOf(u.username) === -1)
+        .filter((u) => _ignored.indexOf(u.username) === -1);
     } catch (error) {
       return undefined;
     }

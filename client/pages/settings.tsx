@@ -19,7 +19,7 @@ import styles from "../styles/Settings.module.css";
 import { StateType } from "../types";
 interface Props {}
 const Settings: React.FC<Props> = ({}) => {
-  const { loading, data: me } = useMeQuery({ fetchPolicy: "network-only" });
+  const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
   const emailCard = useSelector((state: StateType) => state.emailCard);
 
   return (
