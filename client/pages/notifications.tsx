@@ -1,12 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setNotifications } from "../actions";
 import { Header, Notification } from "../components";
+import { ColorThemes } from "../constants";
 import { useMyNotificationsQuery } from "../graphql/generated/graphql";
 import { getAccessToken } from "../state";
 import styles from "../styles/Notifications.module.css";
+import { StateType } from "../types";
 interface Props {}
 const Notifications: React.FC<Props> = ({}) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const { data } = useMyNotificationsQuery({
     fetchPolicy: "network-only",
     variables: {
@@ -27,7 +30,13 @@ const Notifications: React.FC<Props> = ({}) => {
   }, [data, dispatch]);
 
   return (
-    <div className={styles.notifications}>
+    <div
+      className={styles.notifications}
+      style={{
+        backgroundColor:
+          theme === "dark" ? ColorThemes.DARK_BODY : ColorThemes.LIGHT_BODY,
+      }}
+    >
       <Header />
       <div className={styles.notifications__main}>
         <div className={styles.notifications__main__section}>

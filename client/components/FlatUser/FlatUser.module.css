@@ -1,4 +1,5 @@
-.flat__user {
+.flat__user,
+.flat__user__dark {
   background-color: #f5f5f5;
   margin: 2px;
   padding: 5px;
@@ -6,7 +7,9 @@
   display: flex;
   flex-direction: column;
 }
-
+.flat__user__dark {
+  background-color: var(--color-body-dark);
+}
 .flat__user__top {
   display: flex;
   justify-content: space-between;
@@ -40,20 +43,23 @@
   color: gray;
   font-size: 0.7rem !important;
 }
-.flat__user > button {
+.flat__user > button,
+.flat__user__dark > button {
   margin-top: 5px;
-  background-color: var(--main-color);
+  background-color: var(--color-main-dark);
   color: white;
   outline: none !important;
 }
-.flat__user__secondary__btn {
-  background-color: var(--main-color) !important;
+.flat__user__dark > button {
+  background-color: var(--color-brown-dark);
 }
 
 .flat__user__secondary__btn {
   background-color: var(--color-purple) !important;
 }
-
+.flat__user__dark > .flat__user__secondary__btn {
+  background-color: var(--color-brown-dark) !important;
+}
 .flat__user > button:hover {
   background-color: var(--color-pink) !important;
   cursor: pointer;

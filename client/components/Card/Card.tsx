@@ -2,6 +2,7 @@ import { Avatar, Button, useDisclosure } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   TodaysBirthDaysDocument,
   useIgnoreBirthdayMutation,
@@ -9,6 +10,7 @@ import {
   UsersBelatedBirthdaysDocument,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import { userBirthdayObject } from "../../utils";
 import CardsModal from "../CardsModal/CardsModal";
 import Drops from "../Drops/Drops";
@@ -19,6 +21,7 @@ interface Props {
 const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const theme = useSelector(({ theme }: StateType) => theme);
 
   const [ignore, { loading }] = useIgnoreBirthdayMutation({
     fetchPolicy: "network-only",
@@ -48,7 +51,7 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
   };
   return (
     <div
-      className={styles.card}
+      className={theme === "dark" ? styles.card__dark : styles.card}
       style={{
         backgroundImage: `url(${profile?.bannerURL})`,
       }}
@@ -66,7 +69,13 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
         }
       />
       <Drops>
-        <div className={styles.card__container}>
+        <div
+          className={
+            theme === "dark"
+              ? styles.card__container__dark
+              : styles.card__container
+          }
+        >
           <div className={styles.card__top}>
             <h1
               onClick={() => {

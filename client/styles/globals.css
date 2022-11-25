@@ -8,8 +8,11 @@ body {
   --color-brown: #2f1f2b;
   --color-purple: #685268;
   --color-orange: #fcb677;
+  --color-main-dark: #2c3639;
+  --color-body-dark: #3f4e4f;
+  --color-brown-dark: #a27b5c;
+  --color-gray-dark: #dcd7c9;
   font-family: "Trirong", sans-serif !important;
-  /* font-size: 1.3rem; */
   background-color: #f5f5f5;
 }
 

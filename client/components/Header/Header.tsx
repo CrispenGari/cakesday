@@ -13,12 +13,13 @@ import { useRouter } from "next/router";
 import { getAccessToken } from "../../state";
 import { useDispatch, useSelector } from "react-redux";
 import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
-import { setNotifications } from "../../actions";
+import { setNotifications, setTheme } from "../../actions";
 import { StateType } from "../../types";
+import { ColorThemes } from "../../constants";
 interface Props {}
 const Header: React.FC<Props> = ({}) => {
   const { notifications } = useSelector((state: StateType) => state);
-  const { data: user } = useMeQuery({
+  const { data: me } = useMeQuery({
     fetchPolicy: "network-only",
   });
   const { data: notification } = useNotificationsSubscription({
@@ -33,7 +34,7 @@ const Header: React.FC<Props> = ({}) => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     let mounted: boolean = true;
-    if (mounted && notification?.newNotification?.user.id === user?.me?.id) {
+    if (mounted && notification?.newNotification?.user.id === me?.me?.id) {
       // this notification belongs to me
       (async () => {
         const { data: notifications } = await client.query({
@@ -48,14 +49,33 @@ const Header: React.FC<Props> = ({}) => {
         dispatch(setNotifications(notifications?.myNotifications));
       })();
     }
-
     return () => {
       mounted = false;
     };
-  }, [notification, dispatch, user]);
+  }, [notification, dispatch, me]);
+
+  React.useEffect(() => {
+    let mounted: boolean = true;
+    if (mounted) {
+      if (me?.me?.settings?.common?.theme) {
+        dispatch(setTheme(me.me.settings.common.theme as any));
+      }
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [me, dispatch]);
 
   return (
-    <div className={styles.header}>
+    <div
+      className={styles.header}
+      style={{
+        backgroundColor:
+          me?.me?.settings?.common?.theme === "dark"
+            ? ColorThemes.DARK_MAIN
+            : ColorThemes.LIGHT_MAIN,
+      }}
+    >
       <div className={styles.header__left} onClick={() => router.push("/")}>
         <Image src="/header-logo.png" alt="header-logo" />
       </div>
@@ -82,14 +102,14 @@ const Header: React.FC<Props> = ({}) => {
         <div
           className={styles.header__right__profile}
           onClick={() => {
-            router.push(`/profile/${user?.me?.id}`);
+            router.push(`/profile/${me?.me?.id}`);
           }}
         >
           <Avatar
             className={styles.sidebar__right__top__avatar}
-            name={user?.me?.username}
-            src={user?.me?.profile?.photoURL ?? ""}
-            title={`profile/@${user?.me?.username}`}
+            name={me?.me?.username}
+            src={me?.me?.profile?.photoURL ?? ""}
+            title={`profile/@${me?.me?.username}`}
           />
         </div>
       </div>

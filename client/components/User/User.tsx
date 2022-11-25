@@ -11,6 +11,8 @@ import {
   User,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 interface Props {
   friend: User;
 }
@@ -18,6 +20,7 @@ const User: React.FC<Props> = ({
   friend: { profile, username, id, createdAt },
 }) => {
   const router = useRouter();
+  const theme = useSelector(({ theme }: StateType) => theme);
 
   const [followUser, { loading: following }] = useFollowUserMutation({
     refetchQueries: [
@@ -62,7 +65,7 @@ const User: React.FC<Props> = ({
   });
 
   return (
-    <div className={styles.user}>
+    <div className={theme === "dark" ? styles.user__dark : styles.user}>
       <div
         onClick={() => {
           router.push(`/profile/${id}`);

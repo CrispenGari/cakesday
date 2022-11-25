@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Banner, Header, UserInfo, SignOutButton } from "../../components";
 import ProfileModal from "../../components/ProfileModal/ProfileModal";
+import { ColorThemes } from "../../constants";
 import { useMeQuery, useUserByIdQuery } from "../../graphql/generated/graphql";
 import styles from "../../styles/ProfilePage.module.css";
 interface Props {}
@@ -27,7 +28,15 @@ const Profile: React.FC<Props> = ({}) => {
   });
   const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
   return (
-    <div className={styles.profile}>
+    <div
+      className={styles.profile}
+      style={{
+        backgroundColor:
+          me?.me?.settings?.common?.theme === "dark"
+            ? ColorThemes.DARK_BODY
+            : ColorThemes.LIGHT_BODY,
+      }}
+    >
       <Header />
       <ProfileModal
         isOpen={isOpenFollowers}

@@ -5,9 +5,19 @@ import { ImAuthenticatedDocument } from "../graphql/generated/graphql";
 import { client } from "../providers/ApolloGraphQLProvider/ApolloGraphQLProvider";
 import { NextPage } from "next";
 import styles from "../styles/Home.module.css";
+import { ColorThemes } from "../constants";
+import { useSelector } from "react-redux";
+import { StateType } from "../types";
 const Home: NextPage = () => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   return (
-    <div className={styles.home}>
+    <div
+      className={styles.home}
+      style={{
+        backgroundColor:
+          theme === "dark" ? ColorThemes.DARK_BODY : ColorThemes.LIGHT_BODY,
+      }}
+    >
       <div className={styles.home__feed}>
         <Header />
         <div className={styles.home__feed__main}>

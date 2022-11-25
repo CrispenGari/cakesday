@@ -14,6 +14,7 @@ import {
   ProfileSettings,
   VerifyEmailSettings,
 } from "../components";
+import { ColorThemes } from "../constants";
 import { useMeQuery } from "../graphql/generated/graphql";
 import styles from "../styles/Settings.module.css";
 import { StateType } from "../types";
@@ -23,7 +24,15 @@ const Settings: React.FC<Props> = ({}) => {
   const emailCard = useSelector((state: StateType) => state.emailCard);
 
   return (
-    <div className={styles.settings}>
+    <div
+      className={styles.settings}
+      style={{
+        backgroundColor:
+          me?.me?.settings?.common?.theme === "dark"
+            ? ColorThemes.DARK_BODY
+            : ColorThemes.LIGHT_BODY,
+      }}
+    >
       <Header />
       <div className={styles.settings__main}>
         <h1>Common Settings</h1>

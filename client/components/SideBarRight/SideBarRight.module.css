@@ -1,4 +1,5 @@
-.sidebar__right {
+.sidebar__right,
+.sidebar__right__dark {
   flex: 0.2;
   display: flex;
   flex-direction: column;
@@ -6,6 +7,9 @@
   user-select: none;
   user-zoom: none;
   position: relative;
+}
+.sidebar__right__dark {
+  background-color: var(--color-main-dark);
 }
 .sidebar__right__top {
   display: flex;
@@ -19,10 +23,17 @@
   color: var(--main-color);
   cursor: pointer;
 }
+.sidebar__right__dark > .sidebar__right__top > h1 {
+  color: white;
+}
 .sidebar__right__top > h2 {
   color: gray;
   margin: 10px auto;
   font-size: 0.7rem;
+}
+
+.sidebar__right__dark > .sidebar__right__top > h2 {
+  color: white;
 }
 .sidebar__right__top__avatar {
   width: 100px !important;
@@ -30,14 +41,22 @@
   margin: 10px 0 !important
   ;
 }
+
 .sidebar__right__top > button {
   width: 100%;
   background-color: var(--color-purple);
   color: white;
 }
+.sidebar__right__dark > .sidebar__right__top > button {
+  background-color: var(--color-body-dark);
+}
 .sidebar__right > button {
   background-color: var(--main-color);
   color: white;
+}
+.sidebar__right__dark > button {
+  color: white;
+  background-color: var(--color-brown-dark);
 }
 .sidebar__right__banner {
   width: 100%;
@@ -59,6 +78,9 @@
   position: relative;
   color: var(--main-color);
 }
+.sidebar__right__dark > .sidebar__right__top > h3 {
+  color: var(--color-pink);
+}
 
 .sidebar__right__top > h3 > span {
   position: absolute;
@@ -67,8 +89,12 @@
   color: gray;
   text-decoration: underline;
 }
+.sidebar__right__dark > .sidebar__right__top > h3 > span {
+  color: var(--color-gray-dark);
+}
 @media only screen and (max-width: 1000px) {
-  .sidebar__right {
+  .sidebar__right,
+  .sidebar__right__dark {
     display: none;
   }
 }

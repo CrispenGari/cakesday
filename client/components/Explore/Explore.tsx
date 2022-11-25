@@ -3,8 +3,11 @@ import styles from "./Explore.module.css";
 import { User } from "../../components";
 import { useFriendsSuggestionsQuery } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 interface Props {}
 const Explore: React.FC<Props> = ({}) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const { data } = useFriendsSuggestionsQuery({
     fetchPolicy: "network-only",
     variables: {
@@ -14,7 +17,7 @@ const Explore: React.FC<Props> = ({}) => {
     },
   });
   return (
-    <div className={styles.explore}>
+    <div className={theme === "dark" ? styles.explore__dark : styles.explore}>
       <h1>
         <span>Explore Friends</span>
         <span></span>

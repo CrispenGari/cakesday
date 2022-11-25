@@ -1,4 +1,4 @@
-import { BirthdayCardType, EmojiType } from "../types";
+import { BirthdayCardType } from "../types";
 
 export interface FreeCardType {
   imagePath: string;
@@ -26,6 +26,7 @@ export const freeCards: FreeCardType[] = [
 export const constants = {
   SET_EMAIL_CARD: "SET_EMAIL_CARD",
   SET_NOTIFICATIONS: "SET_NOTIFICATIONS",
+  SET_THEME: "SET_THEME",
 };
 export const privacyOptions = ["only me", "friends", "everyone", "followers"];
 export const genders = ["male", "female", "transgender"];
@@ -96,3 +97,10 @@ export const reactions: {
     reaction: EmotionType.CLAP,
   },
 ];
+
+export const ColorThemes = {
+  DARK_MAIN: "#2c3639",
+  LIGHT_MAIN: "#034c65",
+  DARK_BODY: "#3f4e4f",
+  LIGHT_BODY: "#f5f5f5",
+};

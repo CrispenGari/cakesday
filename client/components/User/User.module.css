@@ -1,4 +1,5 @@
-.user {
+.user,
+.user__dark {
   display: flex;
   flex-direction: column;
   width: 200px;
@@ -8,6 +9,10 @@
   align-items: center;
   margin-right: 3px;
 }
+.user__dark {
+  background-color: var(--color-body-dark);
+}
+
 .user__banner {
   position: relative;
   border-radius: 5px;
@@ -53,7 +58,15 @@
   background-color: var(--color-purple);
 }
 
-.user > h1 {
+.user__dark > .user__buttons > button:first-of-type {
+  background-color: var(--color-main-dark);
+}
+.user__dark > .user__buttons > button:last-of-type {
+  background-color: var(--color-brown-dark);
+}
+
+.user > h1,
+.user__dark > h1 {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: unset;
@@ -61,7 +74,11 @@
   color: var(--main-color);
   cursor: pointer;
 }
-.user > h2 {
+.user__dark > h1 {
+  color: white;
+}
+.user > h2,
+.user__dark > h2 {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 0px;
@@ -69,14 +86,23 @@
   color: var(--main-color);
 }
 
-.user > h2 > span {
+.user > h2 > span,
+.user__dark > h2 > span {
   position: absolute;
   font-size: 0.6rem;
   font-weight: 400;
   color: gray;
   text-decoration: underline;
 }
-.user > p {
+.user__dark > h2 {
+  color: var(--color-pink);
+}
+
+.user__dark > h2 > span {
+  color: var(--color-gray-dark);
+}
+.user > p,
+.user__dark > p {
   color: gray;
   margin: 5px auto;
   font-size: 0.65rem;
@@ -84,4 +110,7 @@
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.user__dark > p {
+  color: var(--color-gray-dark);
 }

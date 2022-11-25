@@ -1,4 +1,5 @@
-.main {
+.main,
+.main__dark {
   flex: 0.6;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -7,7 +8,8 @@
   padding-bottom: 100px;
   background-color: #f5f5f5;
 }
-.main::-webkit-scrollbar {
+.main::-webkit-scrollbar,
+.main__dark::-webkit-scrollbar {
   width: 5px;
 }
 .main::-webkit-scrollbar-track {
@@ -16,14 +18,26 @@
 .main::-webkit-scrollbar-thumb {
   background: var(--main-color);
 }
-.main::-webkit-scrollbar-thumb:hover {
+.main::-webkit-scrollbar-thumb:hover,
+.main__dark::-webkit-scrollbar:hover {
   background: var(--color-purple);
   cursor: pointer;
 }
+.main__dark::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.main__dark::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark);
+}
+.main__dark::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
+}
+
 .main__main {
   flex: 1;
 }
-.main__header {
+.main__header,
+.main__dark > .main__header {
   margin-bottom: 10px;
   user-select: none;
   user-zoom: none;
@@ -31,7 +45,11 @@
   padding: 5px;
   background-color: white;
 }
-.main__header > h1 {
+.main__dark > .main__content > .main__content__cards > .main__header {
+  background-color: var(--color-main-dark);
+}
+.main__header > h1,
+.main__dark > .main__content > .main__content__cards > .main__header > h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,13 +59,30 @@
   color: var(--main-color);
   font-weight: 600;
 }
+
+.main__dark > .main__content > .main__content__cards > .main__header > h1 {
+  color: white;
+}
 .main__header > h1 > span:last-of-type {
   border-bottom: 1px solid var(--main-color);
   flex: 1;
   margin-left: 5px;
 }
-.main__header > p {
+
+.main__content
+  > .main__content__cards
+  > .main__header
+  > h1
+  > span:last-of-type {
+  border-color: var(--color-gray-dark);
+}
+.main__header > p,
+.main__dark {
   color: var(--color-purple);
+  font-size: 0.7rem;
+}
+.main__content > .main__content__cards > .main__header > p {
+  color: var(--color-gray-dark);
   font-size: 0.7rem;
 }
 .main__content__cards {
@@ -56,15 +91,16 @@
   width: 100%;
   overflow-y: hidden;
 }
-
-.main__content__cards__container {
+.main__content__cards__container,
+.main__content__cards__container__dark {
   display: flex;
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 
-.main__content__cards__container::-webkit-scrollbar {
+.main__content__cards__container::-webkit-scrollbar,
+.main__content__cards__container__dark::-webkit-scrollbar {
   height: 5px;
 }
 .main__content__cards__container::-webkit-scrollbar-track {
@@ -77,8 +113,19 @@
   background: var(--color-purple);
   cursor: pointer;
 }
+
+.main__content__cards__container__dark::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.main__content__cards__container__dark::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.main__content__cards__container__dark::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
+}
 @media only screen and (max-width: 1000px) {
-  .main {
+  .main,
+  .main__dark {
     flex: 1;
   }
 }

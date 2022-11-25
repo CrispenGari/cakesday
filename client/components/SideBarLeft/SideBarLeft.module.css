@@ -1,4 +1,5 @@
-.sidebar__left {
+.sidebar__left,
+.sidebar__left__dark {
   flex: 0.2;
   user-select: none;
   user-zoom: none;
@@ -8,7 +9,11 @@
   height: 100%;
   padding-bottom: 30px;
 }
-.sidebar__left > h1 {
+.sidebar__left__dark {
+  background-color: var(--color-main-dark);
+}
+.sidebar__left > h1,
+.sidebar__left__dark > h1 {
   font-size: 1rem;
   text-transform: uppercase;
   width: 100%;
@@ -24,6 +29,10 @@
   font-weight: 500;
   letter-spacing: 1px;
 }
+.sidebar__left__dark > h1 {
+  color: white;
+  background-color: var(--color-body-dark);
+}
 .sidebar__left__lists {
   padding: 10px 5px;
   flex: 1;
@@ -37,10 +46,16 @@
   align-items: center;
   font-size: 0.8rem;
 }
+.sidebar__left__dark > .sidebar__left__lists > p {
+  color: white;
+}
 .sidebar__left__lists > p > span:last-of-type {
   flex: 1;
   margin-left: 5px;
   border-bottom: 1px solid var(--main-color);
+}
+.sidebar__left__dark > .sidebar__left__lists > p > span:last-of-type {
+  border-color: white;
 }
 .sidebar__left__lists::-webkit-scrollbar {
   width: 5px;
@@ -54,6 +69,16 @@
 .sidebar__left__lists::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple);
   cursor: pointer;
+}
+
+.sidebar__left__dark > .sidebar__left__lists::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.sidebar__left__dark > .sidebar__left__lists::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark);
+}
+.sidebar__left__dark > .sidebar__left__lists::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
 }
 
 .sidebar__left > button {

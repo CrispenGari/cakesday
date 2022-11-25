@@ -1,11 +1,13 @@
-.feed {
+.feed,
+.feed__dark {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
 }
-.feed__main {
+.feed__main,
+.feed__dark {
   width: 100%;
   margin: 0px auto;
   max-width: 1000px;

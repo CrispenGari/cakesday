@@ -95,6 +95,8 @@ export class VerifyEmailResolver {
     //  the user email has been confirmed
     user.confirmed = true;
     await user.save();
+    // notify all those who subscribe to new-user creation notification
+
     // new tokens
     storeRefreshToken(res, createRefreshToken(user));
     return {

@@ -1,5 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   FriendsSuggestionsDocument,
   MeDocument,
@@ -9,12 +10,14 @@ import {
   useUsersBelatedBirthdaysQuery,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import CardsModal from "../CardsModal/CardsModal";
 import FlatUser from "../FlatUser/FlatUser";
 import styles from "./SideBarLeft.module.css";
 interface Props {}
 const SideBarLeft: React.FC<Props> = ({}) => {
   const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
+  const theme = useSelector(({ theme }: StateType) => theme);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedUser, setSelectedUser] = React.useState<any>(null);
   const { data: belatedBdays } = useUsersBelatedBirthdaysQuery({
@@ -52,7 +55,11 @@ const SideBarLeft: React.FC<Props> = ({}) => {
   };
 
   return (
-    <div className={styles.sidebar__left}>
+    <div
+      className={
+        theme === "dark" ? styles.sidebar__left__dark : styles.sidebar__left
+      }
+    >
       <h1>Birthdays</h1>
       {selectedUser && (
         <CardsModal isOpen={isOpen} onClose={onClose} user={selectedUser} />

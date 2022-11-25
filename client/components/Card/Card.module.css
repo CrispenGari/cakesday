@@ -1,4 +1,5 @@
-.card {
+.card,
+.card__dark {
   margin: 5px auto;
   background-color: var(--main-color);
   position: relative;
@@ -13,7 +14,8 @@
   flex-shrink: 0;
   border-radius: 5px;
 }
-.card__container {
+.card__container,
+.card__container__dark {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -33,7 +35,8 @@
 .card__avatar img {
   -webkit-user-drag: none !important;
 }
-.card__top {
+.card__top,
+.card__container__dark > .card__top {
   width: 100%;
   position: absolute;
   border-top-left-radius: 5px;
@@ -48,11 +51,23 @@
   justify-content: center;
 }
 
-.card__top > h1 {
+.card__container__dark > .card__top {
+  background-color: rgba(44, 54, 57, 0.4);
+}
+
+.card__top > h1,
+.card__container__dark > .card__top > h1 {
   color: white;
   cursor: pointer;
+  font-size: 1rem;
 }
-.card__top > h1 > span:nth-child(1) {
+.card__top
+  > h1
+  > span:nth-child(1)
+  .card__container__dark
+  > .card__top
+  > h1
+  > span:nth-of-type(1) {
   color: gray;
 }
 .card__bottom {
@@ -63,7 +78,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.card__bottom > button {
+.card__bottom > button,
+.card__container__dark > .card__bottom > button {
   color: white;
   padding: 0px 20px;
   display: flex;
@@ -73,13 +89,24 @@
   margin: 5px;
   transition: all 1s;
 }
+
+.card__container__dark > .card__bottom > button:first-of-type {
+  background-color: var(--color-brown-dark);
+}
 .card__bottom > button:last-of-type {
   background-color: var(--color-pink);
+}
+.card__container__dark > .card__bottom > button:last-of-type {
+  background-color: var(--color-main-dark);
 }
 .card__bottom > button:hover {
   background-color: var(--main-color);
 }
-.card__container > h3 {
+.card__container__dark > .card__bottom > button:hover {
+  background-color: var(--color-pink);
+}
+.card__container > h3,
+.card__container__dark > h3 {
   font-weight: bold;
   font-size: 2rem;
   position: relative;
@@ -87,7 +114,8 @@
   margin: 5px 0;
 }
 
-.card__container > h3 > span {
+.card__container > h3 > span,
+.card__container__dark > h3 > span {
   position: absolute;
   font-size: 0.8rem;
   font-weight: 400;

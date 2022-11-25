@@ -8,6 +8,7 @@ export interface ActionType<T> {
 export interface StateType {
   emailCard: "CHANGE_EMAIL" | "VERIFY_EMAIL";
   notifications: Notification[];
+  theme: ThemeType;
 }
 export interface EmojiType {
   name: string;

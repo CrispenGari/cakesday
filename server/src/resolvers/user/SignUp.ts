@@ -3,9 +3,7 @@ import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { SignUpInput } from "./InputTypes/SignUpInput";
 import { SignUpObjectType } from "./ObjectTypes/SignUpObjectType";
 import argorn2 from "argon2";
-
 import { User } from "../../entities/User/User";
-
 import {
   __confirm__email__prefix,
   __maxVerificationAge__,

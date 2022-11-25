@@ -1,10 +1,12 @@
 import { Avatar, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   useSignOutMutation,
   useMeQuery,
 } from "../../graphql/generated/graphql";
+import { StateType } from "../../types";
 import { userBirthdayObject } from "../../utils";
 import styles from "./SideBarRight.module.css";
 
@@ -18,6 +20,7 @@ const SideBarRight: React.FC<Props> = ({}) => {
     fetchPolicy: "network-only",
   });
   const router = useRouter();
+  const theme = useSelector(({ theme }: StateType) => theme);
   useEffect(() => {
     if (data?.signOut) {
       window.location.reload();
@@ -25,7 +28,11 @@ const SideBarRight: React.FC<Props> = ({}) => {
   }, [router, data]);
 
   return (
-    <div className={styles.sidebar__right}>
+    <div
+      className={
+        theme === "dark" ? styles.sidebar__right__dark : styles.sidebar__right
+      }
+    >
       <div className={styles.sidebar__right__top}>
         <h1
           onClick={() => {
