@@ -1,5 +1,6 @@
 import { Switch, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   CommonSettings,
   FriendsSuggestionsDocument,
@@ -7,6 +8,7 @@ import {
   useUpdateCommonSettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import Submitting from "../Submitting/Submitting";
 import styles from "./CakesDayEmailSubscriptionsSettings.module.css";
 interface Props {
@@ -16,6 +18,7 @@ const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
   const [subscription, setSubscription] = useState(0);
   const [counter, setCounter] = React.useState(5);
   const [error, setError] = React.useState("");
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [updateSettings, { loading, data }] = useUpdateCommonSettingsMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -77,7 +80,13 @@ const CakesDayEmailSubscriptionsSettings: React.FC<Props> = ({ settings }) => {
     });
   };
   return (
-    <div className={styles.cakes__day__email__subscriptions__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.cakes__day__email__subscriptions__settings__dark
+          : styles.cakes__day__email__subscriptions__settings
+      }
+    >
       {loading ? <Submitting /> : null}
       <h1>Email Subscriptions</h1>
       <p

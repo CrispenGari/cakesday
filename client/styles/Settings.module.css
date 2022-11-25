@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
 }
-.settings__main {
+.settings__main,
+.settings__main__dark {
   width: 100%;
   margin: 0px auto;
   max-width: 1000px;
@@ -16,7 +17,11 @@
   overflow-x: hidden;
   padding-bottom: 30px;
 }
-.settings__main > h1 {
+.settings__main__dark {
+  background-color: var(--color-main-dark);
+}
+.settings__main > h1,
+.settings__main__dark > h1 {
   text-transform: uppercase;
   width: 100%;
   padding: 10px;
@@ -25,8 +30,12 @@
   user-zoom: none;
   border-bottom: 1px solid var(--color-purple);
 }
+.settings__main__dark > h1 {
+  color: white;
+}
 
-.settings__main::-webkit-scrollbar {
+.settings__main::-webkit-scrollbar,
+.settings__main__dark::-webkit-scrollbar {
   width: 5px;
 }
 .settings__main::-webkit-scrollbar-track {
@@ -38,4 +47,14 @@
 .settings__main::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple);
   cursor: pointer;
+}
+
+.settings__main__dark::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.settings__main__dark::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.settings__main__dark::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
 }

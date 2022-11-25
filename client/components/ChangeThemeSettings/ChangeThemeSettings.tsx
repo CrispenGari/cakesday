@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./ChangeThemeSettings.module.css";
 import { Button, Switch } from "@chakra-ui/react";
-import { ThemeType } from "../../types";
+import { StateType, ThemeType } from "../../types";
 import {
   CommonSettings,
   FriendsSuggestionsDocument,
@@ -11,6 +11,7 @@ import {
 } from "../../graphql/generated/graphql";
 import Submitting from "../Submitting/Submitting";
 import { getAccessToken } from "../../state";
+import { useSelector } from "react-redux";
 interface Props {
   settings: CommonSettings;
 }
@@ -73,9 +74,15 @@ const ChangeThemeSettings: React.FC<Props> = ({ settings }) => {
       },
     });
   };
-
+  const myTheme = useSelector(({ theme }: StateType) => theme);
   return (
-    <div className={styles.change__theme__settings}>
+    <div
+      className={
+        myTheme === "dark"
+          ? styles.change__theme__settings__dark
+          : styles.change__theme__settings
+      }
+    >
       {loading ? <Submitting /> : null}
       <h1>Theme Settings</h1>
       <p

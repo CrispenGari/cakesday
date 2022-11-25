@@ -1,4 +1,5 @@
-.privacy__settings {
+.privacy__settings,
+.privacy__settings__dark {
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -7,14 +8,22 @@
   padding: 10px;
   user-select: none;
 }
-.privacy__settings > p {
+.privacy__settings__dark {
+  background-color: var(--color-body-dark);
+  color: white;
+}
+.privacy__settings > p,
+.privacy__settings__dark > p {
   color: var(--main-color);
   font-size: 0.7rem;
 }
-.privacy__settings > h1 {
+
+.privacy__settings > h1,
+.privacy__settings__dark > h1 {
   font-weight: 600;
 }
-.privacy__settings > div {
+.privacy__settings > div,
+.privacy__settings__dark > div {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -25,20 +34,33 @@
   font-size: 0.85rem;
   position: relative;
 }
-.privacy__settings > div > select {
+.privacy__settings__dark > div {
+  background-color: var(--color-main-dark);
+}
+.privacy__settings > div > select,
+.privacy__settings__dark > div > select {
   outline: none;
   border: 1px solid var(--main-color);
   width: fit-content;
   margin-left: 5px;
   padding: 1px 10px;
 }
-.privacy__settings > button {
+.privacy__settings__dark > div > select {
+  border-color: var(--color-gray-dark);
+  background-color: var(--color-main-dark);
+  color: white;
+}
+.privacy__settings > button,
+.privacy__settings__dark > button {
   width: fit-content !important;
   align-self: flex-end;
   background-color: var(--main-color);
   color: white;
   margin: 10px 0;
   font-weight: 500 !important;
+}
+.privacy__settings__dark > button {
+  background-color: var(--color-brown-dark);
 }
 
 .privacy__settings__error {
@@ -50,4 +72,10 @@
   color: var(--main-color) !important;
   font-size: 0.9rem !important;
   margin: 5px 0;
+}
+.privacy__settings__dark > p.privacy__settings__message {
+  color: white !important;
+}
+.privacy__settings__dark > p {
+  color: white !important;
 }

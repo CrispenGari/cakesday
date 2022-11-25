@@ -13,6 +13,8 @@ import {
   useUpdateProfileSettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 interface Props {
   profile: Profile;
 }
@@ -22,7 +24,7 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
   const [bday, setBday] = useState(new Date());
   const [error, setError] = useState("");
   const [bio, setBio] = useState("");
-
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [updateProfile, { loading, data }] = useUpdateProfileSettingsMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -79,7 +81,14 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
     });
   };
   return (
-    <form className={styles.profile__settings} onSubmit={onSubmit}>
+    <form
+      className={
+        theme === "dark"
+          ? styles.profile__settings__dark
+          : styles.profile__settings
+      }
+      onSubmit={onSubmit}
+    >
       <h1>Update Profile</h1>
       {/* username, gender, bio, dob,  */}
       <div>
@@ -127,14 +136,14 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
       <p
         className={
           data?.updateProfileSettings.success
-            ? styles.p
+            ? styles.profile__settings__message
             : styles.profile__settings__error
         }
       >
         {error}
       </p>
       <Button type={"submit"} isLoading={loading}>
-        Update{" "}
+        Update Profile
       </Button>
       <p>
         Changing your profile details will reflects to all the users of

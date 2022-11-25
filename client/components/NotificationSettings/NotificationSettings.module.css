@@ -1,4 +1,5 @@
-.notification__settings {
+.notification__settings,
+.notification__settings__dark {
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -8,14 +9,26 @@
   user-select: none;
   position: relative !important;
 }
-.notification__settings > p {
+.notification__settings__dark {
+  background-color: var(--color-body-dark);
+}
+.notification__settings > p,
+.notification__settings__dark > p {
   color: var(--main-color);
   font-size: 0.7rem;
 }
-.notification__settings > h1 {
+.notification__settings__dark > p {
+  color: white;
+}
+.notification__settings > h1,
+.notification__settings__dark > h1 {
   font-weight: 600;
 }
-.notification__settings > div {
+.notification__settings__dark > h1 {
+  color: white;
+}
+.notification__settings > div,
+.notification__settings__dark > div {
   display: flex;
   position: relative;
   width: 100%;
@@ -26,13 +39,21 @@
   border-radius: 5px;
   font-size: 0.85rem;
 }
-.notification__settings > button {
+.notification__settings__dark > div {
+  background-color: var(--color-main-dark);
+  color: white;
+}
+.notification__settings > button,
+.notification__settings__dark > button {
   width: fit-content !important;
   align-self: flex-end;
   background-color: var(--main-color);
   color: white;
   margin: 10px 0;
   font-weight: 500 !important;
+}
+.notification__settings__dark > button {
+  background-color: var(--color-brown-dark);
 }
 
 .notification__settings__error {
@@ -44,4 +65,7 @@
   color: var(--main-color) !important;
   font-size: 0.9rem !important;
   margin: 5px 0;
+}
+.notification__settings__dark > p.notification__settings__message {
+  color: white !important;
 }

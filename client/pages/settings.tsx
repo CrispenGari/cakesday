@@ -22,6 +22,7 @@ interface Props {}
 const Settings: React.FC<Props> = ({}) => {
   const { data: me } = useMeQuery({ fetchPolicy: "network-only" });
   const emailCard = useSelector((state: StateType) => state.emailCard);
+  const theme = useSelector(({ theme }: StateType) => theme);
 
   return (
     <div
@@ -34,7 +35,11 @@ const Settings: React.FC<Props> = ({}) => {
       }}
     >
       <Header />
-      <div className={styles.settings__main}>
+      <div
+        className={
+          theme === "dark" ? styles.settings__main__dark : styles.settings__main
+        }
+      >
         <h1>Common Settings</h1>
         {/* changing the theme */}
         <ChangeThemeSettings settings={me?.me?.settings?.common as any} />

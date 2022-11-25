@@ -1,5 +1,6 @@
 import { Button, Switch } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   FriendsSuggestionsDocument,
   MeDocument,
@@ -7,6 +8,7 @@ import {
   useUpdateNotificationSettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import Submitting from "../Submitting/Submitting";
 import styles from "./NotificationSettings.module.css";
 interface Props {
@@ -21,6 +23,7 @@ const NotificationSettings: React.FC<Props> = ({ settings }) => {
   const [onBirthdayWish, setOnBirthdayWish] = useState(0);
   const [counter, setCounter] = React.useState(5);
   const [error, setError] = React.useState("");
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [updateSettings, { loading, data }] =
     useUpdateNotificationSettingsMutation({
       fetchPolicy: "network-only",
@@ -92,7 +95,11 @@ const NotificationSettings: React.FC<Props> = ({ settings }) => {
 
   return (
     <form
-      className={styles.notification__settings}
+      className={
+        theme === "dark"
+          ? styles.notification__settings__dark
+          : styles.notification__settings
+      }
       onSubmit={updateNotificationSettings}
     >
       <h1>Manage your Notifications</h1>

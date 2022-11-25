@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { privacyOptions } from "../../constants";
 import {
   FriendsSuggestionsDocument,
@@ -8,6 +9,7 @@ import {
   useUpdatePrivacySettingsMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import Submitting from "../Submitting/Submitting";
 import styles from "./PrivacySettings.module.css";
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const PrivacySettings: React.FC<Props> = ({ settings }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [myBday, setMyBday] = useState("everyone");
   const [myBdayWishes, setMyBdayWishes] = useState("everyone");
   const [seeFollowers, setSeeFollowers] = useState("everyone");
@@ -88,7 +91,14 @@ const PrivacySettings: React.FC<Props> = ({ settings }) => {
   };
 
   return (
-    <form className={styles.privacy__settings} onSubmit={updatePrivacySettings}>
+    <form
+      className={
+        theme === "dark"
+          ? styles.privacy__settings__dark
+          : styles.privacy__settings
+      }
+      onSubmit={updatePrivacySettings}
+    >
       <p
         className={
           data?.updatePrivacySettings.success
