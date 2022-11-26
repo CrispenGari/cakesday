@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@chakra-ui/react";
+import { Avatar, Button, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import {
 } from "../../graphql/generated/graphql";
 import { StateType } from "../../types";
 import { userBirthdayObject } from "../../utils";
+import ViewProfileModal from "../ViewProfileModal/ViewProfileModal";
 import styles from "./SideBarRight.module.css";
 
 interface Props {}
@@ -19,6 +20,11 @@ const SideBarRight: React.FC<Props> = ({}) => {
   const { data: user } = useMeQuery({
     fetchPolicy: "network-only",
   });
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onClose: onCloseProfileModal,
+  } = useDisclosure();
   const router = useRouter();
   const theme = useSelector(({ theme }: StateType) => theme);
   useEffect(() => {
@@ -33,6 +39,15 @@ const SideBarRight: React.FC<Props> = ({}) => {
         theme === "dark" ? styles.sidebar__right__dark : styles.sidebar__right
       }
     >
+      {user && (
+        <ViewProfileModal
+          profile={user?.me?.profile!}
+          isOpen={isOpenProfileModal}
+          onClose={onCloseProfileModal}
+          imageType="avatar"
+        />
+      )}
+
       <div className={styles.sidebar__right__top}>
         <h1
           onClick={() => {
@@ -51,6 +66,8 @@ const SideBarRight: React.FC<Props> = ({}) => {
             className={styles.sidebar__right__top__avatar}
             name={user?.me?.username}
             src={user?.me?.profile?.photoURL ?? ""}
+            style={{ cursor: "pointer", zIndex: 10 }}
+            onClick={onOpenProfileModal}
           />
         </div>
         <Button

@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@chakra-ui/react";
+import { Avatar, Button, useDisclosure } from "@chakra-ui/react";
 import React, { useState } from "react";
 import styles from "./Banner.module.css";
 import { FileUploader } from "react-drag-drop-files";
@@ -13,6 +13,7 @@ import {
 import { getAccessToken, setAccessToken } from "../../state";
 import { useSelector } from "react-redux";
 import { StateType } from "../../types";
+import ViewProfileModal from "../ViewProfileModal/ViewProfileModal";
 interface Props {
   profile: Profile;
   isMe: boolean;
@@ -27,6 +28,11 @@ const Banner: React.FC<Props> = ({ profile, isMe }) => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [showButton, setShowButton] = useState(false);
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onClose: onCloseProfileModal,
+  } = useDisclosure();
 
   const [updateProfile, { data, loading: l }] =
     useUpdateProfileOrBannerMutation({
@@ -112,6 +118,14 @@ const Banner: React.FC<Props> = ({ profile, isMe }) => {
   }, [bannerImagePreview, profileImagePreview]);
   return (
     <div className={theme === "dark" ? styles.banner__dark : styles.banner}>
+      {profile && (
+        <ViewProfileModal
+          profile={profile}
+          isOpen={isOpenProfileModal}
+          onClose={onCloseProfileModal}
+          imageType="avatar"
+        />
+      )}
       <div
         className={styles.banner__container}
         style={{
@@ -144,6 +158,8 @@ const Banner: React.FC<Props> = ({ profile, isMe }) => {
             className={styles.banner__avatar}
             name="Profile Image"
             src={profileImagePreview}
+            style={{ cursor: "pointer" }}
+            onClick={onOpenProfileModal}
             title={profile?.username}
           />
 

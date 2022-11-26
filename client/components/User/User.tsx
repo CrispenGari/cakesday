@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./User.module.css";
-import { Badge, Button, Avatar } from "@chakra-ui/react";
+import { Badge, Button, Avatar, useDisclosure } from "@chakra-ui/react";
 import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import { useRouter } from "next/router";
 import {
@@ -13,6 +13,7 @@ import {
 import { getAccessToken } from "../../state";
 import { useSelector } from "react-redux";
 import { StateType } from "../../types";
+import ViewProfileModal from "../ViewProfileModal/ViewProfileModal";
 interface Props {
   friend: User;
 }
@@ -21,7 +22,11 @@ const User: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const theme = useSelector(({ theme }: StateType) => theme);
-
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onClose: onCloseProfileModal,
+  } = useDisclosure();
   const [followUser, { loading: following }] = useFollowUserMutation({
     refetchQueries: [
       { query: MeDocument },
@@ -66,10 +71,15 @@ const User: React.FC<Props> = ({
 
   return (
     <div className={theme === "dark" ? styles.user__dark : styles.user}>
+      {profile && (
+        <ViewProfileModal
+          profile={profile}
+          isOpen={isOpenProfileModal}
+          onClose={onCloseProfileModal}
+          imageType="avatar"
+        />
+      )}
       <div
-        onClick={() => {
-          router.push(`/profile/${id}`);
-        }}
         className={styles.user__banner}
         style={{
           backgroundImage: `url(${profile?.bannerURL})`,
@@ -81,9 +91,7 @@ const User: React.FC<Props> = ({
           </Badge>
         ) : null}
         <Avatar
-          onClick={() => {
-            router.push(`/profile/${id}`);
-          }}
+          onClick={onOpenProfileModal}
           title={username}
           className={styles.user__avatar}
           name={username}

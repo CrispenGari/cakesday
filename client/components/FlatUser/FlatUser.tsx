@@ -1,10 +1,11 @@
-import { Avatar, Button } from "@chakra-ui/react";
+import { Avatar, Button, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Profile } from "../../graphql/generated/graphql";
 import { StateType } from "../../types";
 import { userBirthdayObject } from "../../utils";
+import ViewProfileModal from "../ViewProfileModal/ViewProfileModal";
 
 import styles from "./FlatUser.module.css";
 interface Props {
@@ -25,15 +26,26 @@ const FlatUser: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const theme = useSelector(({ theme }: StateType) => theme);
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onClose: onCloseProfileModal,
+  } = useDisclosure();
   return (
     <div
       className={theme === "dark" ? styles.flat__user__dark : styles.flat__user}
     >
+      {user && (
+        <ViewProfileModal
+          profile={user}
+          isOpen={isOpenProfileModal}
+          onClose={onCloseProfileModal}
+          imageType="avatar"
+        />
+      )}
       <div className={styles.flat__user__top}>
         <Avatar
-          onClick={() => {
-            router.push(`/profile/${user.id}`);
-          }}
+          onClick={onOpenProfileModal}
           title={user?.username}
           className={
             size === "normal"

@@ -1,0 +1,53 @@
+.view__profile__modal,
+.view__profile__modal__dark {
+  padding: 10px;
+  user-select: none;
+}
+.view__profile__modal__dark {
+  background-color: var(--color-main-dark) !important;
+}
+
+.view__profile__modal > div,
+.view__profile__modal__dark > div {
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 60vh;
+}
+.view__profile__modal__dark > div {
+  color: white;
+}
+.view__profile__modal > h1,
+.view__profile__modal__dark > h1 {
+  font-size: 1rem;
+  padding: 10px 0;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-purple);
+}
+.view__profile__modal__dark > h1 {
+  color: white;
+}
+.view__profile__modal > img,
+.view__profile__modal__dark > img {
+  margin: 10px 0;
+  border-radius: 5px;
+  height: 70vh;
+  object-fit: contain;
+}
+.view__profile__modal > button,
+.view__profile__modal__dark > button {
+  background-color: var(--color-purple);
+  color: white;
+  transition: all 1s;
+}
+.view__profile__modal > button:hover {
+  background-color: var(--main-color);
+}
+.view__profile__modal__dark > button {
+  background-color: var(--color-brown-dark);
+}
+.view__profile__modal__dark > button:hover {
+  background-color: var(--color-pink);
+}
