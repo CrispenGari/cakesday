@@ -9,13 +9,14 @@ import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEmailCard } from "../../actions";
 import {
   Profile,
   useChangeEmailMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 
 import styles from "./ChangeEmailSettings.module.css";
 interface Props {
@@ -25,6 +26,7 @@ const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [show0, setShow0] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -64,14 +66,24 @@ const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
   }, [data]);
 
   return (
-    <div className={styles.change__email__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.change__email__settings__dark
+          : styles.change__email__settings
+      }
+    >
       <h1>Change Email</h1>
       <form onSubmit={onSubmit}>
         <div>
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
-              children={<MdOutlineMailOutline color="gray" />}
+              children={
+                <MdOutlineMailOutline
+                  color={theme === "dark" ? "white" : "gray"}
+                />
+              }
             />
             <Input
               isInvalid={data?.changeEmail.success === false}
@@ -84,7 +96,11 @@ const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
-              children={<HiOutlineLockClosed color="gray" />}
+              children={
+                <HiOutlineLockClosed
+                  color={theme === "dark" ? "white" : "gray"}
+                />
+              }
             />
             <Input
               isInvalid={data?.changeEmail.success === false}
@@ -99,12 +115,14 @@ const ChangeEmailSettings: React.FC<Props> = ({ profile }) => {
                   onClick={() => setShow0(true)}
                   style={{ cursor: "pointer" }}
                   title="show"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               ) : (
                 <BiShowAlt
                   onClick={() => setShow0(false)}
                   style={{ cursor: "pointer" }}
                   title="hide"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               )}
             </InputRightElement>

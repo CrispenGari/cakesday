@@ -9,11 +9,13 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import {
   useChangePasswordSettingsMutation,
   useSignOutMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import styles from "./ChangePasswordSettings.module.css";
 interface Props {}
 const ChangePassword: React.FC<Props> = ({}) => {
@@ -25,6 +27,7 @@ const ChangePassword: React.FC<Props> = ({}) => {
   const [show1, setShow1] = useState<boolean>(false);
   const [show0, setShow0] = useState<boolean>(false);
   const [show2, setShow2] = useState<boolean>(false);
+  const theme = useSelector(({ theme }: StateType) => theme);
   const router = useRouter();
 
   const [changePassword, { loading, data }] = useChangePasswordSettingsMutation(
@@ -86,14 +89,24 @@ const ChangePassword: React.FC<Props> = ({}) => {
     });
   };
   return (
-    <div className={styles.change__password__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.change__password__settings__dark
+          : styles.change__password__settings
+      }
+    >
       <h1>Change Password</h1>
 
       <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<HiOutlineLockClosed color="gray" />}
+            children={
+              <HiOutlineLockClosed
+                color={theme === "dark" ? "white" : "gray"}
+              />
+            }
           />
           <Input
             isInvalid={
@@ -110,12 +123,14 @@ const ChangePassword: React.FC<Props> = ({}) => {
                 onClick={() => setShow0(true)}
                 style={{ cursor: "pointer" }}
                 title="show"
+                color={theme === "dark" ? "white" : "gray"}
               />
             ) : (
               <BiShowAlt
                 onClick={() => setShow0(false)}
                 style={{ cursor: "pointer" }}
                 title="hide"
+                color={theme === "dark" ? "white" : "gray"}
               />
             )}
           </InputRightElement>
@@ -124,7 +139,11 @@ const ChangePassword: React.FC<Props> = ({}) => {
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
-              children={<HiOutlineLockClosed color="gray" />}
+              children={
+                <HiOutlineLockClosed
+                  color={theme === "dark" ? "white" : "gray"}
+                />
+              }
             />
             <Input
               isInvalid={
@@ -141,12 +160,14 @@ const ChangePassword: React.FC<Props> = ({}) => {
                   onClick={() => setShow1(true)}
                   style={{ cursor: "pointer" }}
                   title="show"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               ) : (
                 <BiShowAlt
                   onClick={() => setShow1(false)}
                   style={{ cursor: "pointer" }}
                   title="hide"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               )}
             </InputRightElement>
@@ -155,7 +176,11 @@ const ChangePassword: React.FC<Props> = ({}) => {
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
-              children={<HiOutlineLockClosed color="gray" />}
+              children={
+                <HiOutlineLockClosed
+                  color={theme === "dark" ? "white" : "gray"}
+                />
+              }
             />
             <Input
               isInvalid={
@@ -172,12 +197,14 @@ const ChangePassword: React.FC<Props> = ({}) => {
                   onClick={() => setShow2(true)}
                   style={{ cursor: "pointer" }}
                   title="show"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               ) : (
                 <BiShowAlt
                   onClick={() => setShow2(false)}
                   style={{ cursor: "pointer" }}
                   title="hide"
+                  color={theme === "dark" ? "white" : "gray"}
                 />
               )}
             </InputRightElement>

@@ -1,4 +1,5 @@
-.invalidate__tokens__settings {
+.invalidate__tokens__settings,
+.invalidate__tokens__settings__dark {
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -7,32 +8,50 @@
   padding: 10px;
   user-select: none;
 }
-.invalidate__tokens__settings > p {
+.invalidate__tokens__settings__dark {
+  background-color: var(--color-main-dark);
+}
+.invalidate__tokens__settings > p,
+.invalidate__tokens__settings__dark > p {
   color: var(--main-color);
   font-size: 0.7rem;
 }
-.invalidate__tokens__settings > h1 {
+.invalidate__tokens__settings > h1,
+.invalidate__tokens__settings__dark > h1 {
   font-weight: 600;
   margin-bottom: 10px;
 }
 
+.invalidate__tokens__settings__dark > p,
+.invalidate__tokens__settings__dark > h1 {
+  color: white;
+}
+
+.invalidate__tokens__settings__dark > form > div:first-of-type,
 .invalidate__tokens__settings > form > div:first-of-type {
   width: 100%;
   max-width: 400px;
 }
 
+.invalidate__tokens__settings__dark > form > div > div:first-of-type,
 .invalidate__tokens__settings > form > div > div:first-of-type {
   margin-right: 10px;
 }
+.invalidate__tokens__settings__dark > form > p,
 .invalidate__tokens__settings > form > p {
   font-size: 0.8rem;
   margin: 5px auto;
   color: var(--main-color);
 }
+.invalidate__tokens__settings__dark > form > p {
+  color: white;
+}
+.invalidate__tokens__settings__dark > form > p.invalidate__tokens__error,
 .invalidate__tokens__settings > form > p.invalidate__tokens__error {
   color: red;
 }
-.invalidate__tokens__settings > form > button {
+.invalidate__tokens__settings > form > button,
+.invalidate__tokens__settings__dark > form > button {
   align-self: flex-end;
   background-color: var(--main-color);
   color: white;
@@ -40,14 +59,23 @@
   font-weight: 500 !important;
 }
 
+.invalidate__tokens__settings__dark > form > button {
+  background-color: var(--color-brown-dark);
+}
+
+.invalidate__tokens__settings__dark > form input {
+  color: white;
+}
 @media only screen and (max-width: 768px) {
+  .invalidate__tokens__settings__dark > form > div > div:first-of-type,
   .invalidate__tokens__settings > form > div > div:first-of-type {
     margin-right: unset;
-    margin: 10px 0;
   }
+  .invalidate__tokens__settings__dark > form > div:first-of-type,
   .invalidate__tokens__settings > form > div:first-of-type {
     max-width: unset;
   }
+  .invalidate__tokens__settings__dark > form > p,
   .invalidate__tokens__settings > form > p {
     text-align: center;
   }

@@ -95,7 +95,7 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<BiUser color="gray" />}
+            children={<BiUser color={theme === "dark" ? "white" : "gray"} />}
           />
           <Input
             // isInvalid={data?.signIn.error?.field !== "password"}
@@ -107,7 +107,7 @@ const ProfileSettings: React.FC<Props> = ({ profile }) => {
         </InputGroup>
         <div>
           <div className={styles.profile__settings__date}>
-            <HiOutlineCake />
+            <HiOutlineCake color={theme === "dark" ? "white" : "gray"} />
             <DatePicker
               showTimeSelectOnly
               selected={bday}

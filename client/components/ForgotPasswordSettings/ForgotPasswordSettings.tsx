@@ -1,8 +1,9 @@
 import { InputGroup, InputLeftElement, Input, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useRequestChangePasswordEmailMutation } from "../../graphql/generated/graphql";
-import { ProfileType } from "../../types";
+import { ProfileType, StateType } from "../../types";
 import styles from "./ForgotPasswordSettings.module.css";
 interface Props {
   profile: ProfileType;
@@ -11,6 +12,7 @@ const ForgotPasswordSettings: React.FC<Props> = ({ profile }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [requestForgotPasswordEmail, { loading, data }] =
     useRequestChangePasswordEmailMutation({ fetchPolicy: "network-only" });
   useEffect(() => {
@@ -41,13 +43,23 @@ const ForgotPasswordSettings: React.FC<Props> = ({ profile }) => {
   };
 
   return (
-    <div className={styles.forgot__password__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.forgot__password__settings__dark
+          : styles.forgot__password__settings
+      }
+    >
       <h1>Forgot Password</h1>
       <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<MdOutlineMailOutline color="gray" />}
+            children={
+              <MdOutlineMailOutline
+                color={theme === "dark" ? "white" : "gray"}
+              />
+            }
           />
           <Input
             // isInvalid={data?.signUp.error?.field === "email"}

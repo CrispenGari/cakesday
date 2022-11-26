@@ -9,8 +9,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import { useDeleteAccountMutation } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import styles from "./DeleteAccountSetting.module.css";
 interface Props {}
 const DeleteAccountSetting: React.FC<Props> = ({}) => {
@@ -18,6 +20,7 @@ const DeleteAccountSetting: React.FC<Props> = ({}) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
   const [show0, setShow0] = useState<boolean>(false);
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [deleteAccount, { loading, data }] = useDeleteAccountMutation({
     fetchPolicy: "network-only",
   });
@@ -47,13 +50,23 @@ const DeleteAccountSetting: React.FC<Props> = ({}) => {
     }
   }, [data, replace]);
   return (
-    <div className={styles.delete__account__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.delete__account__settings__dark
+          : styles.delete__account__settings
+      }
+    >
       <h1>Delete Account</h1>
       <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<HiOutlineLockClosed color="gray" />}
+            children={
+              <HiOutlineLockClosed
+                color={theme === "dark" ? "white" : "gray"}
+              />
+            }
           />
           <Input
             // isInvalid={data?.signUp.error?.field === "password"}
@@ -68,12 +81,14 @@ const DeleteAccountSetting: React.FC<Props> = ({}) => {
                 onClick={() => setShow0(true)}
                 style={{ cursor: "pointer" }}
                 title="show"
+                color={theme === "dark" ? "white" : "gray"}
               />
             ) : (
               <BiShowAlt
                 onClick={() => setShow0(false)}
                 style={{ cursor: "pointer" }}
                 title="hide"
+                color={theme === "dark" ? "white" : "gray"}
               />
             )}
           </InputRightElement>

@@ -9,14 +9,17 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { HiOutlineLockClosed } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import {
   useInvalidateTokensMutation,
   useSignOutMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import styles from "./InvalidateTokensSettings.module.css";
 interface Props {}
 const InvalidateTokensSettings: React.FC<Props> = ({}) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
   const [counter, setCounter] = useState(5);
@@ -78,13 +81,23 @@ const InvalidateTokensSettings: React.FC<Props> = ({}) => {
     });
   };
   return (
-    <div className={styles.invalidate__tokens__settings}>
+    <div
+      className={
+        theme === "dark"
+          ? styles.invalidate__tokens__settings__dark
+          : styles.invalidate__tokens__settings
+      }
+    >
       <h1>Invalidate Tokens</h1>
       <form onSubmit={onSubmit}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<HiOutlineLockClosed color="gray" />}
+            children={
+              <HiOutlineLockClosed
+                color={theme === "dark" ? "white" : "gray"}
+              />
+            }
           />
           <Input
             // isInvalid={data?.signUp.error?.field === "password"}
@@ -99,12 +112,14 @@ const InvalidateTokensSettings: React.FC<Props> = ({}) => {
                 onClick={() => setShow0(true)}
                 style={{ cursor: "pointer" }}
                 title="show"
+                color={theme === "dark" ? "white" : "gray"}
               />
             ) : (
               <BiShowAlt
                 onClick={() => setShow0(false)}
                 style={{ cursor: "pointer" }}
                 title="hide"
+                color={theme === "dark" ? "white" : "gray"}
               />
             )}
           </InputRightElement>
