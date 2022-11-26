@@ -1,20 +1,37 @@
-.signout__btn {
+.signout__btn,
+.signout__btn__dark {
   background-color: white;
   margin: 20px 10px;
   border-radius: 5px;
   padding: 20px;
 }
-.signout__btn > h1 {
+.signout__btn__dark {
+  background-color: var(--color-body-dark);
+}
+.signout__btn > h1,
+.signout__btn__dark > h1 {
   user-select: none;
   font-weight: 500;
 }
-.signout__btn > h1 > span {
+.signout__btn__dark > h1 {
+  color: white;
+}
+
+.signout__btn > h1 > span,
+.signout__btn__dark > h1 > span {
   color: var(--main-color);
   text-decoration: underline;
 }
+.signout__btn__dark > h1 > span {
+  color: white;
+}
 
-.signout__btn > button {
+.signout__btn > button,
+.signout__btn__dark > button {
   background-color: var(--main-color);
   color: white;
   margin-top: 10px;
+}
+.signout__btn__dark > button {
+  background-color: var(--color-brown-dark);
 }

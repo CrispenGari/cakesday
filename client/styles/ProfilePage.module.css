@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
 }
-.profile__main {
+.profile__main,
+.profile__main__dark {
   width: 100%;
   margin: 0px auto;
   max-width: 1000px;
@@ -17,7 +18,11 @@
   background-position: center;
 }
 
-.profile__main::-webkit-scrollbar {
+.profile__main__dark {
+  background-color: var(--color-main-dark);
+}
+.profile__main::-webkit-scrollbar,
+.profile__main__dark::-webkit-scrollbar {
   display: none;
 }
 .profile__main::-webkit-scrollbar-track {
@@ -29,4 +34,14 @@
 .profile__main::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple);
   cursor: pointer;
+}
+
+.profile__main__dark::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.profile__main__dark::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.profile__main__dark::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
 }

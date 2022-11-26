@@ -1,14 +1,17 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Banner, Header, UserInfo, SignOutButton } from "../../components";
 import ProfileModal from "../../components/ProfileModal/ProfileModal";
 import { ColorThemes } from "../../constants";
 import { useMeQuery, useUserByIdQuery } from "../../graphql/generated/graphql";
 import styles from "../../styles/ProfilePage.module.css";
+import { StateType } from "../../types";
 interface Props {}
 const Profile: React.FC<Props> = ({}) => {
   const router = useRouter();
+  const theme = useSelector(({ theme }: StateType) => theme);
   const {
     isOpen: isOpenFollowers,
     onOpen: openFollowers,
@@ -60,7 +63,11 @@ const Profile: React.FC<Props> = ({}) => {
         }}
         btnTitle="unfollow"
       />
-      <div className={styles.profile__main}>
+      <div
+        className={
+          theme === "dark" ? styles.profile__main__dark : styles.profile__main
+        }
+      >
         <Banner
           profile={data?.user?.profile as any}
           isMe={me?.me?.username === data?.user?.username}

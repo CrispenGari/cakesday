@@ -1,10 +1,14 @@
-.banner {
+.banner,
+.banner__dark {
   display: flex;
   flex-direction: column;
   width: 100%;
   background-color: white;
   user-select: none;
   user-zoom: none;
+}
+.banner__dark {
+  background-color: var(--color-main-dark);
 }
 .banner__container {
   background-color: var(--main-color);
@@ -61,6 +65,9 @@
   padding: 5px 20px;
   cursor: pointer;
 }
+.banner__dark .banner__avatar__btn {
+  background-color: var(--color-brown-dark);
+}
 .banner__sub__info {
   display: flex;
   flex-direction: column;
@@ -100,13 +107,17 @@
   color: white;
   text-decoration: underline;
 }
-.banner > button {
+.banner > button,
+.banner__dark > button {
   background-color: var(--main-color);
   color: white;
   font-weight: unset;
   margin: 10px;
   width: 150px;
   margin-top: unset;
+}
+.banner__dark > button {
+  background-color: var(--color-brown-dark);
 }
 @keyframes animate {
   from {

@@ -38,7 +38,13 @@ const Notifications: React.FC<Props> = ({}) => {
       }}
     >
       <Header />
-      <div className={styles.notifications__main}>
+      <div
+        className={
+          theme === "dark"
+            ? styles.notifications__main__dark
+            : styles.notifications__main
+        }
+      >
         <div className={styles.notifications__main__section}>
           <span>UnRead Notifications</span> <span></span>
         </div>

@@ -11,11 +11,14 @@ import {
   useUpdateProfileOrBannerMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken, setAccessToken } from "../../state";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 interface Props {
   profile: Profile;
   isMe: boolean;
 }
 const Banner: React.FC<Props> = ({ profile, isMe }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [bannerImage, setBannerImage] = useState<any>(undefined);
   const [bannerImagePreview, setBannerImagePreview] = useState<string>("");
 
@@ -108,7 +111,7 @@ const Banner: React.FC<Props> = ({ profile, isMe }) => {
     }
   }, [bannerImagePreview, profileImagePreview]);
   return (
-    <div className={styles.banner}>
+    <div className={theme === "dark" ? styles.banner__dark : styles.banner}>
       <div
         className={styles.banner__container}
         style={{

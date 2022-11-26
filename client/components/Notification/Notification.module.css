@@ -1,4 +1,5 @@
-.notification {
+.notification,
+.notification__dark {
   display: flex;
   background-color: white;
   margin: 2px 0;
@@ -6,6 +7,9 @@
   cursor: pointer;
   padding: 10px;
   justify-content: space-between;
+}
+.notification__dark {
+  background-color: var(--color-body-dark);
 }
 .notification__main {
   flex: 1;
@@ -16,6 +20,10 @@
   text-transform: lowercase;
   color: var(--main-color);
 }
+
+.notification__dark > .notification__main > h1 {
+  color: white;
+}
 .notification__main > div,
 .notification__main > div > p {
   width: 100%;
@@ -23,16 +31,22 @@
   display: flex;
   font-size: 0.8rem;
 }
+
 .notification__main > div > p > span:last-of-type {
   color: gray;
   margin: 0 5px;
 }
-.notification__buttons {
+.notification__dark > .notification__main > div > p > span:last-of-type {
+  color: var(--color-gray-dark);
+}
+.notification__buttons,
+.notification__dark .notification__buttons {
   display: none;
   transition: all 1s;
   z-index: 10;
 }
-.notification__buttons > button {
+.notification__buttons > button,
+.notification__dark .notification__buttons > button {
   width: fit-content;
   height: 100%;
   border-radius: 0 !important;
@@ -42,6 +56,14 @@
   color: white;
   transition: all 1s;
 }
+
+.notification__dark .notification__buttons > button {
+  background-color: var(--color-main-dark);
+}
+
+.notification__dark .notification__buttons > button:last-of-type {
+  background-color: var(--color-brown-dark);
+}
 .notification__buttons > button:last-of-type {
   background-color: var(--color-pink);
 }
@@ -49,6 +71,10 @@
 .notification__buttons > button:hover {
   background-color: var(--main-color);
 }
-.notification:hover .notification__buttons {
+.notification__dark .notification__buttons > button:hover {
+  background-color: var(--color-body-dark);
+}
+.notification:hover .notification__buttons,
+.notification__dark:hover .notification__buttons {
   display: flex;
 }

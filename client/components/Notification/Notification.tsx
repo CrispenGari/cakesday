@@ -14,6 +14,8 @@ import { BiBookReader } from "react-icons/bi";
 import { getAccessToken } from "../../state";
 import { Emoji } from "@crispengari/react-emojify";
 import { reactions } from "../../constants";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 
 interface Props {
   notification: Notification;
@@ -21,6 +23,7 @@ interface Props {
 const Notification: React.FC<Props> = ({
   notification: { user, ...notification },
 }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [read, { loading: reading }] = useMarkNotificationAsReadMutation({
     fetchPolicy: "network-only",
@@ -73,7 +76,11 @@ const Notification: React.FC<Props> = ({
     });
   };
   return (
-    <div className={styles.notification}>
+    <div
+      className={
+        theme === "dark" ? styles.notification__dark : styles.notification
+      }
+    >
       <NotificationModal
         isOpen={isOpen}
         notification={{

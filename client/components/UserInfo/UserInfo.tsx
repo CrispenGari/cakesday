@@ -1,6 +1,7 @@
 import { Avatar, Badge, Button } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   useFollowUserMutation,
   MeDocument,
@@ -8,6 +9,7 @@ import {
   User,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import { dateDiffFromToday, userBirthdayObject } from "../../utils";
 import BirthdayToday from "../BirthdayToday/BirthdayToday";
 import styles from "./UserInfo.module.css";
@@ -23,6 +25,7 @@ const UserInfo: React.FC<Props> = ({
   openFollowers,
   openFollowings,
 }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [followUser, { loading }] = useFollowUserMutation({
     refetchQueries: [
       { query: MeDocument },
@@ -44,7 +47,9 @@ const UserInfo: React.FC<Props> = ({
     },
   });
   return (
-    <div className={styles.user__info}>
+    <div
+      className={theme === "dark" ? styles.user__info__dark : styles.user__info}
+    >
       {userBirthdayObject(user?.profile?.bday).isBirthday ? (
         <BirthdayToday user={user} isMe={isMe} />
       ) : null}

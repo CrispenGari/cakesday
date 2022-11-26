@@ -1,9 +1,11 @@
-.user__info {
+.user__info,
+.user__info__dark {
   display: flex;
   flex-direction: column;
 }
 
-.user__info__container {
+.user__info__container,
+.user__info__dark > .user__info__container {
   margin: 10px;
   background-color: white;
   border-radius: 5px;
@@ -15,11 +17,18 @@
   align-items: center;
   position: relative;
 }
+.user__info__dark > .user__info__container {
+  background-color: var(--color-body-dark);
+}
 .user__info__avatar {
   width: 25px !important;
   height: 25px !important;
   margin-left: -8px !important;
   border: 1px solid var(--main-color) !important;
+}
+
+.user__info__dark .user__info__avatar {
+  border-color: var(--color-gray-dark);
 }
 
 .user__info__top__10 {
@@ -33,6 +42,10 @@
   color: var(--main-color);
 }
 
+.user__info__dark > .user__info__container > h3 {
+  color: var(--color-pink);
+}
+
 .user__info__container > h3 > span {
   position: absolute;
   font-size: 0.8rem;
@@ -40,11 +53,17 @@
   color: gray;
   text-decoration: underline;
 }
+.user__info__dark > .user__info__container > h3 > span {
+  color: var(--color-gray-dark);
+}
 
 .user__info__container > h1 {
   font-weight: bold;
   font-size: 1rem;
   color: var(--main-color);
+}
+.user__info__dark > .user__info__container > h1 {
+  color: white;
 }
 .user__info__container > h2,
 .user__info__container > h5,
@@ -53,7 +72,11 @@
   margin: 10px auto;
   font-size: 0.9rem;
 }
-
+.user__info__dark > .user__info__container > h2,
+.user__info__dark > .user__info__container > h4,
+.user__info__dark > .user__info__container > h5 {
+  color: white;
+}
 .user__info__container > h5 {
   font-weight: bold;
 }
@@ -69,6 +92,10 @@
   font-size: 0.9rem;
   color: gray;
 }
+
+.user__info__dark > .user__info__container > p {
+  color: var(--color-gray-dark);
+}
 .user__info__container > div:last-of-type {
   width: 100%;
 }
@@ -76,6 +103,9 @@
   color: var(--main-color);
   font-size: 0.9rem;
   font-weight: bold;
+}
+.user__info__dark > .user__info__container > div > p {
+  color: white;
 }
 .user__info__badge {
   position: absolute !important;
@@ -92,7 +122,9 @@
   color: white;
   width: 100px;
 }
-
+.user__info__dark > .user__info__container > button {
+  background-color: var(--color-brown-dark);
+}
 .user__info__container > h5 > span:hover {
   text-decoration: underline;
 }

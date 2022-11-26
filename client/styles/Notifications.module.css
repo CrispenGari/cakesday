@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
 }
-.notifications__main {
+.notifications__main,
+.notifications__main__dark {
   width: 100%;
   padding: 10px;
   margin: 0px auto;
@@ -19,8 +20,14 @@
   user-select: none;
   user-zoom: none;
 }
-
-.notifications__main > h1 {
+.notifications__main__dark {
+  background-color: var(--color-main-dark);
+}
+.notifications__main__dark {
+  color: white;
+}
+.notifications__main > h1,
+.notifications__main__dark > h1 {
   text-transform: uppercase;
   width: 100%;
   padding: 10px;
@@ -29,13 +36,15 @@
   user-zoom: none;
   border-bottom: 1px solid var(--color-purple);
 }
-.notifications__main > h2 {
+.notifications__main > h2,
+.notifications__main__dark > h2 {
   margin-top: 20px;
   text-align: center;
 }
 
 .notifications__main::-webkit-scrollbar,
-.notifications__main__none::-webkit-scrollbar {
+.notifications__main__none::-webkit-scrollbar,
+.notifications__main__dark::-webkit-scrollbar {
   width: 5px;
 }
 .notifications__main::-webkit-scrollbar-track,
@@ -51,6 +60,17 @@
   background: var(--color-purple);
   cursor: pointer;
 }
+
+.notifications__main__dark::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.notifications__main__dark::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.notifications__main__dark::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
+}
+
 .notifications__main__section {
   display: flex;
   width: 100%;
@@ -70,10 +90,13 @@
   flex: unset !important;
   border-bottom: unset !important;
   font-size: 0.8rem !important;
-  color: var(--main-color);
   font-weight: 600 !important;
   color: var(--color-purple);
 }
+
+.notifications__main__dark .notifications__main__section > span:first-of-type {
+  color: var(--color-brown-dark);
+}
 .notifications__main__section:first-of-type > span {
-  color: var(--color-pink);
+  color: var(--color-pink) !important;
 }
