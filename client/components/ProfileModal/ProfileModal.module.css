@@ -1,4 +1,5 @@
-.profile__modal__content {
+.profile__modal__content,
+.profile__modal__content__dark {
   padding: 10px;
   height: 80vh;
   display: flex;
@@ -6,23 +7,37 @@
   user-select: none;
   user-zoom: none;
 }
+.profile__modal__content__dark {
+  background-color: var(--color-body-dark) !important;
+}
 .profile__modal__content__container {
   flex: 1;
   overflow-y: scroll;
   padding: 10px 0;
 }
-.profile__modal__content > h1 {
+.profile__modal__content > h1,
+.profile__modal__content__dark > h {
   width: 100%;
   padding: 5px 0;
   border-bottom: 1px solid var(--color-purple);
   font-weight: 800 !important;
 }
-.profile__modal__content > button {
+.profile__modal__content__dark > h1 {
+  color: white;
+  border-bottom: 1px solid var(--color-gray-dark);
+}
+.profile__modal__content > button,
+.profile__modal__content__dark > button {
   margin: 5px;
   background-color: var(--color-purple);
   color: white;
 }
+.profile__modal__content__dark > button {
+  background-color: var(--color-pink);
+}
 
+.profile__modal__content__dark
+  .profile__modal__content__container::-webkit-scrollbar,
 .profile__modal__content__container::-webkit-scrollbar {
   width: 5px;
 }
@@ -36,10 +51,26 @@
   background: var(--color-purple);
   cursor: pointer;
 }
+
+.profile__modal__content__dark
+  .profile__modal__content__container::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.profile__modal__content__dark
+  .profile__modal__content__container::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.profile__modal__content__dark
+  .profile__modal__content__container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
+}
 .profile__modal__content__empty {
   flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
+}
+.profile__modal__content__dark .profile__modal__content__empty {
+  color: white;
 }

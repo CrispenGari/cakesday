@@ -1,0 +1,57 @@
+.user__result__dark,
+.user__result {
+  background-color: #f5f5f5;
+  margin: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.user__result__dark {
+  background-color: var(--color-main-dark);
+}
+.user__result__info > h1 {
+  color: var(--main-color);
+  font-weight: 600;
+}
+.user__result__dark .user__result__info > h1 {
+  color: white;
+}
+
+.user__result__info > p {
+  color: gray;
+  font-size: 0.8rem !important;
+  margin-top: 5px;
+}
+
+.user__result__dark .user__result__info > p {
+  color: var(--color-gray-dark);
+}
+.user__result__info > h1:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.user__result__top {
+  display: flex;
+  justify-content: space-between;
+}
+.user__result__info {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.user__result__info__badges {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: fit-content;
+}
+.user__result__info__badge {
+  background-color: var(--color-purple) !important;
+  color: white !important;
+  text-transform: lowercase !important;
+  margin-left: 3px !important;
+  font-weight: 400 !important;
+}

@@ -81,7 +81,7 @@
   color: var(--color-purple);
   font-size: 0.7rem;
 }
-.main__content > .main__content__cards > .main__header > p {
+.main__dark .main__content > .main__content__cards > .main__header > p {
   color: var(--color-gray-dark);
   font-size: 0.7rem;
 }

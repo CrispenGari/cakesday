@@ -1,6 +1,7 @@
 import { Button, Avatar } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   FriendsSuggestionsDocument,
   MeDocument,
@@ -8,6 +9,7 @@ import {
   useFollowUserMutation,
 } from "../../../graphql/generated/graphql";
 import { getAccessToken } from "../../../state";
+import { StateType } from "../../../types";
 import { userBirthdayObject } from "../../../utils";
 import styles from "./NewFollower.module.css";
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 }
 const NewFollower: React.FC<Props> = ({ notification, onClose }) => {
   const router = useRouter();
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [followUser, { loading, data }] = useFollowUserMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -55,7 +58,11 @@ const NewFollower: React.FC<Props> = ({ notification, onClose }) => {
     };
   }, [data, onClose]);
   return (
-    <div className={styles.new__follower}>
+    <div
+      className={
+        theme === "dark" ? styles.new__follower__dark : styles.new__follower
+      }
+    >
       <h1>{notification.message}</h1>
       <div className={styles.new__follower__user}>
         <Avatar

@@ -87,7 +87,8 @@
   margin: 20px 5px;
 }
 @media only screen and (max-width: 1000px) {
-  .sidebar__left {
+  .sidebar__left,
+  .sidebar__left__dark {
     display: none;
   }
 }

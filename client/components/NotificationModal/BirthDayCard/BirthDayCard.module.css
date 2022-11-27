@@ -1,13 +1,21 @@
-.birthday__card {
+.birthday__card,
+.birthday__card__dark {
   display: flex;
   flex-direction: column;
   padding: 10px 0;
 }
-.birthday__card > h1 {
+.birthday__card__dark {
+  background-color: var(--color-body-dark) !important;
+}
+.birthday__card > h1,
+.birthday__card__dark > h1 {
   color: var(--color-purple);
   text-align: center;
   margin: 5px 0;
   font-weight: 600;
+}
+.birthday__card__dark > h1 {
+  color: white;
 }
 .birthday__card__buttons > p {
   color: white;
@@ -108,6 +116,7 @@
   background-color: var(--color-pink) !important;
 }
 
+.birthday__card__dark > .birthday_card__user,
 .birthday_card__user {
   display: flex;
   justify-content: space-between;
@@ -124,13 +133,20 @@
   margin-left: 10px;
 }
 
+.birthday__card__dark > .birthday_card__user > .birthday_card__user__info > h1,
 .birthday_card__user__info > h1 {
   font-weight: 600;
   color: var(--main-color);
 }
+.birthday__card__dark > .birthday_card__user > .birthday_card__user__info > h1 {
+  color: white;
+}
 .birthday_card__user__info > p {
   color: gray;
   font-size: 0.8rem !important;
+}
+.birthday__card__dark > .birthday_card__user > .birthday_card__user__info > p {
+  color: var(--color-gray-dark);
 }
 .birthday_card__user__avatar {
   width: 50px !important;

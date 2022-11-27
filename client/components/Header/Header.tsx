@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Header.module.css";
-import { Image } from "@chakra-ui/react";
+import { Image, useDisclosure } from "@chakra-ui/react";
 import { AiFillSetting, AiFillBell } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/react";
 import { HeaderIconButton } from "../../components";
@@ -16,9 +16,13 @@ import { client } from "../../providers/ApolloGraphQLProvider/ApolloGraphQLProvi
 import { setNotifications, setTheme } from "../../actions";
 import { StateType } from "../../types";
 import { ColorThemes } from "../../constants";
+import { MdPersonSearch } from "react-icons/md";
+import SearchUsersModal from "../SearchUsersModal/SearchUsersModal";
 interface Props {}
 const Header: React.FC<Props> = ({}) => {
   const { notifications } = useSelector((state: StateType) => state);
+
+  const { onOpen, onClose, isOpen } = useDisclosure();
   const { data: me } = useMeQuery({
     fetchPolicy: "network-only",
   });
@@ -79,7 +83,15 @@ const Header: React.FC<Props> = ({}) => {
       <div className={styles.header__left} onClick={() => router.push("/")}>
         <Image src="/header-logo.png" alt="header-logo" />
       </div>
+
+      <SearchUsersModal onClose={onClose} isOpen={isOpen} />
       <div className={styles.header__right}>
+        <HeaderIconButton
+          title="search"
+          Icon={MdPersonSearch}
+          onClick={onOpen}
+          active={false}
+        />
         <HeaderIconButton
           title="settings"
           Icon={AiFillSetting}

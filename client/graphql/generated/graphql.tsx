@@ -474,6 +474,7 @@ export type Query = {
   helloWorld: Scalars['String'];
   me?: Maybe<User>;
   myNotifications: Array<Notification>;
+  search?: Maybe<Array<User>>;
   suggestions: FriendSuggestionObjectType;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
@@ -484,6 +485,11 @@ export type Query = {
 
 export type QueryMyNotificationsArgs = {
   input: MyNotificationInputType;
+};
+
+
+export type QuerySearchArgs = {
+  input: UserSearchInputType;
 };
 
 
@@ -618,6 +624,10 @@ export type UserBirthdayInputType = {
 
 export type UserInputType = {
   id: Scalars['Int'];
+};
+
+export type UserSearchInputType = {
+  searchTerm: Scalars['String'];
 };
 
 export type VerifyEmailInput = {
@@ -878,6 +888,13 @@ export type MyNotificationsQueryVariables = Exact<{
 
 
 export type MyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'Notification', id: number, type: string, message: string, fromId: number, fromUsername: string, fromEmail: string, fromPhotoURL?: string | null, fromBDay: string, read: boolean, fromBannerURL?: string | null, fromGender: string, bdayCard?: string | null, reaction?: string | null, createdAt: string, updatedAt: string, bdayMessage?: string | null, createdAtFormattedForMoment: string, updatedAtFormattedForMoment: string, user: { __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string } }> };
+
+export type SearchUserQueryVariables = Exact<{
+  input: UserSearchInputType;
+}>;
+
+
+export type SearchUserQuery = { __typename?: 'Query', search?: Array<{ __typename?: 'User', username: string, id: number, email: string, isLoggedIn: boolean, confirmed: boolean, createdAt: string, updatedAt: string, createdAtFormattedForMoment: string, updatedAtFormattedForMoment: string, ignoredUsers?: Array<{ __typename?: 'IgnoredUser', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, settings?: { __typename?: 'Settings', id: number, createdAt: string, updatedAt: string, common?: { __typename?: 'CommonSettings', id: number, theme: string, emailSubscriptions: boolean, createdAt: string, updatedAt: string } | null, privacy?: { __typename?: 'PrivacySettings', id: number, myProfile: string, myBirthday: string, sendBirthDayWishes: string, shareBirthDayCard: string, followersFollowings: string, createdAt: string, updatedAt: string } | null, notifications?: { __typename?: 'NotificationsSettings', id: number, onNewUserAccountCreation: boolean, onNewFriends: boolean, onFriendProfileUpdate: boolean, onFriendBirthday: boolean, onBirthDayWish: boolean, onNewFollowers: boolean, createdAt: string, updatedAt: string } | null } | null, profile?: { __typename?: 'Profile', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified?: boolean | null, gender: string, createdAt: string, updatedAt: string } | null, followers?: Array<{ __typename?: 'Follower', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null, followings?: Array<{ __typename?: 'Following', id: number, email: string, username: string, photoURL?: string | null, bannerURL?: string | null, bio?: string | null, bday: string, verified: boolean, gender: string, createdAt: string, updatedAt: string }> | null }> | null };
 
 export type UserByIdQueryVariables = Exact<{
   input: UserInputType;
@@ -2208,6 +2225,41 @@ export function useMyNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type MyNotificationsQueryHookResult = ReturnType<typeof useMyNotificationsQuery>;
 export type MyNotificationsLazyQueryHookResult = ReturnType<typeof useMyNotificationsLazyQuery>;
 export type MyNotificationsQueryResult = Apollo.QueryResult<MyNotificationsQuery, MyNotificationsQueryVariables>;
+export const SearchUserDocument = gql`
+    query SearchUser($input: UserSearchInputType!) {
+  search(input: $input) {
+    ...UserFragment
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useSearchUserQuery__
+ *
+ * To run a query within a React component, call `useSearchUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchUserQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSearchUserQuery(baseOptions: Apollo.QueryHookOptions<SearchUserQuery, SearchUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchUserQuery, SearchUserQueryVariables>(SearchUserDocument, options);
+      }
+export function useSearchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchUserQuery, SearchUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchUserQuery, SearchUserQueryVariables>(SearchUserDocument, options);
+        }
+export type SearchUserQueryHookResult = ReturnType<typeof useSearchUserQuery>;
+export type SearchUserLazyQueryHookResult = ReturnType<typeof useSearchUserLazyQuery>;
+export type SearchUserQueryResult = Apollo.QueryResult<SearchUserQuery, SearchUserQueryVariables>;
 export const UserByIdDocument = gql`
     query UserById($input: UserInputType!) {
   user(input: $input) {

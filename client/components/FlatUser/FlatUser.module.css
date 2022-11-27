@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .flat__user__dark {
   background-color: var(--color-body-dark);
 }
@@ -30,10 +31,19 @@
   font-weight: 600;
   color: var(--main-color);
 }
+.flat__user__dark .flat__user__info__small > h1,
+.flat__user__dark .flat__user__info > h1 {
+  color: white !important;
+}
 .flat__user__info > p,
 .flat__user__info__small > p {
   color: gray;
   font-size: 0.8rem !important;
+}
+
+.flat__user__dark .flat__user__info__small > p,
+.flat__user__dark .flat__user__info > p {
+  color: var(--color-gray-dark) !important;
 }
 .flat__user__info__small > h1 {
   font-size: 0.9rem;

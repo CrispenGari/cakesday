@@ -1,13 +1,8 @@
-import {
-  Avatar,
-  Button,
-  Image,
- 
-  useToast,
-} from "@chakra-ui/react";
+import { Avatar, Button, Image, useToast } from "@chakra-ui/react";
 import { Emoji } from "@crispengari/react-emojify";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { freeCards, reactions } from "../../../constants";
 import {
   MyNotificationsDocument,
@@ -15,8 +10,8 @@ import {
   useReactToBirthDayCardMutation,
 } from "../../../graphql/generated/graphql";
 import { getAccessToken } from "../../../state";
-import { NotificationType } from "../../../types";
-import {  userBirthdayObject } from "../../../utils";
+import { NotificationType, StateType } from "../../../types";
+import { userBirthdayObject } from "../../../utils";
 import Drops from "../../Drops/Drops";
 import styles from "./BirthDayCard.module.css";
 interface Props {
@@ -25,6 +20,7 @@ interface Props {
 }
 const BirthDayCard: React.FC<Props> = ({ notification, onClose }) => {
   const [openEmotions, setOpenEmotions] = useState(false);
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [changed, setChanged] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState(reactions[0]);
 
@@ -105,7 +101,11 @@ const BirthDayCard: React.FC<Props> = ({ notification, onClose }) => {
     (card) => card.cardType === notification.bdayCard
   )!;
   return (
-    <div className={styles.birthday__card}>
+    <div
+      className={
+        theme === "dark" ? styles.birthday__card__dark : styles.birthday__card
+      }
+    >
       <h1>{notification.message}</h1>
       <div className={styles.birthday__card__container}>
         <div className={styles.birthday__card__preview}>

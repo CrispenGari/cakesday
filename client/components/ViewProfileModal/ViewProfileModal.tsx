@@ -28,14 +28,14 @@ const ViewProfileModal: React.FC<Props> = ({
             : styles.view__profile__modal
         }
       >
-        <h1>{`${profile.username}'s ${imageType} image.`}</h1>
+        <h1>{`${profile?.username}'s ${imageType} image.`}</h1>
         {imageType === "avatar" ? (
-          profile.photoURL ? (
-            <Image alt="profile" src={profile.photoURL} />
+          profile?.photoURL ? (
+            <Image alt="profile" src={profile?.photoURL} />
           ) : (
-            <div>No profile avatar for {profile.username}.</div>
+            <div>No profile avatar for {profile?.username}.</div>
           )
-        ) : profile.bannerURL ? (
+        ) : profile?.bannerURL ? (
           <Image alt="profile" src={profile.bannerURL} />
         ) : (
           <div>No banner for {profile.username}.</div>

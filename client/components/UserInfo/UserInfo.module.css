@@ -122,8 +122,8 @@
   color: white;
   width: 100px;
 }
-.user__info__dark > .user__info__container > button {
-  background-color: var(--color-brown-dark);
+.user__info__dark .user__info__container > button {
+  background-color: var(--color-brown-dark) !important;
 }
 .user__info__container > h5 > span:hover {
   text-decoration: underline;

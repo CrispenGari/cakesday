@@ -1,19 +1,29 @@
-.new__friend {
+.new__friend,
+.new__friend__dark {
   display: flex;
   flex-direction: column;
   padding: 10px 0;
 }
-.new__friend > h1 {
+.new__friend > h1,
+.new__friend__dark > h1 {
   color: var(--color-purple);
   text-align: center;
   margin: 5px 0;
   font-weight: 600;
 }
-.new__friend > button {
+.new__friend__dark > h1 {
+  color: white;
+}
+.new__friend > button,
+.new__friend__dark > button {
   color: white;
   margin: 10px 0;
   font-weight: 0.8rem !important;
   background-color: var(--main-color);
+}
+.new__friend__dark > button {
+  background-color: var(--color-brown-dark);
+  color: white;
 }
 .new__friend__user {
   display: flex;
@@ -35,9 +45,15 @@
   font-weight: 600;
   color: var(--main-color);
 }
+.new__friend__dark .new__friend__user__info > h1 {
+  color: white;
+}
 .new__friend__user__info > p {
   color: gray;
   font-size: 0.8rem !important;
+}
+.new__friend__dark .new__friend__user__info > p {
+  color: var(--color-gray-dark);
 }
 .new__friend__user__avatar {
   width: 80px !important;
@@ -52,7 +68,12 @@
   height: 35px;
   text-transform: lowercase;
 }
-
+.new__friend__dark .new__friend__user__info > button {
+  background-color: var(--color-brown-dark);
+}
 .new__friend__user__info > button:hover {
   background-color: var(--main-color);
+}
+.new__friend__dark .new__friend__user__info > button:hover {
+  background-color: var(--color-main-dark);
 }

@@ -1,5 +1,6 @@
 import { Modal, ModalContent, Button } from "@chakra-ui/react";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Follower,
   FriendsSuggestionsDocument,
@@ -9,6 +10,7 @@ import {
   useUnFollowUserMutation,
 } from "../../graphql/generated/graphql";
 import { getAccessToken } from "../../state";
+import { StateType } from "../../types";
 import FlatUser from "../FlatUser/FlatUser";
 import styles from "./ProfileModal.module.css";
 
@@ -29,6 +31,8 @@ const ProfileModal: React.FC<Props> = ({
   data: { title, isMe, username, users },
   btnTitle,
 }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
+
   const [unFollowUser, { loading }] = useUnFollowUserMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -83,7 +87,13 @@ const ProfileModal: React.FC<Props> = ({
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalContent className={styles.profile__modal__content}>
+      <ModalContent
+        className={
+          theme === "dark"
+            ? styles.profile__modal__content__dark
+            : styles.profile__modal__content
+        }
+      >
         <h1>{`${isMe ? "Your " : username} ${title}`}</h1>
 
         {users.length === 0 ? (

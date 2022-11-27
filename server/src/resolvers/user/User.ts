@@ -6,6 +6,7 @@ import {
   FieldResolver,
   InputType,
   Int,
+  ObjectType,
   Query,
   Resolver,
   Root,
@@ -18,6 +19,22 @@ export class UserInputType {
   @Field(() => Int)
   id: number;
 }
+
+@InputType()
+export class UserSearchInputType {
+  @Field(() => String)
+  searchTerm: string;
+}
+
+@ObjectType()
+export class UserMeta {
+  @Field(() => Boolean)
+  isFollowing: boolean;
+  @Field(() => Boolean)
+  weAreFiends: boolean;
+  @Field(() => Boolean)
+  iMFollowing: boolean;
+}
 @Resolver(() => User)
 export class UserResolver {
   @FieldResolver()
@@ -27,6 +44,49 @@ export class UserResolver {
   @FieldResolver()
   updatedAtFormattedForMoment(@Root() { updatedAt }: User): string {
     return updatedAt.toString();
+  }
+
+  @Query(() => [User], { nullable: true })
+  async search(
+    @Arg("input", () => UserSearchInputType)
+    { searchTerm }: UserSearchInputType,
+    @Ctx() { req }: ContextType
+  ): Promise<User[] | undefined> {
+    const authorization = req.headers["authorization"];
+    if (!authorization) return undefined;
+    try {
+      const token = authorization.split(" ")[1];
+      const payload: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRETE);
+      const user = await dataSource.getRepository(User).findOne({
+        where: {
+          id: payload.userId,
+        },
+        relations: {
+          followers: true,
+          followings: true,
+          profile: true,
+        },
+      });
+      if (!user) {
+        return undefined;
+      }
+      if (user.tokenVersion !== payload.tokenVersion) {
+        return undefined;
+      }
+      const users = await dataSource
+        .getRepository(User)
+        .createQueryBuilder("user")
+        .where("user.username like :username", {
+          username: `%${searchTerm.trim().toLocaleLowerCase()}%`,
+        })
+        .leftJoinAndSelect("user.profile", "profile")
+        .leftJoinAndSelect("user.followings", "followings")
+        .leftJoinAndSelect("user.followers", "followers")
+        .getMany();
+      return users.filter((u) => u.id !== user.id).filter((u) => u.confirmed);
+    } catch (error) {
+      return undefined;
+    }
   }
 
   @Query(() => [User], { nullable: true })

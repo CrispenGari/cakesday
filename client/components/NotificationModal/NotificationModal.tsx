@@ -10,6 +10,8 @@ import NewFollower from "./NewFollower/NewFollower";
 import { getAccessToken } from "../../state";
 import BirthDayCard from "./BirthDayCard/BirthDayCard";
 import NewFriend from "./NewFriend/NewFriend";
+import { useSelector } from "react-redux";
+import { StateType } from "../../types";
 
 interface Props {
   onClose: () => void;
@@ -21,6 +23,7 @@ const NotificationModal: React.FC<Props> = ({
   onClose,
   notification,
 }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [markAsRead, { data }] = useMarkNotificationAsReadMutation({
     fetchPolicy: "network-only",
     refetchQueries: [
@@ -81,7 +84,13 @@ const NotificationModal: React.FC<Props> = ({
   };
   return (
     <Modal isOpen={isOpen} onClose={closeModalAndReadNotification}>
-      <ModalContent className={styles.notification__modal__content}>
+      <ModalContent
+        className={
+          theme === "dark"
+            ? styles.notification__modal__content__dark
+            : styles.notification__modal__content
+        }
+      >
         <h1>{notification.type.split("_").join(" ")}</h1>
         <div className={styles.notification__modal__content__container}>
           {renderComponent[notification.type]}

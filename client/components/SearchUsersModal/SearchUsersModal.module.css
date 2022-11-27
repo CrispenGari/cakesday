@@ -1,0 +1,77 @@
+.search__user__modal__content,
+.search__user__modal__content__dark {
+  padding: 10px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  user-zoom: none;
+}
+.search__user__modal__content__dark {
+  background-color: var(--color-body-dark) !important;
+}
+.search__user__modal__content__dark > form input {
+  color: white;
+}
+.search__user__modal__content__container {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 10px 0;
+}
+.search__user__modal__content > button,
+.search__user__modal__content__dark > button {
+  margin: 5px;
+  background-color: var(--color-purple);
+  color: white;
+}
+.search__user__modal__content__dark > button {
+  background-color: var(--color-pink);
+}
+
+.search__user__modal__content__dark
+  > .search__user__modal__content__container::-webkit-scrollbar,
+.search__user__modal__content__container::-webkit-scrollbar {
+  width: 5px;
+}
+.search__user__modal__content__container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.search__user__modal__content__container::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+}
+.search__user__modal__content__container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple);
+  cursor: pointer;
+}
+
+.search__user__modal__content__dark
+  > .search__user__modal__content__container::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.search__user__modal__content__dark
+  > .search__user__modal__content__container::-webkit-scrollbar-thumb {
+  background: var(--color-brown-dark) !important;
+}
+.search__user__modal__content__dark
+  > .search__user__modal__content__container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink) !important;
+}
+
+.search__user__modal__content__container__searching,
+.search__user__modal__content__container__no_users {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  user-zoom: none;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+
+.search__user__modal__content__dark
+  .search__user__modal__content__container__searching,
+.search__user__modal__content__dark
+  .search__user__modal__content__container__no_users {
+  color: white !important;
+}

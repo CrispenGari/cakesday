@@ -1,7 +1,9 @@
 import { Button, Avatar } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Notification } from "../../../graphql/generated/graphql";
+import { StateType } from "../../../types";
 import { userBirthdayObject } from "../../../utils";
 import styles from "./NewFriend.module.css";
 interface Props {
@@ -9,8 +11,13 @@ interface Props {
 }
 const NewFriend: React.FC<Props> = ({ notification }) => {
   const router = useRouter();
+  const theme = useSelector(({ theme }: StateType) => theme);
   return (
-    <div className={styles.new__friend}>
+    <div
+      className={
+        theme === "dark" ? styles.new__friend__dark : styles.new__friend
+      }
+    >
       <h1>{notification.message}</h1>
       <div className={styles.new__friend__user}>
         <Avatar

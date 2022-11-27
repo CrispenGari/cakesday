@@ -1,14 +1,15 @@
-.free__card {
+.free__card,
+.free__card__dark {
   background-color: var(--color-brown);
   border-radius: 5px;
   margin-bottom: 5px;
-
   height: 350px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   border: 1px solid lightblue;
 }
+
 .free__card__preview {
   position: relative;
   flex: 1;

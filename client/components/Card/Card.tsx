@@ -14,6 +14,7 @@ import { StateType } from "../../types";
 import { userBirthdayObject } from "../../utils";
 import CardsModal from "../CardsModal/CardsModal";
 import Drops from "../Drops/Drops";
+import ViewProfileModal from "../ViewProfileModal/ViewProfileModal";
 import styles from "./Card.module.css";
 interface Props {
   user: User;
@@ -21,6 +22,11 @@ interface Props {
 const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onClose: onCloseProfileModal,
+  } = useDisclosure();
   const theme = useSelector(({ theme }: StateType) => theme);
 
   const [ignore, { loading }] = useIgnoreBirthdayMutation({
@@ -68,6 +74,14 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
           } as any
         }
       />
+      {profile && (
+        <ViewProfileModal
+          profile={profile}
+          isOpen={isOpenProfileModal}
+          onClose={onCloseProfileModal}
+          imageType="avatar"
+        />
+      )}
       <Drops>
         <div
           className={
@@ -88,10 +102,12 @@ const Card: React.FC<Props> = ({ user: { profile, ...user } }) => {
           </div>
           <div className={styles.card__center}>
             <Avatar
+              style={{ color: "pointer" }}
               title={user?.username}
               className={styles.card__avatar}
               name={user?.username}
               src={profile?.photoURL ?? ""}
+              onClick={onOpenProfileModal}
             />
           </div>
           <h3>

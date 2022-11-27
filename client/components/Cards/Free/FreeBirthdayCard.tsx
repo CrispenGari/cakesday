@@ -1,5 +1,6 @@
 import { Button, Image } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FreeCardType } from "../../../constants";
 import {
   TodaysBirthDaysDocument,
@@ -8,6 +9,7 @@ import {
   useSendBirthdayCardMutation,
 } from "../../../graphql/generated/graphql";
 import { getAccessToken } from "../../../state";
+import { StateType } from "../../../types";
 import Drops from "../../Drops/Drops";
 import styles from "./FreeBirthdayCard.module.css";
 interface Props {
@@ -20,6 +22,7 @@ const FreeBirthdayCard: React.FC<Props> = ({
   user,
   onClose,
 }) => {
+  const theme = useSelector(({ theme }: StateType) => theme);
   const [message, setMessage] = useState(`Happy birthday ${user.username}!!`);
   const [sendCard, { loading, data }] = useSendBirthdayCardMutation({
     fetchPolicy: "network-only",
@@ -60,7 +63,9 @@ const FreeBirthdayCard: React.FC<Props> = ({
   }, [data, onClose]);
 
   return (
-    <div className={styles.free__card}>
+    <div
+      className={theme === "dark" ? styles.free__card__dark : styles.free__card}
+    >
       <div className={styles.free__card__preview}>
         <Drops>
           <Image
