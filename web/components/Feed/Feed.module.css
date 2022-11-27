@@ -6,6 +6,7 @@
   flex-direction: column;
   overflow-y: hidden;
 }
+
 .feed__main,
 .feed__dark {
   width: 100%;
