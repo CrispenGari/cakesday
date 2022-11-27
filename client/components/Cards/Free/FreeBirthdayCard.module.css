@@ -34,14 +34,27 @@
   justify-content: flex-end;
 }
 
+.free__card__dark .free__card__buttons {
+  background-color: var(--color-main-dark);
+}
+
+.free__card__dark .free__card__buttons > button,
 .free__card__buttons > button {
   margin-right: 5px;
   color: white;
   background-color: var(--color-pink);
   transition: all 1s;
 }
+
+.free__card__dark .free__card__buttons > button {
+  background-color: var(--color-brown-dark);
+}
 .free__card__buttons > button:hover {
   background-color: var(--main-color);
+}
+
+.free__card__dark .free__card__buttons > button:hover {
+  background-color: var(--color-pink);
 }
 .free__card__buttons > textarea {
   resize: none;
@@ -52,6 +65,12 @@
   padding: 5px 10px;
   height: 50px;
   font-size: 0.9rem;
+  border-radius: 5px;
+}
+.free__card__dark .free__card__buttons > textarea {
+  color: white;
+  background-color: inherit;
+  border: 1px solid var(--color-gray-dark);
 }
 .free__card__preview > h1 {
   color: var(--main-color);
