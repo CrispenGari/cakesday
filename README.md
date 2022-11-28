@@ -8,16 +8,16 @@
 
 ### server
 
-A graphql api build using `express`.
+A graphql api built using `express`.
 
 ### mobile
 
-A mobile version for `cakesday` app build using `react-native`.
+A mobile version for `cakesday` app built using `react-native`.
 
 ### web
 
-A web version of `cakesday` app buid using `next.js`.
+A web version of `cakesday` app built using `next.js`.
 
 ### desktop
 
-A desktop version of `cakesday` app, build using `electron`.
+A desktop version of `cakesday` app, built using `electron`.
