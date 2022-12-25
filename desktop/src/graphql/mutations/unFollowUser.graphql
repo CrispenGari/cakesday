@@ -1,0 +1,9 @@
+mutation UnFollowUser($input: FollowUserInputType!) {
+  unFollowUser(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

@@ -1,0 +1,14 @@
+fragment SettingsFragment on Settings {
+  id
+  createdAt
+  updatedAt
+  common {
+    ...CommonSettingsFragment
+  }
+  privacy {
+    ...PrivacySettingsFragment
+  }
+  notifications {
+    ...NotificationSettingsFragment
+  }
+}

@@ -1,0 +1,27 @@
+mutation UpdateProfileOrBanner($input: UpdateProfileSettingInputType!) {
+  updateAvatarOrBanner(input: $input) {
+    error {
+      message
+      field
+    }
+    accessToken
+    user {
+      username
+      id
+      email
+      isLoggedIn
+      confirmed
+      profile {
+        id
+        username
+        email
+        bannerURL
+        bday
+        verified
+        bio
+        photoURL
+        verified
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+mutation ChangeEmail($input: ChangeEmailInputType!) {
+  changeEmail(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

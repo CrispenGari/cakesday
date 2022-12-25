@@ -1,0 +1,7 @@
+fragment CommonSettingsFragment on CommonSettings {
+  id
+  theme
+  emailSubscriptions
+  createdAt
+  updatedAt
+}

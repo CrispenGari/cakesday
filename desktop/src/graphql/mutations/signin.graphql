@@ -1,0 +1,13 @@
+mutation SignIn($input: SignInInput!) {
+  signIn(input: $input) {
+    user {
+      id
+      username
+    }
+    accessToken
+    error {
+      field
+      message
+    }
+  }
+}

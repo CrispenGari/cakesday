@@ -1,0 +1,1 @@
+declare const api: ApiType;

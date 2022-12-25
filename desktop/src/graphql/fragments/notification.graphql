@@ -1,0 +1,22 @@
+fragment NotificationFragment on Notification {
+  id
+  type
+  message
+  fromId
+  fromUsername
+  fromEmail
+  fromPhotoURL
+  fromBDay
+  read
+  fromBannerURL
+  fromGender
+  bdayCard
+  reaction
+  fromBDay
+  createdAt
+  updatedAt
+  bdayMessage
+  reaction
+  createdAtFormattedForMoment
+  updatedAtFormattedForMoment
+}

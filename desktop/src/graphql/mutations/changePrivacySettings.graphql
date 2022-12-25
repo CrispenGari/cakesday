@@ -1,0 +1,9 @@
+mutation UpdatePrivacySettings($input: ChangePrivacySettingsInputType!) {
+  updatePrivacySettings(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

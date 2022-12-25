@@ -1,0 +1,10 @@
+fragment PrivacySettingsFragment on PrivacySettings {
+  id
+  myProfile
+  myBirthday
+  sendBirthDayWishes
+  shareBirthDayCard
+  followersFollowings
+  createdAt
+  updatedAt
+}

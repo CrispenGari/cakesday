@@ -1,0 +1,9 @@
+mutation VerifyChangeEmail($input: VerifyNewEmailInputType!) {
+  verifyNewEmail(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

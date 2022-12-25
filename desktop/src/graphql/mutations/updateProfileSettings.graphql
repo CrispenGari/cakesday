@@ -1,0 +1,9 @@
+mutation UpdateProfileSettings($input: UpdateProfileSettingInputType!) {
+  updateProfileSettings(input: $input) {
+    success
+    message {
+      field
+      message
+    }
+  }
+}

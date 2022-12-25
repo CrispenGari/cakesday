@@ -1,0 +1,14 @@
+query MyNotifications($input: MyNotificationInputType!) {
+  myNotifications(input: $input) {
+    ...NotificationFragment
+    user {
+      username
+      id
+      email
+      isLoggedIn
+      confirmed
+      createdAt
+      updatedAt
+    }
+  }
+}

@@ -1,0 +1,16 @@
+mutation VerifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    user {
+      id
+      username
+      email
+      confirmed
+      isLoggedIn
+    }
+    accessToken
+    error {
+      message
+      field
+    }
+  }
+}
