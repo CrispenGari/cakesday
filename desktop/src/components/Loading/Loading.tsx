@@ -1,10 +1,10 @@
 import React from "react";
-
+import "./Loading.css";
 interface Props {}
 const Loading: React.FC<Props> = () => {
   return (
-    <div className="Loading">
-      <h1>Hello from Loading</h1>
+    <div className="loading">
+      <div></div>
     </div>
   );
 };

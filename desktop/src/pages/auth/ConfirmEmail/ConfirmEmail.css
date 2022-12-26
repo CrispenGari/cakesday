@@ -1,0 +1,91 @@
+.confirm__email {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  user-zoom: none;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+.confirm__email > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  max-width: 500px;
+  margin: 0px auto;
+  background-color: white;
+}
+.confirm__email > form > img {
+  -webkit-user-drag: none;
+  width: 100px;
+}
+.confirm__email > form > button {
+  width: 100%;
+  color: white;
+}
+.confirm__email > form > button:first-of-type {
+  background-color: var(--main-color);
+}
+.confirm__email > form > button:last-of-type {
+  background-color: var(--color-pink);
+}
+.confirm__email > form > h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: flex-start;
+  margin: 10px 0;
+}
+@media only screen and (max-width: 768px) {
+  .confirm__email {
+    background-color: white;
+  }
+}
+.confirm__email > form > input {
+  background-color: #f5f5f5;
+  outline: none;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  width: 100%;
+}
+.confirm__email > form > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 0.8rem !important;
+  color: gray;
+}
+.confirm__email > form > p:first-of-type {
+  text-align: center;
+  color: gray;
+  font-size: 0.8rem;
+}
+.confirm__email > form > div > span {
+  border-bottom: 2px solid lightgray;
+  flex: 1;
+}
+.confirm__email > form > div > h1 {
+  margin: 0 10px;
+}
+.confirm__email > form > p.confirm__email__clickable {
+  align-self: flex-end;
+  margin: 5px 0;
+  color: cornflowerblue;
+  cursor: pointer;
+}
+.confirm__email > form > p.confirm__email__error {
+  text-align: center;
+  margin: 5px 0;
+  color: red;
+  font-size: 0.9rem;
+}
+.confirm__email > form > p {
+  text-align: center;
+}

@@ -1,0 +1,144 @@
+import { Button, Image } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
+import { AiOutlineCamera } from "react-icons/ai";
+import { Avatar } from "@chakra-ui/react";
+import { Footer } from "../../../components";
+import { useUpdateProfileOrBannerMutation } from "../../../graphql/generated/graphql";
+import { getAccessToken, setAccessToken } from "../../../state";
+import { getBase64 } from "../../../utils";
+import { useNavigate } from "react-router-dom";
+import "./Profile.css";
+interface Props {}
+const Profile: React.FC<Props> = () => {
+  const [bannerImage, setBannerImage] = useState<any>(undefined);
+  const [bannerImagePreview, setBannerImagePreview] = useState<string>("");
+
+  const [profileImagePreview, setProfileImagePreview] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<any>(undefined);
+
+  const [updateProfile, { data, loading: l }] =
+    useUpdateProfileOrBannerMutation({ fetchPolicy: "network-only" });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await updateProfile({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+          bannerImage,
+          avatarImage: profileImage,
+        },
+      },
+    });
+  };
+
+  const skip = async () => {
+    await updateProfile({
+      variables: {
+        input: {
+          accessToken: getAccessToken() as any,
+        },
+      },
+    });
+  };
+
+  const handleFileChange = async (file: any, field: "banner" | "avatar") => {
+    if (file) {
+      setLoading(true);
+      const _file = await getBase64(file);
+      field === "avatar"
+        ? setProfileImagePreview(_file as any)
+        : setBannerImagePreview(_file as any);
+      field === "avatar" ? setProfileImage(file) : setBannerImage(file);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(l);
+  }, [l]);
+
+  useEffect(() => {
+    if (!loading && data?.updateAvatarOrBanner.accessToken) {
+      setAccessToken(data?.updateAvatarOrBanner.accessToken);
+      setError("");
+      if (data?.updateAvatarOrBanner.accessToken) {
+        navigate("/", { replace: true });
+      }
+    } else {
+      if (data?.updateAvatarOrBanner.error) {
+        setError(data.updateAvatarOrBanner.error.message);
+      } else {
+        setError("");
+      }
+    }
+  }, [data, loading, navigate]);
+  return (
+    <div className="profile">
+      <form onSubmit={onSubmit}>
+        <Image src="/main-logo.png" alt="main-logo" />
+        <h1>Profile</h1>
+        <div
+          className="profile__preview"
+          style={{
+            backgroundImage: `url(${bannerImagePreview})`,
+          }}
+        >
+          <div className="profile__image__container">
+            <Avatar
+              className="profile__image"
+              name="Profile Image"
+              src={profileImagePreview}
+              background="lightgray"
+            />
+
+            <div>
+              <FileUploader
+                handleChange={(files: any) => handleFileChange(files, "avatar")}
+                name="file"
+                types={["jpeg", "png", "jpg", "webp", "gif"]}
+                multiple={false}
+                children={<AiOutlineCamera />}
+              />
+            </div>
+          </div>
+          <div className="profile__preview__banner__btn">
+            <FileUploader
+              handleChange={(files: any) => handleFileChange(files, "banner")}
+              name="file"
+              types={["jpeg", "png", "jpg", "webp", "gif"]}
+              multiple={false}
+              children={<AiOutlineCamera />}
+            />
+          </div>
+        </div>
+        <p>{error}</p>
+        <div>
+          <Button type="submit" isLoading={loading}>
+            Next
+          </Button>
+          <Button type="button" isLoading={loading} onClick={skip}>
+            Skip
+          </Button>
+        </div>
+
+        <div>
+          <span></span>
+          <h1>Already Have an Account?</h1>
+          <span></span>
+        </div>
+        <Button disabled={loading} onClick={() => navigate("/auth/signin")}>
+          Sign In
+        </Button>
+      </form>
+      <Footer />
+    </div>
+  );
+};
+
+export default Profile;

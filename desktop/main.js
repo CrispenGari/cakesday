@@ -4,9 +4,12 @@ const isDev = require("electron-is-dev");
 
 const createWindow = () => {
   const win = new electron.BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     icon: path.join(__dirname, "/public/favicon.ico"),
+    autoHideMenuBar: true,
+    show: false,
+    center: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,
@@ -20,6 +23,8 @@ const createWindow = () => {
       : `file://${path.join(__dirname, "./build/index.html")}`
   );
 
+  // win.maximize();
+  win.show();
   win.webContents.openDevTools({ mode: "bottom" });
 };
 
