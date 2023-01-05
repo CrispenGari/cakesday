@@ -1,3 +1,0 @@
-mutation DeleteNotification($input: MyNotificationInputType!) {
-  deleteNotification(input: $input)
-}

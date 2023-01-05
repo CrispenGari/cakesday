@@ -1,3 +1,0 @@
-mutation MarkNotificationAsRead($input: MyNotificationInputType!) {
-  markAsRead(input: $input)
-}

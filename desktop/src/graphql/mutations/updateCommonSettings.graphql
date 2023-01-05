@@ -1,9 +1,0 @@
-mutation UpdateCommonSettings($input: UpdateCommonSettingsInputType!) {
-  updateCommonSettings(input: $input) {
-    success
-    message {
-      field
-      message
-    }
-  }
-}

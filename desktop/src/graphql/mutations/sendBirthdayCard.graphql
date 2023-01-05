@@ -1,3 +1,0 @@
-mutation SendBirthdayCard($input: UserBirthdayInputType!) {
-  sendWish(input: $input)
-}

@@ -1,9 +1,0 @@
-mutation FollowUser($input: FollowUserInputType!) {
-  followUser(input: $input) {
-    success
-    message {
-      field
-      message
-    }
-  }
-}

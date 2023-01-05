@@ -1,5 +1,0 @@
-query SearchUser($input: UserSearchInputType!) {
-  search(input: $input) {
-    ...UserFragment
-  }
-}

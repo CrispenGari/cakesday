@@ -1,5 +1,0 @@
-query UsersBelatedBirthdays {
-  usersBelatedBirthdays {
-    ...UserFragment
-  }
-}

@@ -1,3 +1,0 @@
-mutation IgnoreBirthday($input: UserBirthdayInputType!) {
-  ignoreBirthday(input: $input)
-}

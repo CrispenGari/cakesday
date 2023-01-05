@@ -1,9 +1,0 @@
-mutation DeleteAccount($input: DeleteAccountInputType!) {
-  deleteAccount(input: $input) {
-    success
-    message {
-      field
-      message
-    }
-  }
-}

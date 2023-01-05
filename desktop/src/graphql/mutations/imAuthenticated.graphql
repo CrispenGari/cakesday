@@ -1,9 +1,0 @@
-mutation ImAuthenticated($input: ImAuthenticatedInputType!) {
-  imAuthenticated(input: $input) {
-    imAuthenticated
-    error {
-      field
-      message
-    }
-  }
-}
